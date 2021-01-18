@@ -1,15 +1,15 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'onliner_api.dart';
+part of 'nbrb_api.dart';
 
 // **************************************************************************
 // RetrofitGenerator
 // **************************************************************************
 
-class _OnlinerApi implements OnlinerApi {
-  _OnlinerApi(this._dio, {this.baseUrl}) {
+class _NbrbApi implements NbrbApi {
+  _NbrbApi(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    baseUrl ??= 'https://catalog.onliner.by/sdapi/catalog.api/search';
+    baseUrl ??= 'https://www.nbrb.by/api/exrates/rates';
   }
 
   final Dio _dio;
@@ -17,13 +17,11 @@ class _OnlinerApi implements OnlinerApi {
   String baseUrl;
 
   @override
-  Future<VideoCardResponse> videocardRequest(gpuName) async {
-    ArgumentError.checkNotNull(gpuName, 'gpuName');
+  Future<ExchangeRateResponse> exchangeRateRequest() async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'desktop_gpu[0]': gpuName};
+    final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        '/videocard?desktop_gpu[operation]=union&videoram_videoc[from]=6gb&order=price:asc',
+    final _result = await _dio.request<Map<String, dynamic>>('/usd?parammode=2',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -31,7 +29,7 @@ class _OnlinerApi implements OnlinerApi {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = VideoCardResponse.fromJson(_result.data);
+    final value = ExchangeRateResponse.fromJson(_result.data);
     return value;
   }
 }

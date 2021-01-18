@@ -1,4 +1,9 @@
+import 'package:cryptotool/blocs/blocs.dart';
+import 'package:cryptotool/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);
@@ -8,39 +13,55 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home"),
+        title: AppBarTitle(),
+        actions: [
+          UpdateButton()
+        ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
+      body: BlocBuilder<HomeBloc, HomeState>(
+        builder: (context, state) {
+          Widget body = Container();
+          if (state is HomeLoading) {
+            body = Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: double.maxFinite,
+                ),
+                LoadingIndicator()
+              ],
+            );
+          }
+          if (state is HomeLoaded) {
+            body = ListView.builder(
+              itemCount: state.videocards?.length ?? 0,
+              itemBuilder: (context, index) => HomeItem(state.videocards[index])
+            );
+          }
+          if (state is HomeError) {
+            body = Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(state.error?.toString() ?? "Ошибка"),
+                SizedBox(height: 16),
+                FlatButton(
+                  onPressed: () => context.read<HomeBloc>().add(HomeInit()),
+                  child: Text("Повторить")
+                )
+              ],
+            );
+          }
+          return body;
+        },
+      )
     );
   }
 }

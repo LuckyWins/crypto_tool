@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'blocs/bloc_observer.dart';
+import 'blocs/blocs.dart';
 import 'injection_component.dart';
 import 'navigation.dart';
 import 'screens/screens.dart';
@@ -14,7 +15,14 @@ void main() {
   Bloc.observer = SimpleBlocObserver();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
   InjectionComponent.run();
-  runApp(CryptoToolApp());
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider<HomeBloc>(
+        create: (context) => HomeBloc()..add(HomeInit())
+      )
+    ],
+    child: CryptoToolApp()
+  ));
 }
 
 class CryptoToolApp extends StatelessWidget {
