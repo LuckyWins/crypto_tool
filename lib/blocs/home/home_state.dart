@@ -12,14 +12,16 @@ class HomeLoading extends HomeState {}
 class HomeLoaded extends HomeState {
   final double bynToUsd;
   final List<Videocard> videocards;
+  final SortOptions sortOption;
 
   const HomeLoaded({
     @required this.bynToUsd,
-    @required this.videocards
+    @required this.videocards,
+    @required this.sortOption
   });
 
   @override
-  List<Object> get props => [bynToUsd, videocards];
+  List<Object> get props => [bynToUsd, videocards, sortOption];
 }
 
 class HomeError extends HomeState {

@@ -18,7 +18,7 @@ void main() {
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider<HomeBloc>(
-        create: (context) => HomeBloc()..add(HomeInit())
+        create: (context) => HomeBloc()
       )
     ],
     child: CryptoToolApp()

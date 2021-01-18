@@ -82,7 +82,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       yield HomeLoaded(
         bynToUsd: bynToUsd,
-        videocards: videocards
+        videocards: videocards,
+        sortOption: SortOptions.none
       );
     } catch (error, stacktrace) {
       yield HomeError(
@@ -109,7 +110,37 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ) async* {
     if (state is HomeLoaded) {
       var tempState = state as HomeLoaded;
-      // tempState.videocards.sortedBy((element) => null)
+      // var videocards = tempState.videocards.sortedBy((element) => null);
+      List<Videocard> videocards;
+      switch (event.option) {
+        case SortOptions.cardPriceAsc:
+          videocards = tempState.videocards.sortedBy((card) => card.minPrice);
+          break;
+        case SortOptions.cardPriceDesc:
+          videocards = tempState.videocards.sortedByDescending((card) => card.minPrice);
+          break;
+        case SortOptions.paybackDesc:
+          videocards = tempState.videocards.sortedBy((card) => card.paybackDays);
+          break;
+        case SortOptions.paybackAsc:
+          videocards = tempState.videocards.sortedByDescending((card) => card.paybackDays);
+          break;
+        case SortOptions.dailyUsdDesc:
+          videocards = tempState.videocards.sortedByDescending((card) => card.dailyInUsd);
+          break;
+        case SortOptions.dailyUsdAsc:
+          videocards = tempState.videocards.sortedBy((card) => card.dailyInUsd);
+          break;
+        default:
+          videocards = tempState.videocards;
+          break;
+      }
+
+      yield HomeLoaded(
+        bynToUsd: tempState.bynToUsd,
+        videocards: videocards,
+        sortOption: event.option
+      );
     }
   }
 }

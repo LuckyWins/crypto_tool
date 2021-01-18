@@ -1,7 +1,9 @@
 import 'package:cryptotool/blocs/blocs.dart';
+import 'package:cryptotool/models/models.dart';
 import 'package:cryptotool/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'widgets/widgets.dart';
 
@@ -14,59 +16,95 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
+  RefreshController refreshController = RefreshController(initialRefresh: true);
+
+  List<Videocard> _videocards = [];
+  bool get isListEmpty => (_videocards?.length ?? 0) == 0;
+
+  @override
+  void dispose() {
+    refreshController?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: false,
         title: AppBarTitle(),
         actions: [
-          FilterButton(),
-          UpdateButton()
+          FilterButton()
         ],
       ),
-      body: BlocBuilder<HomeBloc, HomeState>(
-        builder: (context, state) {
-          Widget body = Container();
-          if (state is HomeLoading) {
-            body = Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: double.maxFinite,
-                ),
-                LoadingIndicator()
-              ],
-            );
+      body: BlocListener<HomeBloc, HomeState>(
+        listener: (context, state) {
+          if (state is HomeError) {
+            _catchErrorToRefreshController();
           }
           if (state is HomeLoaded) {
-            body = ListView.separated(
-              separatorBuilder: (context, _) => Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: Divider(),
-              ),
-              itemCount: state.videocards?.length ?? 0,
-              itemBuilder: (context, index) => HomeItem(state.videocards[index])
-            );
+            _successLoad(state.videocards);
           }
-          if (state is HomeError) {
-            body = Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(state.error?.toString() ?? "Ошибка"),
-                SizedBox(height: 16),
-                FlatButton(
-                  onPressed: () => context.read<HomeBloc>().add(HomeInit()),
-                  child: Text("Повторить")
-                )
-              ],
-            );
-          }
-          return body;
         },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            PageTitle(),
+            Expanded(
+              child: Scrollbar(
+                child: SmartRefresher(
+                  controller: refreshController,
+                  onRefresh: () => _onRefresh(),
+                  enablePullDown: true,
+                  enablePullUp: false,
+                  header: RefreshHeader(),
+                  child: isListEmpty
+                  ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        "Список пуст.\nВоспользуйтесь фильтром",
+                        textAlign: TextAlign.center
+                      )
+                    ],
+                  )
+                  : ListView.separated(
+                    separatorBuilder: (context, _) => Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      child: Divider(),
+                    ),
+                    itemCount: _videocards?.length ?? 0,
+                    itemBuilder: (BuildContext context, int index) => HomeItem(_videocards[index])
+                  )
+                ),
+              ),
+            )
+          ],
+        ),
       )
     );
+  }
+
+  _onRefresh() {
+    // context.read<HomeBloc>().add(HomeInit());
+    BlocProvider.of<HomeBloc>(context).add(HomeInit());
+  }
+
+  _catchErrorToRefreshController() {
+    refreshController.refreshFailed();
+  }
+
+  _successLoad(List<Videocard> list) {
+    refreshController.resetNoData();
+
+    setState(() {
+      _videocards = List.from(list);
+    });
+
+    if (isListEmpty) {
+      refreshController.refreshToIdle();
+    } else {
+      refreshController.refreshCompleted();
+    }
   }
 }
