@@ -45,6 +45,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       var exchangeResponse = await _dataManager.getExchangeRate();
       double bynToUsd = exchangeResponse.officialRate;
       if (bynToUsd == null) throw("error to get BYN->USD rate");
+      var etherchainResponse = await _dataManager.getStat();
 
       List<Videocard> videocards = [];
       // await initialList.forEach((card) async {
@@ -55,11 +56,24 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         var minPrice = ((onlinerCard.prices.priceMin.amount.toDoubleOrNull() ?? 0.0) / bynToUsd).roundFixed();
         var maxPrice = ((onlinerCard.prices.priceMax.amount.toDoubleOrNull() ?? 0.0) / bynToUsd).roundFixed();
 
+        double reward = _reward(
+          mhs: card.hashRate,
+          blockReward: etherchainResponse.currentStats.blockReward,
+          difficulty: etherchainResponse.currentStats.difficulty,
+          poolFee: 0.0
+        );
+
+        var dailyInBtc = reward * 24 * etherchainResponse.currentStats.priceBtc;
+        var dailyInUsd = reward * 24 * etherchainResponse.currentStats.priceUsd;
+
         videocards.add(card.copy(
           name: onlinerCard.name ?? "Неизвестно",
           descriprtion: onlinerCard.microDescription,
           minPrice: minPrice,
           maxPrice: maxPrice,
+          reward: reward,
+          dailyInBtc: dailyInBtc,
+          dailyInUsd: dailyInUsd
         ));
       };
 
@@ -72,5 +86,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         error: error
       );
     }
+  }
+
+  // get reward for 1h
+  double _reward({
+    // MH/S
+    @required double mhs,
+    @required double blockReward,
+    @required double difficulty,
+    @required double poolFee
+  }) {
+    double hashRate = mhs * 1000000;
+    double reward = ((hashRate * blockReward) / difficulty) * (1 - poolFee) * 3600;
+    return reward ?? 0.0;
   }
 }

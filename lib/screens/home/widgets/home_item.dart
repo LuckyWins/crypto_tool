@@ -9,7 +9,6 @@ class HomeItem extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    var profit = 10.0;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
       child: Column(
@@ -53,14 +52,37 @@ class HomeItem extends StatelessWidget {
               ]
             ),
           ),
-          Text("$profit")
+          SizedBox(height: 8),
+          RichText(
+            text: TextSpan(
+              text: "${(videocard.dailyInBtc * 1000).toStringAsFixed(8)}",
+              style: TextStyle(
+                color: AppStyles.mainTextColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 16
+              ),
+              children: [
+                TextSpan(
+                  text: " mBTC / Day",
+                  style: TextStyle(
+                    color: AppStyles.mainTextColor.withOpacity(0.5),
+                    fontWeight: FontWeight.normal,
+                    fontSize: 12
+                  ),
+                ),
+                TextSpan(
+                  text: " ~ \$${videocard.dailyInUsd.toStringAsFixed(2)}",
+                  style: TextStyle(
+                    color: AppStyles.mainTextColor,
+                    fontWeight: FontWeight.normal,
+                    fontSize: 14
+                  ),
+                )
+              ]
+            ),
+          ),
         ],
       ),
-    );
-    return ListTile(
-      onTap: () {},
-      title: Text(videocard.name),
-      subtitle: Text("\$ ${videocard.minPrice} - ${videocard.maxPrice}"),
     );
   }
 }

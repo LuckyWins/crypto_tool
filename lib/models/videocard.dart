@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+import 'package:dartx/dartx.dart';
 
 class Videocard extends Equatable {
   final String gpuName;
@@ -9,6 +10,9 @@ class Videocard extends Equatable {
   final double minPrice;
   final double maxPrice;
   final double hashRate;
+  final double reward;
+  final double dailyInBtc;
+  final double dailyInUsd;
 
   const Videocard({
     this.gpuName,
@@ -17,7 +21,10 @@ class Videocard extends Equatable {
     this.descriprtion,
     this.minPrice,
     this.maxPrice,
-    this.hashRate
+    this.hashRate,
+    this.reward,
+    this.dailyInBtc,
+    this.dailyInUsd
   });
 
   Videocard copy({
@@ -27,7 +34,10 @@ class Videocard extends Equatable {
     String descriprtion,
     double minPrice,
     double maxPrice,
-    double hashRate
+    double hashRate,
+    double reward,
+    double dailyInBtc,
+    double dailyInUsd
   }) => Videocard(
     gpuName: gpuName ?? this.gpuName,
     onlinerGpuName: onlinerGpuName ?? this.onlinerGpuName,
@@ -35,8 +45,13 @@ class Videocard extends Equatable {
     descriprtion: descriprtion ?? this.descriprtion,
     minPrice: minPrice ?? this.minPrice,
     maxPrice: maxPrice ?? this.maxPrice,
-    hashRate: hashRate ?? this.hashRate
+    hashRate: hashRate ?? this.hashRate,
+    reward: reward ?? this.reward,
+    dailyInBtc: dailyInBtc ?? this.dailyInBtc,
+    dailyInUsd: dailyInUsd ?? this.dailyInUsd
   );
+
+  double get rewardPerDay => reward * 24;
 
   @override
   List<Object> get props => [gpuName, minPrice, maxPrice, hashRate];
