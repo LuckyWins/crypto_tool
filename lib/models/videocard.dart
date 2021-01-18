@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:dartx/dartx.dart';
+import 'package:flutter/material.dart';
 
 class Videocard extends Equatable {
   final String gpuName;
@@ -52,6 +53,20 @@ class Videocard extends Equatable {
   );
 
   double get rewardPerDay => reward * 24;
+
+  int get paybackDays => (minPrice / dailyInUsd).round();
+
+  Color get paybackRateColor {
+    if (paybackDays > 300) {
+      return Color(0xffe49a9a);
+    } else if (paybackDays > 200) {
+      return Color(0xffe4cd9a);
+    } if (paybackDays > 100) {
+      return Color(0xffdbe49a);
+    } else {
+      return Color(0xff9de49a);
+    }
+  }
 
   @override
   List<Object> get props => [gpuName, minPrice, maxPrice, hashRate];

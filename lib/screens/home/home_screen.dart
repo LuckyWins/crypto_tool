@@ -21,6 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: AppBarTitle(),
         actions: [
+          FilterButton(),
           UpdateButton()
         ],
       ),

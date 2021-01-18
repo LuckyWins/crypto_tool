@@ -27,6 +27,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (event is HomeInit) {
       yield* _mapHomeInitToState(event);
     }
+    if (event is HomeFilter) {
+      yield* _mapHomeFilterToState(event);
+    }
   }
 
   Stream<HomeState> _mapHomeInitToState(
@@ -99,5 +102,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     double hashRate = mhs * 1000000;
     double reward = ((hashRate * blockReward) / difficulty) * (1 - poolFee) * 3600;
     return reward ?? 0.0;
+  }
+
+  Stream<HomeState> _mapHomeFilterToState(
+    HomeFilter event
+  ) async* {
+    if (state is HomeLoaded) {
+      var tempState = state as HomeLoaded;
+      // tempState.videocards.sortedBy((element) => null)
+    }
   }
 }

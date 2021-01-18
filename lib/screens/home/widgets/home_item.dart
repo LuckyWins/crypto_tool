@@ -12,7 +12,7 @@ class HomeItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             videocard.gpuName,
@@ -81,6 +81,27 @@ class HomeItem extends StatelessWidget {
               ]
             ),
           ),
+          SizedBox(height: 4),
+          Row(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: videocard.paybackRateColor,
+                  borderRadius: BorderRadius.circular(4)
+                ),
+                padding: EdgeInsets.all(4),
+                child: Text("${videocard.paybackDays} дней"),
+              ),
+              SizedBox(width: 4),
+              Text(
+                "Окупаемость",
+                style: TextStyle(
+                  color: AppStyles.mainTextColor.withOpacity(0.5),
+                  fontSize: 12
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );

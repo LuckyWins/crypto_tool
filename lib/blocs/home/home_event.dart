@@ -8,3 +8,12 @@ abstract class HomeEvent extends Equatable {
 }
 
 class HomeInit extends HomeEvent {}
+
+class HomeFilter extends HomeEvent {
+  final SortOptions option;
+
+  const HomeFilter(this.option);
+
+  @override
+  List<Object> get props => [option];
+}
