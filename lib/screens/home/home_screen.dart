@@ -40,7 +40,11 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           }
           if (state is HomeLoaded) {
-            body = ListView.builder(
+            body = ListView.separated(
+              separatorBuilder: (context, _) => Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Divider(),
+              ),
               itemCount: state.videocards?.length ?? 0,
               itemBuilder: (context, index) => HomeItem(state.videocards[index])
             );
