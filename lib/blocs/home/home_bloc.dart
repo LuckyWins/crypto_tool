@@ -73,9 +73,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       // Videocard(gpuName: "NVIDIA P106-90", onlinerGpuName: "", hashRate: 13.4)
     ];
 
-    // try {
-      var exchangeResponse = await _dataManager.getExchangeRate();
-      double bynToUsd = exchangeResponse.officialRate;
+    try {
+      // var exchangeResponse = await _dataManager.getExchangeRateNbrb();
+      // double bynToUsd = exchangeResponse.officialRate;
+      var exchangeResponse = await _dataManager.getExchangeRateAlfabank();
+      double bynToUsd = exchangeResponse.rates.firstWhere((item) => item.sellCode == 840 && item.buyCode == 933, orElse: () => null)?.buyRate;
       if (bynToUsd == null) throw("error to get BYN->USD rate");
       var etherchainResponse = await _dataManager.getStat();
 
@@ -108,18 +110,23 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           dailyInUsd: dailyInUsd,
           pricesUrl: onlinerCard?.prices?.htmlUrl
         ));
-      };
+      }
+
+      videocards = filterCards(
+        list: videocards,
+        option: event.option
+      );
 
       yield HomeLoaded(
         bynToUsd: bynToUsd,
         videocards: videocards,
-        sortOption: SortOptions.none
+        sortOption: event.option
       );
-    // } catch (error, stacktrace) {
-    //   yield HomeError(
-    //     error: error
-    //   );
-    // }
+    } catch (error, stacktrace) {
+      yield HomeError(
+        error: error
+      );
+    }
   }
 
   // get reward for 1h
@@ -140,39 +147,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ) async* {
     if (state is HomeLoaded) {
       var tempState = state as HomeLoaded;
-      // var videocards = tempState.videocards.sortedBy((element) => null);
-      List<Videocard> videocards = [];
-      switch (event.option) {
-        case SortOptions.cardPriceAsc:
-          videocards = tempState.videocards.sortedBy((card) => card.minPrice);
-          break;
-        case SortOptions.cardPriceDesc:
-          videocards = tempState.videocards.sortedByDescending((card) => card.minPrice);
-          break;
-        case SortOptions.paybackDesc:
-          var cardWithZero = tempState.videocards.filter((card) => card.paybackDays == 0);
-          var normalCards = tempState.videocards.filter((card) => card.paybackDays != 0);
-
-          videocards.addAll(normalCards.sortedBy((card) => card.paybackDays));
-          videocards.addAll(cardWithZero);
-          break;
-        case SortOptions.paybackAsc:
-          var cardWithZero = tempState.videocards.filter((card) => card.paybackDays == 0);
-          var normalCards = tempState.videocards.filter((card) => card.paybackDays != 0);
-
-          videocards.addAll(normalCards.sortedByDescending((card) => card.paybackDays));
-          videocards.addAll(cardWithZero);
-          break;
-        case SortOptions.dailyUsdDesc:
-          videocards = tempState.videocards.sortedByDescending((card) => card.dailyInUsd);
-          break;
-        case SortOptions.dailyUsdAsc:
-          videocards = tempState.videocards.sortedBy((card) => card.dailyInUsd);
-          break;
-        default:
-          videocards = tempState.videocards;
-          break;
-      }
+      
+      var videocards = filterCards(
+        list: tempState.videocards,
+        option: event.option
+      );
 
       yield HomeLoaded(
         bynToUsd: tempState.bynToUsd,
@@ -180,5 +159,49 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         sortOption: event.option
       );
     }
+  }
+
+  List<Videocard> filterCards({
+    @required List<Videocard> list,
+    @required SortOptions option
+  }) {
+    List<Videocard> videocards = [];
+
+    switch (option) {
+      case SortOptions.cardPriceAsc:
+        var cardWithZero = list.filter((card) => card.minPrice == 0.0);
+        var normalCards = list.filter((card) => card.minPrice != 0.0);
+
+        videocards.addAll(normalCards.sortedBy((card) => card.minPrice));
+        videocards.addAll(cardWithZero);
+        break;
+      case SortOptions.cardPriceDesc:
+        videocards = list.sortedByDescending((card) => card.minPrice);
+        break;
+      case SortOptions.paybackDesc:
+        var cardWithZero = list.filter((card) => card.paybackDays == 0);
+        var normalCards = list.filter((card) => card.paybackDays != 0);
+
+        videocards.addAll(normalCards.sortedBy((card) => card.paybackDays));
+        videocards.addAll(cardWithZero);
+        break;
+      case SortOptions.paybackAsc:
+        var cardWithZero = list.filter((card) => card.paybackDays == 0);
+        var normalCards = list.filter((card) => card.paybackDays != 0);
+
+        videocards.addAll(normalCards.sortedByDescending((card) => card.paybackDays));
+        videocards.addAll(cardWithZero);
+        break;
+      case SortOptions.dailyUsdDesc:
+        videocards = list.sortedByDescending((card) => card.dailyInUsd);
+        break;
+      case SortOptions.dailyUsdAsc:
+        videocards = list.sortedBy((card) => card.dailyInUsd);
+        break;
+      default:
+        videocards = list;
+        break;
+    }
+    return videocards;
   }
 }

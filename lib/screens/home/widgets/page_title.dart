@@ -12,15 +12,15 @@ class PageTitle extends StatelessWidget {
         if (state is HomeLoaded) {
           if (state.sortOption != SortOptions.none) {
             return Container(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            color: Colors.black.withOpacity(0.3),
-            child: Text(
-              state.sortOption.name,
-              style: TextStyle(
-                color: Colors.white
-              ),
-            )
-          );
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              color: Colors.black.withOpacity(0.3),
+              child: Text(
+                state.sortOption.name,
+                style: TextStyle(
+                  color: Colors.white
+                ),
+              )
+            );
           }
         }
         return body;

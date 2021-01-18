@@ -21,7 +21,14 @@ class AppBarTitle extends StatelessWidget {
                 ),
               );
             } else {
-              return Container();
+              // return Container();
+              return Text(
+                "- BYN = 1 USD",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: AppStyles.mainTextColor.withOpacity(0.5)
+                ),
+              );
             }
           },
         )

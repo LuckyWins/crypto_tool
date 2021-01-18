@@ -24,7 +24,15 @@ class FilterButton extends StatelessWidget {
             icon: Icon(Icons.sort),
           );
         } else {
-          return Container();
+          // return Container();
+          return Padding(
+            padding: const EdgeInsets.all(12),
+            child: Icon(
+              Icons.sort,
+              size: 24,
+              color: Colors.black.withOpacity(0.5),
+            ),
+          );
         }
       },
     );

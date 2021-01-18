@@ -22,6 +22,8 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Videocard> _videocards = [];
   bool get isListEmpty => (_videocards?.length ?? 0) == 0;
 
+  SortOptions _currentOption = SortOptions.none;
+
   @override
   void dispose() {
     _scrollController?.dispose();
@@ -45,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
             _catchErrorToRefreshController();
           }
           if (state is HomeLoaded) {
-            _successLoad(state.videocards);
+            _successLoad(state.videocards, state.sortOption);
           }
         },
         child: Column(
@@ -58,7 +60,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   scrollController: _scrollController,
                   primary: false,
                   controller: refreshController,
-                  onRefresh: () => _onRefresh(),
+                  onRefresh: () => _onRefresh(
+                    option: _currentOption
+                  ),
                   enablePullDown: true,
                   enablePullUp: false,
                   header: RefreshHeader(),
@@ -90,18 +94,23 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  _onRefresh() {
-    context.read<HomeBloc>().add(HomeInit());
+  _onRefresh({
+    @required SortOptions option
+  }) {
+    context.read<HomeBloc>().add(HomeInit(
+      option: option
+    ));
   }
 
   _catchErrorToRefreshController() {
     refreshController.refreshFailed();
   }
 
-  _successLoad(List<Videocard> list) {
+  _successLoad(List<Videocard> list, SortOptions option) {
     refreshController.resetNoData();
 
     setState(() {
+      _currentOption = option;
       _videocards = List.from(list);
     });
     _scrollController.animateTo(
