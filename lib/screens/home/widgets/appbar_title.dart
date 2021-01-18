@@ -9,7 +9,7 @@ class AppBarTitle extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Home"),
+        Text("Crypto Tool"),
         BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
             if (state is HomeLoaded) {

@@ -1,5 +1,6 @@
 import 'package:cryptotool/blocs/blocs.dart';
 import 'package:cryptotool/models/models.dart';
+import 'package:cryptotool/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,33 +12,10 @@ class FilterButton extends StatelessWidget {
         if (state is HomeLoaded) {
           return IconButton(
             onPressed: () async {
-              var option = await showDialog(
+              var option = await Multiplatform.showDropdown<SortOptions>(
                 context: context,
-                builder: (context) => SimpleDialog(
-                  // title: Text(
-                  //   "Сортировка",
-                  //   style: TextStyle(
-                  //     fontSize: 18
-                  //   ),
-                  // ),
-                  children: SortExtersion.mapNamesForFilter.map((option, description) => MapEntry(option,
-                    SimpleDialogOption(
-                      onPressed: () => Navigator.pop(context, option),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4),
-                        child: Text(
-                          description,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: state.sortOption == option
-                                ? FontWeight.bold
-                                : FontWeight.normal
-                          ),
-                        ),
-                      ),
-                    )
-                  )).values.toList(),
-                )
+                map: SortExtersion.mapNamesForFilter,
+                selected: state.sortOption
               );
               if (option != null) {
                 context.read<HomeBloc>().add(HomeFilter(option));

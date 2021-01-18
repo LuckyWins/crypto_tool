@@ -62,9 +62,13 @@ class OnlinerVideocardPrices {
   @JsonKey(name: 'price_max')
   final OnlinerVideocardPrice priceMax;
 
+  @JsonKey(name: 'html_url')
+  final String htmlUrl;
+
   OnlinerVideocardPrices({
     this.priceMin,
-    this.priceMax
+    this.priceMax,
+    this.htmlUrl
   });
 
   factory OnlinerVideocardPrices.fromJson(Map<String, dynamic> json) => _$OnlinerVideocardPricesFromJson(json);

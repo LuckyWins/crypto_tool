@@ -58,6 +58,7 @@ OnlinerVideocardPrices _$OnlinerVideocardPricesFromJson(
         ? null
         : OnlinerVideocardPrice.fromJson(
             json['price_max'] as Map<String, dynamic>),
+    htmlUrl: json['html_url'] as String,
   );
 }
 
@@ -66,6 +67,7 @@ Map<String, dynamic> _$OnlinerVideocardPricesToJson(
     <String, dynamic>{
       'price_min': instance.priceMin,
       'price_max': instance.priceMax,
+      'html_url': instance.htmlUrl,
     };
 
 OnlinerVideocardPrice _$OnlinerVideocardPriceFromJson(

@@ -1,6 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
-import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 
 class Videocard extends Equatable {
@@ -14,6 +12,7 @@ class Videocard extends Equatable {
   final double reward;
   final double dailyInBtc;
   final double dailyInUsd;
+  final String pricesUrl;
 
   const Videocard({
     this.gpuName,
@@ -25,7 +24,8 @@ class Videocard extends Equatable {
     this.hashRate,
     this.reward,
     this.dailyInBtc,
-    this.dailyInUsd
+    this.dailyInUsd,
+    this.pricesUrl
   });
 
   Videocard copy({
@@ -38,7 +38,8 @@ class Videocard extends Equatable {
     double hashRate,
     double reward,
     double dailyInBtc,
-    double dailyInUsd
+    double dailyInUsd,
+    String pricesUrl
   }) => Videocard(
     gpuName: gpuName ?? this.gpuName,
     onlinerGpuName: onlinerGpuName ?? this.onlinerGpuName,
@@ -49,7 +50,8 @@ class Videocard extends Equatable {
     hashRate: hashRate ?? this.hashRate,
     reward: reward ?? this.reward,
     dailyInBtc: dailyInBtc ?? this.dailyInBtc,
-    dailyInUsd: dailyInUsd ?? this.dailyInUsd
+    dailyInUsd: dailyInUsd ?? this.dailyInUsd,
+    pricesUrl: pricesUrl ?? this.pricesUrl
   );
 
   double get rewardPerDay => reward * 24;
@@ -64,8 +66,12 @@ class Videocard extends Equatable {
     } if (paybackDays > 100) {
       return Color(0xffdbe49a);
     } else {
-      return Color(0xff9de49a);
-    }
+      if (paybackDays == 0) {
+        return Colors.black.withOpacity(0.3);
+      } else {
+        return Color(0xff9de49a);
+      }
+    } 
   }
 
   @override

@@ -16,6 +16,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
+  var _scrollController = ScrollController();
   RefreshController refreshController = RefreshController(initialRefresh: true);
 
   List<Videocard> _videocards = [];
@@ -23,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
+    _scrollController?.dispose();
     refreshController?.dispose();
     super.dispose();
   }
@@ -53,6 +55,8 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(
               child: Scrollbar(
                 child: SmartRefresher(
+                  scrollController: _scrollController,
+                  primary: false,
                   controller: refreshController,
                   onRefresh: () => _onRefresh(),
                   enablePullDown: true,
@@ -69,6 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   )
                   : ListView.separated(
+                    padding: EdgeInsets.symmetric(vertical: 16),
                     separatorBuilder: (context, _) => Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16),
                       child: Divider(),
@@ -86,8 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   _onRefresh() {
-    // context.read<HomeBloc>().add(HomeInit());
-    BlocProvider.of<HomeBloc>(context).add(HomeInit());
+    context.read<HomeBloc>().add(HomeInit());
   }
 
   _catchErrorToRefreshController() {
@@ -100,6 +104,11 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _videocards = List.from(list);
     });
+    _scrollController.animateTo(
+      _scrollController.position.minScrollExtent,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.fastOutSlowIn
+    );
 
     if (isListEmpty) {
       refreshController.refreshToIdle();
