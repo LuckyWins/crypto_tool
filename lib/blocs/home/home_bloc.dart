@@ -40,10 +40,22 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     List<Videocard> initialList = GpuRepository.availableList;
 
     try {
-      // var exchangeResponse = await _dataManager.getExchangeRateNbrb();
-      // double bynToUsd = exchangeResponse.officialRate;
-      var exchangeResponse = await _dataManager.getExchangeRateAlfabank();
-      double bynToUsd = exchangeResponse.rates.firstWhere((item) => item.sellCode == 840 && item.buyCode == 933, orElse: () => null)?.buyRate;
+      BynToUsdExchangeSource bynToUsdExchangeSource = await PreferencesHelper.getBynToUsdExchangeSource();
+
+      double bynToUsd;
+      switch (bynToUsdExchangeSource) {
+        case BynToUsdExchangeSource.alfabank:
+          var exchangeResponse = await _dataManager.getExchangeRateAlfabank();
+          bynToUsd = exchangeResponse.rates.firstWhere((item) => item.sellCode == 840 && item.buyCode == 933, orElse: () => null)?.buyRate;
+          break;
+        case BynToUsdExchangeSource.nbrb:
+          var exchangeResponse = await _dataManager.getExchangeRateNbrb();
+          bynToUsd = exchangeResponse.officialRate;
+          break;
+        case BynToUsdExchangeSource.manually:
+          bynToUsd = await PreferencesHelper.getBynToUsdExchangeRate();
+          break;
+      }
       if (bynToUsd == null) throw("error to get BYN->USD rate");
       var etherchainResponse = await _dataManager.getStat();
 

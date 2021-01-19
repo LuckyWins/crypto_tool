@@ -1,5 +1,6 @@
 import 'package:cryptotool/blocs/blocs.dart';
 import 'package:cryptotool/models/models.dart';
+import 'package:cryptotool/navigation.dart';
 import 'package:cryptotool/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,6 +39,12 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: false,
         title: AppBarTitle(),
         actions: [
+          SettingsButton(
+            onPressed: () async {
+              var value = await Navigation.toSettings();
+              if (value ?? false) refreshController.requestRefresh();
+            },
+          ),
           FilterButton()
         ],
       ),

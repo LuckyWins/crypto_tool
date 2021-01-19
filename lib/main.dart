@@ -53,7 +53,7 @@ class CryptoToolApp extends StatelessWidget {
             color: AppStyles.mainColor
           )
         ),
-        primarySwatch: Colors.deepPurple,
+        primarySwatch: Colors.blue,
         secondaryHeaderColor: Colors.black,
         textTheme: Theme.of(context).textTheme.apply(
           bodyColor: AppStyles.mainTextColor
