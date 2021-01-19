@@ -1,3 +1,5 @@
+import 'package:cryptotool/models/models.dart';
+import 'package:cryptotool/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -11,14 +13,16 @@ class Navigation {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
   }
 
-  static toAuth() {
+  static toInfo({
+    Videocard videocard
+  }) {
     beforeNavigate();
-    // navigatorKey.currentState.pushAndRemoveUntil(
-    //   MaterialPageRoute(builder: (context) =>
-    //     AuthScreen(),
-    //     // settings: RouteSettings(isInitialRoute: true)
-    //   ),
-    //   (route) => false
-    // );
+    navigatorKey.currentState.push(
+      MaterialPageRoute(builder: (context) =>
+        InfoScreen(
+          videocard: videocard,
+        )
+      )
+    );
   }
 }

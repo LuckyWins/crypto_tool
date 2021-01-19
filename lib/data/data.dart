@@ -1,4 +1,5 @@
 export 'local/preferences_helper.dart';
+export 'local/gpu_repository.dart';
 
 export 'remote_models/videocard_response.dart';
 export 'remote_models/exchange_rate_response.dart';

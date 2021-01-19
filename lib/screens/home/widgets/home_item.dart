@@ -1,7 +1,7 @@
 import 'package:cryptotool/models/models.dart';
+import 'package:cryptotool/navigation.dart';
 import 'package:cryptotool/styles.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class HomeItem extends StatelessWidget {
   final Videocard videocard;
@@ -12,7 +12,9 @@ class HomeItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        if (videocard.pricesUrl != null) launch(videocard.pricesUrl);
+        Navigation.toInfo(
+          videocard: videocard
+        );
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),

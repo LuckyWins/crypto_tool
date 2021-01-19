@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class Videocard extends Equatable {
   final String gpuName;
+  final String gpuDescription;
   final String onlinerGpuName;
   final String name;
   final String descriprtion;
@@ -13,23 +14,29 @@ class Videocard extends Equatable {
   final double dailyInBtc;
   final double dailyInUsd;
   final String pricesUrl;
+  final double expectedPrice;
+  final double powerUsage;
 
   const Videocard({
-    this.gpuName,
-    this.onlinerGpuName,
+    @required this.gpuName,
+    this.gpuDescription = "",
+    @required this.onlinerGpuName,
     this.name,
     this.descriprtion,
     this.minPrice,
     this.maxPrice,
-    this.hashRate,
+    @required this.hashRate,
     this.reward,
     this.dailyInBtc,
     this.dailyInUsd,
-    this.pricesUrl
+    this.pricesUrl,
+    this.expectedPrice = 0.0,
+    this.powerUsage = 0.0
   });
 
   Videocard copy({
     String gpuName,
+    String gpuDescription,
     String onlinerGpuName,
     String name,
     String descriprtion,
@@ -39,9 +46,12 @@ class Videocard extends Equatable {
     double reward,
     double dailyInBtc,
     double dailyInUsd,
-    String pricesUrl
+    String pricesUrl,
+    double expectedPrice,
+    double powerUsage
   }) => Videocard(
     gpuName: gpuName ?? this.gpuName,
+    gpuDescription: gpuDescription ?? this.gpuDescription,
     onlinerGpuName: onlinerGpuName ?? this.onlinerGpuName,
     name: name ?? this.name,
     descriprtion: descriprtion ?? this.descriprtion,
@@ -51,7 +61,9 @@ class Videocard extends Equatable {
     reward: reward ?? this.reward,
     dailyInBtc: dailyInBtc ?? this.dailyInBtc,
     dailyInUsd: dailyInUsd ?? this.dailyInUsd,
-    pricesUrl: pricesUrl ?? this.pricesUrl
+    pricesUrl: pricesUrl ?? this.pricesUrl,
+    expectedPrice: expectedPrice ?? this.expectedPrice,
+    powerUsage: powerUsage ?? this.powerUsage
   );
 
   double get rewardPerDay => reward * 24;

@@ -37,41 +37,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ) async* {
     yield HomeLoading();
 
-    List<Videocard> initialList = [
-      Videocard(gpuName: "NVIDIA RTX 3090", onlinerGpuName: "rtx3090", hashRate: 125.0),
-      Videocard(gpuName: "NVIDIA RTX 3080", onlinerGpuName: "rtx3080", hashRate: 100.0),
-      // Videocard(gpuName: "AMD VII", onlinerGpuName: "", hashRate: 89.4),
-      Videocard(gpuName: "NVIDIA RTX 3060 Ti", onlinerGpuName: "rtx3060ti", hashRate: 60.0),
-      Videocard(gpuName: "NVIDIA RTX 3070", onlinerGpuName: "rtx3070", hashRate: 60.0),
-      Videocard(gpuName: "AMD RX 5700 XT", onlinerGpuName: "rx5700xt", hashRate: 56.5),
-      Videocard(gpuName: "AMD RX 5700", onlinerGpuName: "rx5700", hashRate: 56.0),
-      Videocard(gpuName: "NVIDIA RTX 2080 Ti", onlinerGpuName: "rtx2080ti", hashRate: 55.5),
-      Videocard(gpuName: "NVIDIA GTX 1080 Ti", onlinerGpuName: "gtx1080ti", hashRate: 46.5),
-      Videocard(gpuName: "NVIDIA RTX 2070 SUPER", onlinerGpuName: "rtx2070super", hashRate: 44.3),
-      Videocard(gpuName: "NVIDIA RTX 2060 SUPER", onlinerGpuName: "rtx2060super", hashRate: 44.3),
-      Videocard(gpuName: "NVIDIA RTX 2070", onlinerGpuName: "rtx2070", hashRate: 44.3),
-      Videocard(gpuName: "NVIDIA RTX 2080 SUPER", onlinerGpuName: "rtx2080super", hashRate: 44.3),
-      Videocard(gpuName: "NVIDIA RTX 2080", onlinerGpuName: "rtx2080", hashRate: 44.3),
-      Videocard(gpuName: "AMD RX 5600 XT", onlinerGpuName: "rx5600xt", hashRate: 42.2),
-      // Videocard(gpuName: "AMD RX Vega 64", onlinerGpuName: "", hashRate: 40.0),
-      // Videocard(gpuName: "NVIDIA P104-100", onlinerGpuName: "", hashRate: 37.0),
-      Videocard(gpuName: "AMD RX Vega 56", onlinerGpuName: "rxvega56", hashRate: 36.5),
-      Videocard(gpuName: "NVIDIA GTX 1080", onlinerGpuName: "gtx1080", hashRate: 35.5),
-      Videocard(gpuName: "AMD RX 580 8GB", onlinerGpuName: "radeonrx580", hashRate: 32.2),
-      Videocard(gpuName: "AMD RX 480 8GB", onlinerGpuName: "radeonrx480", hashRate: 31.5),
-      Videocard(gpuName: "AMD RX 570 8GB", onlinerGpuName: "radeonrx570", hashRate: 30.9),
-      Videocard(gpuName: "NVIDIA GTX 1660 SUPER", onlinerGpuName: "gtx1660super", hashRate: 30.2),
-      Videocard(gpuName: "NVIDIA GTX 1070 Ti", onlinerGpuName: "gtx1070ti", hashRate: 30.0),
-      // Videocard(gpuName: "AMD RX 470 8GB", onlinerGpuName: "x470", hashRate: 29.7),
-      Videocard(gpuName: "NVIDIA GTX 1660 Ti", onlinerGpuName: "gtx1660ti", hashRate: 29.1),
-      Videocard(gpuName: "NVIDIA RTX 2060", onlinerGpuName: "rtx2060", hashRate: 28.6),
-      Videocard(gpuName: "NVIDIA GTX 1070", onlinerGpuName: "gtx1070", hashRate: 28.2),
-      Videocard(gpuName: "AMD RX 5500 XT 8GB", onlinerGpuName: "rx5500xt", hashRate: 26.5),
-      Videocard(gpuName: "NVIDIA GTX 1660", onlinerGpuName: "gtx1660", hashRate: 24.5),
-      Videocard(gpuName: "NVIDIA GTX 1060 6GB", onlinerGpuName: "gfgtx1060", hashRate: 22.5),
-      // Videocard(gpuName: "NVIDIA P106-100", onlinerGpuName: "", hashRate: 22.5),
-      // Videocard(gpuName: "NVIDIA P106-90", onlinerGpuName: "", hashRate: 13.4)
-    ];
+    List<Videocard> initialList = GpuRepository.availableList;
 
     try {
       // var exchangeResponse = await _dataManager.getExchangeRateNbrb();
@@ -108,7 +74,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           reward: reward,
           dailyInBtc: dailyInBtc,
           dailyInUsd: dailyInUsd,
-          pricesUrl: onlinerCard?.prices?.htmlUrl
+          pricesUrl: onlinerCard?.prices?.htmlUrl != null
+              ? "${onlinerCard?.prices?.htmlUrl}?order=price%3Aasc"
+              : null
         ));
       }
 

@@ -21,9 +21,9 @@ extension SortExtersion on SortOptions {
     SortOptions.cardPriceAsc: "Сначала дешевые",
     SortOptions.cardPriceDesc: "Сначала дорогие",
     SortOptions.paybackDesc: "Сначала быстроокупаемые",
-    SortOptions.paybackAsc: "Сначала плохоокупаемые",
+    // SortOptions.paybackAsc: "Сначала плохоокупаемые",
     SortOptions.dailyUsdDesc: "Сначала самые доходные",
-    SortOptions.dailyUsdAsc: "Сначала менее прибыльные",
+    // SortOptions.dailyUsdAsc: "Сначала менее прибыльные",
   };
 
   static const Map<SortOptions, String> mapNames = {

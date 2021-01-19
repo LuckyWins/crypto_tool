@@ -53,7 +53,9 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            PageTitle(),
+            PageTitle(
+              option: _currentOption,
+            ),
             Expanded(
               child: Scrollbar(
                 child: SmartRefresher(
