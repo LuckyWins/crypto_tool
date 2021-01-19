@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Videocard> _videocards = [];
   bool get isListEmpty => (_videocards?.length ?? 0) == 0;
 
-  SortOptions _currentOption = SortOptions.none;
+  SortOptions _currentOption;
 
   @override
   void dispose() {

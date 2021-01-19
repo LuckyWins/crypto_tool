@@ -10,10 +10,12 @@ import 'widgets.dart';
 class SettingsForm extends StatefulWidget {
   final BynToUsdExchangeSource initialBynToUsdExchangeSource;
   final double initialBynToUsdExchangeRate;
+  final SortOptions initialSortOption;
 
   const SettingsForm({
     @required this.initialBynToUsdExchangeSource,
-    @required this.initialBynToUsdExchangeRate
+    @required this.initialBynToUsdExchangeRate,
+    @required this.initialSortOption
   });
 
   @override
@@ -25,8 +27,10 @@ class _SettingsFormState extends State<SettingsForm> {
 
   BynToUsdExchangeSource _bynToUsdExchangeSource;
   double _bynToUsdExchangeRate;
+  SortOptions _sortOption;
 
   final _bynToUsdController = TextEditingController();
+  final _sortOptionController = TextEditingController();
   
   Map<BynToUsdExchangeSource, String> _mapBynToUsdExchangeSource = {
     BynToUsdExchangeSource.nbrb: "НБРБ",
@@ -38,14 +42,17 @@ class _SettingsFormState extends State<SettingsForm> {
   void initState() {
     super.initState();
 
-    _bynToUsdController.text = _mapBynToUsdExchangeSource[widget.initialBynToUsdExchangeSource];
     _bynToUsdExchangeSource = widget.initialBynToUsdExchangeSource;
+    _bynToUsdController.text = _mapBynToUsdExchangeSource[_bynToUsdExchangeSource];
 
+    _sortOption = widget.initialSortOption;
+    _sortOptionController.text = SortExtersion.mapNames[_sortOption];
   }
 
   @override
   void dispose() {
     _bynToUsdController?.dispose();
+    _sortOptionController?.dispose();
     super.dispose();
   }
   
@@ -64,7 +71,8 @@ class _SettingsFormState extends State<SettingsForm> {
                   context.read<SettingsBloc>().add(
                     SettingsSave(
                       bynToUsdExchangeSource: _bynToUsdExchangeSource,
-                      bynToUsdExchangeRate: _bynToUsdExchangeRate
+                      bynToUsdExchangeRate: _bynToUsdExchangeRate,
+                      sortOption: _sortOption
                     )
                   );
                 }
@@ -89,7 +97,11 @@ class _SettingsFormState extends State<SettingsForm> {
                       onSaved: (value) {
                         _bynToUsdExchangeRate = value;
                       },
-                    )
+                    ),
+                  SortOptionField(
+                    controller: _sortOptionController,
+                    onTap: () => _showSortOptionDropDown(),
+                  )
                 ],
               ),
             ),
@@ -110,6 +122,21 @@ class _SettingsFormState extends State<SettingsForm> {
       _bynToUsdController.text = _mapBynToUsdExchangeSource[value];
       setState(() {
         _bynToUsdExchangeSource = value;
+      });
+    }
+  }
+
+  _showSortOptionDropDown() async {
+    final value = await Multiplatform.showDropdown<SortOptions>(
+      context:context,
+      map: SortExtersion.mapNames,
+      selected: _sortOption,
+      title: "Сортировка при запуске"
+    );
+    if (value != null) {
+      _sortOptionController.text = SortExtersion.mapNames[value];
+      setState(() {
+        _sortOption = value;
       });
     }
   }

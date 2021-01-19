@@ -30,6 +30,33 @@ class PreferencesHelper {
     return _setDouble(_bynToUsdExchangeRate, value);
   }
 
+  static Future<SortOptions> getSortOption() async {
+    Map<int, SortOptions> _map = {
+      0: SortOptions.cardPriceAsc,
+      1: SortOptions.cardPriceDesc,
+      2: SortOptions.paybackDesc,
+      3: SortOptions.paybackAsc,
+      4: SortOptions.dailyUsdDesc,
+      5: SortOptions.dailyUsdAsc,
+      6: SortOptions.none
+    };
+    int value = await _getInt(_sortOption) ?? 6;
+    return _map[value];
+  }
+
+  static Future<bool> setSortOption(SortOptions value) {
+    Map<SortOptions, int> _map = {
+      SortOptions.cardPriceAsc: 0,
+      SortOptions.cardPriceDesc: 1,
+      SortOptions.paybackDesc: 2,
+      SortOptions.paybackAsc: 3,
+      SortOptions.dailyUsdDesc: 4,
+      SortOptions.dailyUsdAsc: 5,
+      SortOptions.none: 6
+    };
+    return _setInt(_sortOption, _map[value]);
+  }
+
   /// get/set for different types
   
   static Future<int> _getInt(String key) async {
@@ -59,4 +86,5 @@ class PreferencesHelper {
   //keys
   static const _bynToUsdExchangeSource = "byntousdexchangeource";
   static const _bynToUsdExchangeRate = "byntousdexchangerate";
+  static const _sortOption = "sortoption";
 }

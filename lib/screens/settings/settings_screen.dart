@@ -43,7 +43,8 @@ class SettingsScreen extends StatelessWidget {
         if (state is SettingsInitial) {
           body = SettingsForm(
             initialBynToUsdExchangeSource: state.bynToUsdExchangeSource,
-            initialBynToUsdExchangeRate: state.bynToUsdExchangeRate
+            initialBynToUsdExchangeRate: state.bynToUsdExchangeRate,
+            initialSortOption: state.sortOption,
           );
         }
         return body;

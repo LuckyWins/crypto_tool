@@ -12,12 +12,14 @@ class SettingsInit extends SettingsEvent {}
 class SettingsSave extends SettingsEvent {
   final BynToUsdExchangeSource bynToUsdExchangeSource;
   final double bynToUsdExchangeRate;
+  final SortOptions sortOption;
 
   const SettingsSave({
     @required this.bynToUsdExchangeSource,
-    this.bynToUsdExchangeRate
+    this.bynToUsdExchangeRate,
+    @required this.sortOption
   });
 
   @override
-  List<Object> get props => [bynToUsdExchangeSource, bynToUsdExchangeRate];
+  List<Object> get props => [bynToUsdExchangeSource, bynToUsdExchangeRate, sortOption];
 }

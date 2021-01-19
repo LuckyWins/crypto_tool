@@ -92,15 +92,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         ));
       }
 
+      var option = event.option ?? await PreferencesHelper.getSortOption();
+
       videocards = filterCards(
         list: videocards,
-        option: event.option
+        option: option
       );
 
       yield HomeLoaded(
         bynToUsd: bynToUsd,
         videocards: videocards,
-        sortOption: event.option
+        sortOption: option
       );
     } catch (error, stacktrace) {
       yield HomeError(
