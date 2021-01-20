@@ -65,6 +65,30 @@ class PreferencesHelper {
     return _setBool(_showPriceRise, value);
   }
 
+  static Future<bool> getIncludeElectricityCost() async {
+    return await _getBool(_includeElectricityCost) ?? false;
+  }
+
+  static Future<bool> setIncludeElectricityCost(bool value) {
+    return _setBool(_includeElectricityCost, value);
+  }
+
+  static Future<double> getElectricityCost() async {
+    return await _getDouble(_electricityCost) ?? 0;
+  }
+
+  static Future<bool> setElectricityCost(double value) {
+    return _setDouble(_electricityCost, value);
+  }
+
+  static Future<double> getPcPower() async {
+    return await _getDouble(_pcPower) ?? 0;
+  }
+
+  static Future<bool> setPcPower(double value) {
+    return _setDouble(_pcPower, value);
+  }
+
   /// get/set for different types
   
   static Future<int> _getInt(String key) async {
@@ -106,4 +130,7 @@ class PreferencesHelper {
   static const _bynToUsdExchangeRate = "byntousdexchangerate";
   static const _sortOption = "sortoption";
   static const _showPriceRise = "showpricerise";
+  static const _includeElectricityCost = "includeelectricitycost";
+  static const _electricityCost = "electricitycost";
+  static const _pcPower= "pcpower";
 }

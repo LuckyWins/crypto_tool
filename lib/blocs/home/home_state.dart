@@ -14,16 +14,24 @@ class HomeLoaded extends HomeState {
   final List<Videocard> videocards;
   final SortOptions sortOption;
   final bool showPriceRise;
+  final bool includeElectricityCost;
 
   const HomeLoaded({
     @required this.bynToUsd,
     @required this.videocards,
     @required this.sortOption,
-    @required this.showPriceRise
+    @required this.showPriceRise,
+    @required this.includeElectricityCost,
   });
 
   @override
-  List<Object> get props => [bynToUsd, videocards, sortOption, showPriceRise];
+  List<Object> get props => [
+    bynToUsd,
+    videocards,
+    sortOption,
+    showPriceRise,
+    includeElectricityCost
+  ];
 }
 
 class HomeError extends HomeState {

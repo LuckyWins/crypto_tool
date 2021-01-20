@@ -7,10 +7,12 @@ import 'package:flutter/material.dart';
 class HomeItem extends StatelessWidget {
   final Videocard videocard;
   final bool showPriceRise;
+  final bool includeElectricityCost;
 
   const HomeItem({
     @required this.videocard,
-    @required this.showPriceRise
+    @required this.showPriceRise,
+    @required this.includeElectricityCost,
   });
   
   @override
@@ -87,9 +89,39 @@ class HomeItem extends StatelessWidget {
               ),
             ),
             SizedBox(height: 8),
+            // RichText(
+            //   text: TextSpan(
+            //     text: "${(videocard.revenueDailyInBtc * 1000).toStringAsFixed(8)}",
+            //     style: TextStyle(
+            //       color: AppStyles.mainTextColor,
+            //       fontWeight: FontWeight.bold,
+            //       fontSize: 16
+            //     ),
+            //     children: [
+            //       TextSpan(
+            //         text: " mBTC / Day",
+            //         style: TextStyle(
+            //           color: AppStyles.mainTextColor.withOpacity(0.5),
+            //           fontWeight: FontWeight.normal,
+            //           fontSize: 12
+            //         ),
+            //       ),
+            //       TextSpan(
+            //         text: " ~ \$${videocard.revenueDailyInUsd.toStringAsFixed(2)}",
+            //         style: TextStyle(
+            //           color: AppStyles.mainTextColor,
+            //           fontWeight: FontWeight.normal,
+            //           fontSize: 14
+            //         ),
+            //       )
+            //     ]
+            //   ),
+            // ),
             RichText(
               text: TextSpan(
-                text: "${(videocard.dailyInBtc * 1000).toStringAsFixed(8)}",
+                text: includeElectricityCost
+                  ? "\$${videocard.profitDailyInUsd.toStringAsFixed(2)}"
+                  : "\$${videocard.revenueDailyInUsd.toStringAsFixed(2)}",
                 style: TextStyle(
                   color: AppStyles.mainTextColor,
                   fontWeight: FontWeight.bold,
@@ -97,21 +129,15 @@ class HomeItem extends StatelessWidget {
                 ),
                 children: [
                   TextSpan(
-                    text: " mBTC / Day",
+                    text: includeElectricityCost
+                      ? " Прибыль"
+                      : " Доход",
                     style: TextStyle(
                       color: AppStyles.mainTextColor.withOpacity(0.5),
                       fontWeight: FontWeight.normal,
                       fontSize: 12
                     ),
                   ),
-                  TextSpan(
-                    text: " ~ \$${videocard.dailyInUsd.toStringAsFixed(2)}",
-                    style: TextStyle(
-                      color: AppStyles.mainTextColor,
-                      fontWeight: FontWeight.normal,
-                      fontSize: 14
-                    ),
-                  )
                 ]
               ),
             ),
@@ -120,11 +146,11 @@ class HomeItem extends StatelessWidget {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    color: videocard.paybackRateColor,
+                    color: videocard.paybackRateColor(includeElectricityCost),
                     borderRadius: BorderRadius.circular(4)
                   ),
                   padding: EdgeInsets.all(4),
-                  child: Text("${videocard.paybackDays == 0.0 ? "-" : videocard.paybackDays} дней"),
+                  child: Text("${videocard.paybackDays(includeElectricityCost) == 0 ? "-" : videocard.paybackDays(includeElectricityCost)} дней"),
                 ),
                 SizedBox(width: 4),
                 Text(

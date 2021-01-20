@@ -12,12 +12,18 @@ class SettingsForm extends StatefulWidget {
   final double initialBynToUsdExchangeRate;
   final SortOptions initialSortOption;
   final bool initialShowPriceRise;
+  final bool initialIncludeElectricityCost;
+  final double initialElectricityCost;
+  final double initialPcPower;
 
   const SettingsForm({
     @required this.initialBynToUsdExchangeSource,
     @required this.initialBynToUsdExchangeRate,
     @required this.initialSortOption,
-    @required this.initialShowPriceRise
+    @required this.initialShowPriceRise,
+    @required this.initialIncludeElectricityCost,
+    @required this.initialElectricityCost,
+    @required this.initialPcPower
   });
 
   @override
@@ -31,6 +37,9 @@ class _SettingsFormState extends State<SettingsForm> {
   double _bynToUsdExchangeRate;
   SortOptions _sortOption;
   bool _showPriceRise;
+  bool _includeElectricityCost;
+  double _electricityCost;
+  double _pcPower;
 
   final _bynToUsdController = TextEditingController();
   final _sortOptionController = TextEditingController();
@@ -52,6 +61,7 @@ class _SettingsFormState extends State<SettingsForm> {
     _sortOptionController.text = SortExtersion.mapNames[_sortOption];
 
     _showPriceRise = widget.initialShowPriceRise;
+    _includeElectricityCost = widget.initialIncludeElectricityCost;
   }
 
   @override
@@ -78,7 +88,10 @@ class _SettingsFormState extends State<SettingsForm> {
                       bynToUsdExchangeSource: _bynToUsdExchangeSource,
                       bynToUsdExchangeRate: _bynToUsdExchangeRate,
                       sortOption: _sortOption,
-                      showPriceRise: _showPriceRise
+                      showPriceRise: _showPriceRise,
+                      includeElectricityCost: _includeElectricityCost,
+                      electricityCost: _electricityCost,
+                      pcPower: _pcPower
                     )
                   );
                 }
@@ -101,8 +114,10 @@ class _SettingsFormState extends State<SettingsForm> {
                 if (_bynToUsdExchangeSource == BynToUsdExchangeSource.manually)
                   Padding(
                     padding: const EdgeInsets.only(top: 8, left: 16, right: 16),
-                    child: CurrencyField(
+                    child: MoneyField(
                       initialValue: widget.initialBynToUsdExchangeRate,
+                      mandatory: true,
+                      label: "Курс *",
                       onSaved: (value) {
                         _bynToUsdExchangeRate = value;
                       },
@@ -116,10 +131,41 @@ class _SettingsFormState extends State<SettingsForm> {
                   ),
                 ),
                 SizedBox(height: 8),
-                ShowPriceRiseSwitch(
+                ParamSwitch(
                   value: _showPriceRise,
+                  text: "Отображать рыночную цену",
                   onTap: (value) => setState(() => _showPriceRise = value)
-                )
+                ),
+                // SizedBox(height: 8),
+                ParamSwitch(
+                  value: _includeElectricityCost,
+                  text: "Включать электроэнергию в расчеты",
+                  onTap: (value) => setState(() => _includeElectricityCost = value)
+                ),
+                if (_includeElectricityCost)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16, right: 16),
+                    child: MoneyField(
+                      initialValue: widget.initialElectricityCost,
+                      mandatory: true,
+                      decimalRange: 4,
+                      label: "Цена \$/kWh *",
+                      onSaved: (value) {
+                        _electricityCost = value;
+                      },
+                    ),
+                  ),
+                if (_includeElectricityCost)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16, right: 16),
+                    child: MoneyField(
+                      initialValue: widget.initialPcPower,
+                      label: "Мощность ПК, W",
+                      onSaved: (value) {
+                        _pcPower = value;
+                      },
+                    ),
+                  ),
               ],
             ),
           ),

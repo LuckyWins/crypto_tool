@@ -11,9 +11,15 @@ class Videocard extends Equatable {
   final double minPrice;
   final double maxPrice;
   final double hashRate;
+  // reward in ETH for 1 hour
   final double reward;
-  final double dailyInBtc;
-  final double dailyInUsd;
+  // доход сутки BTC
+  final double revenueDailyInBtc;
+  // доход сутки USD
+  final double revenueDailyInUsd;
+  // прибыль сутки USD
+  final double profitDailyInUsd;
+  final double electricityExpensesDaily;
   final String pricesUrl;
   final double expectedPrice;
   final double powerUsage;
@@ -28,8 +34,10 @@ class Videocard extends Equatable {
     this.maxPrice,
     @required this.hashRate,
     this.reward,
-    this.dailyInBtc,
-    this.dailyInUsd,
+    this.revenueDailyInBtc,
+    this.revenueDailyInUsd,
+    this.profitDailyInUsd,
+    this.electricityExpensesDaily,
     this.pricesUrl,
     this.expectedPrice = 0.0,
     this.powerUsage = 0.0
@@ -45,8 +53,11 @@ class Videocard extends Equatable {
     double maxPrice,
     double hashRate,
     double reward,
-    double dailyInBtc,
-    double dailyInUsd,
+    double revenueDailyInBtc,
+    double revenueDailyInUsd,
+    double profitDailyInBtc,
+    double profitDailyInUsd,
+    double electricityExpensesDaily,
     String pricesUrl,
     double expectedPrice,
     double powerUsage
@@ -60,26 +71,32 @@ class Videocard extends Equatable {
     maxPrice: maxPrice ?? this.maxPrice,
     hashRate: hashRate ?? this.hashRate,
     reward: reward ?? this.reward,
-    dailyInBtc: dailyInBtc ?? this.dailyInBtc,
-    dailyInUsd: dailyInUsd ?? this.dailyInUsd,
+    revenueDailyInBtc: revenueDailyInBtc ?? this.revenueDailyInBtc,
+    revenueDailyInUsd: revenueDailyInUsd ?? this.revenueDailyInUsd,
+    profitDailyInUsd: profitDailyInUsd ?? this.profitDailyInUsd,
+    electricityExpensesDaily: electricityExpensesDaily ?? this.electricityExpensesDaily,
     pricesUrl: pricesUrl ?? this.pricesUrl,
     expectedPrice: expectedPrice ?? this.expectedPrice,
-    powerUsage: powerUsage ?? this.powerUsage
+    powerUsage: powerUsage ?? this.powerUsage,
   );
 
   double get rewardPerDay => reward * 24;
 
-  int get paybackDays => (minPrice / dailyInUsd).round();
+  int paybackDays(bool includeElectricityCost) {
+    double sum = includeElectricityCost ? profitDailyInUsd : revenueDailyInUsd;
+    return (minPrice / sum).round();
+  }
 
-  Color get paybackRateColor {
-    if (paybackDays > 300) {
+  Color paybackRateColor(bool includeElectricityCost) {
+    var value = paybackDays(includeElectricityCost);
+    if (value > 300) {
       return Color(0xffe49a9a);
-    } else if (paybackDays > 200) {
+    } else if (value > 200) {
       return Color(0xffe4cd9a);
-    } if (paybackDays > 100) {
+    } if (value > 100) {
       return Color(0xffdbe49a);
     } else {
-      if (paybackDays == 0) {
+      if (value == 0) {
         return Colors.black.withOpacity(0.3);
       } else {
         return Color(0xff9de49a);

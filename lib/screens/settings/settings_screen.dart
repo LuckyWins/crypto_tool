@@ -46,6 +46,9 @@ class SettingsScreen extends StatelessWidget {
             initialBynToUsdExchangeRate: state.bynToUsdExchangeRate,
             initialSortOption: state.sortOption,
             initialShowPriceRise: state.showPriceRise,
+            initialIncludeElectricityCost: state.includeElectricityCost,
+            initialElectricityCost: state.electricityCost,
+            initialPcPower: state.pcPower,
           );
         }
         return body;

@@ -2,12 +2,14 @@ import 'package:cryptotool/styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ShowPriceRiseSwitch extends StatelessWidget {
+class ParamSwitch extends StatelessWidget {
   final bool value;
+  final String text;
   final Function(bool value) onTap;
 
-  const ShowPriceRiseSwitch({
+  const ParamSwitch({
     @required this.value,
+    @required this.text,
     @required this.onTap
   });
 
@@ -15,7 +17,7 @@ class ShowPriceRiseSwitch extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () => onTap?.call(!value),
-      title: Text("Отображать рыночную цену"),
+      title: Text(text ?? ""),
       trailing: CupertinoSwitch(
         activeColor: AppStyles.mainColor,
         value: value,

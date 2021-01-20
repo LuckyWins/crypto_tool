@@ -14,16 +14,30 @@ class SettingsInitial extends SettingsState {
   final double bynToUsdExchangeRate;
   final SortOptions sortOption;
   final bool showPriceRise;
+  final bool includeElectricityCost;
+  final double electricityCost;
+  final double pcPower;
 
   const SettingsInitial({
     @required this.bynToUsdExchangeSource,
     @required this.bynToUsdExchangeRate,
     @required this.sortOption,
-    @required this.showPriceRise
+    @required this.showPriceRise,
+    @required this.includeElectricityCost,
+    @required this.electricityCost,
+    @required this.pcPower
   });
 
   @override
-  List<Object> get props => [bynToUsdExchangeSource, bynToUsdExchangeRate, sortOption, showPriceRise];
+  List<Object> get props => [
+    bynToUsdExchangeSource,
+    bynToUsdExchangeRate,
+    sortOption,
+    showPriceRise,
+    includeElectricityCost,
+    electricityCost,
+    pcPower
+  ];
 }
 
 class SettingsSavedSuccess extends SettingsState {}
