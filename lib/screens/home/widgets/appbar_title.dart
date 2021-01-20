@@ -14,7 +14,9 @@ class AppBarTitle extends StatelessWidget {
           builder: (context, state) {
             if (state is HomeLoaded) {
               return Text(
-                "\$1 = ${state.bynToUsd} BYN; 1kWh = \$${state.electricityCost}",
+                state.electricityCost == null || state.electricityCost == 0.0
+                ? "\$1 = ${state.bynToUsd} BYN"
+                : "\$1 = ${state.bynToUsd} BYN; 1kWh = \$${state.electricityCost}",
                 style: TextStyle(
                   fontSize: 14,
                   color: AppStyles.mainTextColor.withOpacity(0.5)
@@ -23,7 +25,7 @@ class AppBarTitle extends StatelessWidget {
             } else {
               // return Container();
               return Text(
-                "\$1 = - BYN; 1kWh = \$-",
+                "\$1 = - BYN",
                 style: TextStyle(
                   fontSize: 14,
                   color: AppStyles.mainTextColor.withOpacity(0.5)
