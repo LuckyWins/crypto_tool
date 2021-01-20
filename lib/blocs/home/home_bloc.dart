@@ -122,6 +122,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         sortOption: option,
         showPriceRise: showPriceRise,
         includeElectricityCost: includeElectricityCost,
+        electricityCost: electricityCost
       );
     } catch (error, stacktrace) {
       yield HomeError(
@@ -171,7 +172,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         videocards: videocards,
         sortOption: event.option,
         showPriceRise: tempState.showPriceRise,
-        includeElectricityCost: tempState.includeElectricityCost
+        includeElectricityCost: tempState.includeElectricityCost,
+        electricityCost: tempState.electricityCost
       );
     }
   }

@@ -15,6 +15,7 @@ class HomeLoaded extends HomeState {
   final SortOptions sortOption;
   final bool showPriceRise;
   final bool includeElectricityCost;
+  final double electricityCost;
 
   const HomeLoaded({
     @required this.bynToUsd,
@@ -22,6 +23,7 @@ class HomeLoaded extends HomeState {
     @required this.sortOption,
     @required this.showPriceRise,
     @required this.includeElectricityCost,
+    @required this.electricityCost
   });
 
   @override
@@ -30,7 +32,8 @@ class HomeLoaded extends HomeState {
     videocards,
     sortOption,
     showPriceRise,
-    includeElectricityCost
+    includeElectricityCost,
+    electricityCost
   ];
 }
 
