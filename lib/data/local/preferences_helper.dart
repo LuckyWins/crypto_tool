@@ -22,8 +22,8 @@ class PreferencesHelper {
     return _setInt(_bynToUsdExchangeSource, _map[value]);
   }
 
-  static Future<double> getBynToUsdExchangeRate() {
-    return _getDouble(_bynToUsdExchangeRate) ?? 0;
+  static Future<double> getBynToUsdExchangeRate() async {
+    return await _getDouble(_bynToUsdExchangeRate) ?? 0;
   }
 
   static Future<bool> setBynToUsdExchangeRate(double value) {
@@ -57,6 +57,14 @@ class PreferencesHelper {
     return _setInt(_sortOption, _map[value]);
   }
 
+  static Future<bool> getShowPriceRise() async {
+    return await _getBool(_showPriceRise) ?? false;
+  }
+
+  static Future<bool> setShowPriceRise(bool value) {
+    return _setBool(_showPriceRise, value);
+  }
+
   /// get/set for different types
   
   static Future<int> _getInt(String key) async {
@@ -79,6 +87,16 @@ class PreferencesHelper {
     return prefs.setDouble(key, value);
   }
 
+  static Future<bool> _getBool(String key) async {
+    var prefs = await _load();
+    return prefs.getBool(key);
+  }
+
+  static Future<bool> _setBool(String key, bool value) async {
+    var prefs = await _load();
+    return prefs.setBool(key, value);
+  }
+
   static Future<SharedPreferences> _load() async {
     return await SharedPreferences.getInstance();
   }
@@ -87,4 +105,5 @@ class PreferencesHelper {
   static const _bynToUsdExchangeSource = "byntousdexchangeource";
   static const _bynToUsdExchangeRate = "byntousdexchangerate";
   static const _sortOption = "sortoption";
+  static const _showPriceRise = "showpricerise";
 }

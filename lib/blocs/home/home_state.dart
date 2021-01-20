@@ -13,15 +13,17 @@ class HomeLoaded extends HomeState {
   final double bynToUsd;
   final List<Videocard> videocards;
   final SortOptions sortOption;
+  final bool showPriceRise;
 
   const HomeLoaded({
     @required this.bynToUsd,
     @required this.videocards,
-    @required this.sortOption
+    @required this.sortOption,
+    @required this.showPriceRise
   });
 
   @override
-  List<Object> get props => [bynToUsd, videocards, sortOption];
+  List<Object> get props => [bynToUsd, videocards, sortOption, showPriceRise];
 }
 
 class HomeError extends HomeState {

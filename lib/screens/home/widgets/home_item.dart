@@ -1,12 +1,17 @@
 import 'package:cryptotool/models/models.dart';
 import 'package:cryptotool/navigation.dart';
 import 'package:cryptotool/styles.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomeItem extends StatelessWidget {
   final Videocard videocard;
+  final bool showPriceRise;
 
-  const HomeItem(this.videocard);
+  const HomeItem({
+    @required this.videocard,
+    @required this.showPriceRise
+  });
   
   @override
   Widget build(BuildContext context) {
@@ -30,12 +35,34 @@ class HomeItem extends StatelessWidget {
               ),
             ),
             // SizedBox(height: 2),
-            Text(
-              // "\$ ${videocard.minPrice} - ${videocard.maxPrice}",
-              "${videocard.minPrice == 0.0 ? "Нет в продаже" : "\$${videocard.minPrice}" }",
-              style: TextStyle(
-                color: AppStyles.mainTextColor,
-
+            RichText(
+              text: TextSpan(
+                // "\$ ${videocard.minPrice} - ${videocard.maxPrice}",
+                text: "${videocard.minPrice == 0.0 ? "Нет в продаже" : "\$${videocard.minPrice}" }",
+                style: TextStyle(
+                  color: AppStyles.mainTextColor,
+                ),
+                children: [
+                  if (showPriceRise)
+                  TextSpan(
+                    text: "     \$${videocard.expectedPrice}",
+                    style: TextStyle(
+                      color: AppStyles.mainTextColor.withOpacity(0.5),
+                      fontSize: 12
+                    )
+                  ),
+                  if (showPriceRise && videocard.priceRise != 0.0)
+                    TextSpan(
+                      text: "  ${videocard.priceRise.isNegative ? "-" : "+"}${videocard.priceRise}%",
+                      style: TextStyle(
+                        // color: AppStyles.mainTextColor.withOpacity(0.5),
+                        color: videocard.priceRise.isNegative
+                          ? CupertinoColors.systemGreen
+                          : CupertinoColors.systemRed,
+                        fontSize: 12
+                      )
+                    ),
+                ]
               ),
             ),
             SizedBox(height: 8),

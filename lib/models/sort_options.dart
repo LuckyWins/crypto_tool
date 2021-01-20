@@ -11,6 +11,8 @@ enum SortOptions {
   dailyUsdDesc,
   // от маленького дохода в день к большому
   dailyUsdAsc,
+  // от наименьшей к наибльшей разнице в цене рынка/реальной
+  priceRiseAsc,
   // по умолчанию,
   none
 }
@@ -24,6 +26,7 @@ extension SortExtersion on SortOptions {
     // SortOptions.paybackAsc: "Сначала плохоокупаемые",
     SortOptions.dailyUsdDesc: "Сначала самые доходные",
     // SortOptions.dailyUsdAsc: "Сначала менее прибыльные",
+    SortOptions.priceRiseAsc: "Рыночная цена/текущая цена",
   };
 
   static const Map<SortOptions, String> mapNames = {
@@ -33,6 +36,7 @@ extension SortExtersion on SortOptions {
     // SortOptions.paybackAsc: "Сначала плохоокупаемые",
     SortOptions.dailyUsdDesc: "Сначала самые доходные",
     // SortOptions.dailyUsdAsc: "Сначала менее прибыльные",
+    SortOptions.priceRiseAsc: "Рыночная цена/текущая цена",
     SortOptions.none: "По умолчанию"
   };
 

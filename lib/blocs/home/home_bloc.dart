@@ -99,10 +99,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         option: option
       );
 
+      var showPriceRise = await PreferencesHelper.getShowPriceRise();
+
       yield HomeLoaded(
         bynToUsd: bynToUsd,
         videocards: videocards,
-        sortOption: option
+        sortOption: option,
+        showPriceRise: showPriceRise
       );
     } catch (error, stacktrace) {
       yield HomeError(
@@ -135,10 +138,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         option: event.option
       );
 
+      var showPriceRise = await PreferencesHelper.getShowPriceRise();
+
       yield HomeLoaded(
         bynToUsd: tempState.bynToUsd,
         videocards: videocards,
-        sortOption: event.option
+        sortOption: event.option,
+        showPriceRise: showPriceRise
       );
     }
   }
@@ -179,6 +185,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         break;
       case SortOptions.dailyUsdAsc:
         videocards = list.sortedBy((card) => card.dailyInUsd);
+        break;
+      case SortOptions.priceRiseAsc:
+        var cardWithZero = list.filter((card) => card.priceRise == 0);
+        var normalCards = list.filter((card) => card.priceRise != 0);
+
+        videocards.addAll(normalCards.sortedBy((card) => card.priceRise));
+        videocards.addAll(cardWithZero);
         break;
       default:
         videocards = list;

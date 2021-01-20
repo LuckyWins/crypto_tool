@@ -45,6 +45,7 @@ class SettingsScreen extends StatelessWidget {
             initialBynToUsdExchangeSource: state.bynToUsdExchangeSource,
             initialBynToUsdExchangeRate: state.bynToUsdExchangeRate,
             initialSortOption: state.sortOption,
+            initialShowPriceRise: state.showPriceRise,
           );
         }
         return body;

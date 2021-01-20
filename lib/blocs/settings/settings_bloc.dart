@@ -32,11 +32,13 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     var bynToUsdExchangeSource = await PreferencesHelper.getBynToUsdExchangeSource();
     var bynToUsdExchangeRate = await PreferencesHelper.getBynToUsdExchangeRate();
     var sortOption = await PreferencesHelper.getSortOption();
+    var showPriceRise = await PreferencesHelper.getShowPriceRise();
 
     yield SettingsInitial(
       bynToUsdExchangeSource: bynToUsdExchangeSource,
       bynToUsdExchangeRate: bynToUsdExchangeRate,
-      sortOption: sortOption
+      sortOption: sortOption,
+      showPriceRise: showPriceRise
     );
   }
 
@@ -49,6 +51,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     }
 
     await PreferencesHelper.setSortOption(event.sortOption);
+    await PreferencesHelper.setShowPriceRise(event.showPriceRise);
 
     yield SettingsSavedSuccess();
   }

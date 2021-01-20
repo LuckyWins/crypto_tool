@@ -11,11 +11,13 @@ class SettingsForm extends StatefulWidget {
   final BynToUsdExchangeSource initialBynToUsdExchangeSource;
   final double initialBynToUsdExchangeRate;
   final SortOptions initialSortOption;
+  final bool initialShowPriceRise;
 
   const SettingsForm({
     @required this.initialBynToUsdExchangeSource,
     @required this.initialBynToUsdExchangeRate,
-    @required this.initialSortOption
+    @required this.initialSortOption,
+    @required this.initialShowPriceRise
   });
 
   @override
@@ -28,6 +30,7 @@ class _SettingsFormState extends State<SettingsForm> {
   BynToUsdExchangeSource _bynToUsdExchangeSource;
   double _bynToUsdExchangeRate;
   SortOptions _sortOption;
+  bool _showPriceRise;
 
   final _bynToUsdController = TextEditingController();
   final _sortOptionController = TextEditingController();
@@ -47,6 +50,8 @@ class _SettingsFormState extends State<SettingsForm> {
 
     _sortOption = widget.initialSortOption;
     _sortOptionController.text = SortExtersion.mapNames[_sortOption];
+
+    _showPriceRise = widget.initialShowPriceRise;
   }
 
   @override
@@ -72,7 +77,8 @@ class _SettingsFormState extends State<SettingsForm> {
                     SettingsSave(
                       bynToUsdExchangeSource: _bynToUsdExchangeSource,
                       bynToUsdExchangeRate: _bynToUsdExchangeRate,
-                      sortOption: _sortOption
+                      sortOption: _sortOption,
+                      showPriceRise: _showPriceRise
                     )
                   );
                 }
@@ -81,29 +87,40 @@ class _SettingsFormState extends State<SettingsForm> {
           ],
         ),
         body: FullScreen(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Form(
-              key: _settingsFormKey,
-              child: Column(
-                children: [
-                  BynToUsdField(
+          child: Form(
+            key: _settingsFormKey,
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: BynToUsdField(
                     controller: _bynToUsdController,
                     onTap: () => _showBynToUsdDropDown(),
                   ),
-                  if (_bynToUsdExchangeSource == BynToUsdExchangeSource.manually)
-                    CurrencyField(
+                ),
+                if (_bynToUsdExchangeSource == BynToUsdExchangeSource.manually)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8, left: 16, right: 16),
+                    child: CurrencyField(
                       initialValue: widget.initialBynToUsdExchangeRate,
                       onSaved: (value) {
                         _bynToUsdExchangeRate = value;
                       },
                     ),
-                  SortOptionField(
+                  ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8, left: 16, right: 16),
+                  child: SortOptionField(
                     controller: _sortOptionController,
                     onTap: () => _showSortOptionDropDown(),
-                  )
-                ],
-              ),
+                  ),
+                ),
+                SizedBox(height: 8),
+                ShowPriceRiseSwitch(
+                  value: _showPriceRise,
+                  onTap: (value) => setState(() => _showPriceRise = value)
+                )
+              ],
             ),
           ),
         ),

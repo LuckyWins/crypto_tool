@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:cryptotool/utils/utils.dart';
 
 class Videocard extends Equatable {
   final String gpuName;
@@ -84,6 +85,12 @@ class Videocard extends Equatable {
         return Color(0xff9de49a);
       }
     } 
+  }
+
+  /// shows the difference between the [expectedPrice] and the [minPrice]
+  double get priceRise {
+    var finalPrice = minPrice == null || minPrice == 0.0 ? expectedPrice : minPrice;
+    return (((finalPrice - expectedPrice)/expectedPrice) * 100)?.roundFixed();
   }
 
   @override
