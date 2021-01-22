@@ -7,6 +7,7 @@ class DataManager {
   NbrbApi _nbrbApi;
   AlfaBankApi _alfaBankApi;
   EtherchainApi _etherchainApi;
+  NicehashApi _nicehashApi;
   final Dio dio;
 
   DataManager(this.dio) {
@@ -14,6 +15,7 @@ class DataManager {
     _nbrbApi = NbrbApi(dio);
     _alfaBankApi = AlfaBankApi(dio);
     _etherchainApi = EtherchainApi(dio);
+    _nicehashApi = NicehashApi(dio);
   }
 
   Future<VideoCardResponse> getVideocard(String gpuName) {
@@ -30,5 +32,9 @@ class DataManager {
 
   Future<EtherchainResponse> getStat() {
     return _etherchainApi.getStat();
+  }
+
+  Future<NicehashGpuResponse> getGpuInfo(String deviceId) {
+    return _nicehashApi.device(deviceId);
   }
 }

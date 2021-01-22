@@ -66,6 +66,19 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       List<Videocard> videocards = [];
       // await initialList.forEach((card) async {
       for (var card in initialList) {
+        Videocard tempCard;
+        try {
+          var nicehashResponse = await _dataManager.getGpuInfo(card.nicehashId);
+          double daggerHashimoto = nicehashResponse?.speeds["DAGGERHASHIMOTO"];
+          bool isStatActual = nicehashResponse.power != null && daggerHashimoto != null;
+
+          tempCard = card.copy(
+            powerUsage: nicehashResponse.power,
+            hashRate: daggerHashimoto,
+            isStatActual: isStatActual
+          );
+        } catch (error, stacktrace) {}
+        
         var response = await _dataManager.getVideocard(card.onlinerGpuName);
 
         var onlinerCard = response?.products?.firstOrNull;
@@ -90,7 +103,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
         var profitDailyInUsd = revenueDailyInUsd - electricityExp;
 
-        videocards.add(card.copy(
+        tempCard = (tempCard ?? card).copy(
           name: onlinerCard?.name ?? "Неизвестно",
           descriprtion: onlinerCard?.microDescription ?? "",
           minPrice: minPrice,
@@ -103,7 +116,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           pricesUrl: onlinerCard?.prices?.htmlUrl != null
               ? "${onlinerCard?.prices?.htmlUrl}?order=price%3Aasc"
               : null
-        ));
+        );
+
+        videocards.add(tempCard);
       }
 
       var option = event.option ?? await PreferencesHelper.getSortOption();

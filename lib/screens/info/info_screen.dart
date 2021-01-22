@@ -36,6 +36,8 @@ class InfoScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              if (!videocard.isStatActual)
+              ActualWarning(),
               InfoItem(
                 title: videocard.gpuDescription,
               ),

@@ -11,18 +11,22 @@ class Videocard extends Equatable {
   final double minPrice;
   final double maxPrice;
   final double hashRate;
-  // reward in ETH for 1 hour
+  /// reward in ETH for 1 hour
   final double reward;
   // доход сутки BTC
   final double revenueDailyInBtc;
-  // доход сутки USD
+  /// доход сутки USD
   final double revenueDailyInUsd;
-  // прибыль сутки USD
+  /// прибыль сутки USD
   final double profitDailyInUsd;
   final double electricityExpensesDaily;
   final String pricesUrl;
   final double expectedPrice;
   final double powerUsage;
+  /// nicehash device id for getting actual [powerUsage] & [hashRate]
+  final String nicehashId;
+  /// is stat loaded from nicehash
+  final bool isStatActual;
 
   const Videocard({
     @required this.gpuName,
@@ -40,7 +44,9 @@ class Videocard extends Equatable {
     this.electricityExpensesDaily,
     this.pricesUrl,
     this.expectedPrice = 0.0,
-    this.powerUsage = 0.0
+    this.powerUsage = 0.0,
+    this.nicehashId,
+    this.isStatActual = false
   });
 
   Videocard copy({
@@ -60,7 +66,9 @@ class Videocard extends Equatable {
     double electricityExpensesDaily,
     String pricesUrl,
     double expectedPrice,
-    double powerUsage
+    double powerUsage,
+    String nicehashId,
+    bool isStatActual
   }) => Videocard(
     gpuName: gpuName ?? this.gpuName,
     gpuDescription: gpuDescription ?? this.gpuDescription,
@@ -78,6 +86,8 @@ class Videocard extends Equatable {
     pricesUrl: pricesUrl ?? this.pricesUrl,
     expectedPrice: expectedPrice ?? this.expectedPrice,
     powerUsage: powerUsage ?? this.powerUsage,
+    nicehashId: nicehashId ?? this.nicehashId,
+    isStatActual: isStatActual ?? this.isStatActual
   );
 
   double get rewardPerDay => reward * 24;
