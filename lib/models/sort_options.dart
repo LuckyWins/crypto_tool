@@ -20,12 +20,12 @@ enum SortOptions {
 extension SortExtersion on SortOptions {
 
   static const Map<SortOptions, String> mapNamesForFilter = {
-    SortOptions.cardPriceAsc: "Сначала дешевые",
-    SortOptions.cardPriceDesc: "Сначала дорогие",
-    SortOptions.paybackDesc: "Сначала быстроокупаемые",
-    // SortOptions.paybackAsc: "Сначала плохоокупаемые",
-    SortOptions.dailyUsdDesc: "Сначала самые доходные",
-    // SortOptions.dailyUsdAsc: "Сначала менее прибыльные",
+    SortOptions.cardPriceAsc: "Дешевые",
+    SortOptions.cardPriceDesc: "Дорогие",
+    SortOptions.paybackDesc: "Быстроокупаемые",
+    // SortOptions.paybackAsc: "Плохоокупаемые",
+    SortOptions.dailyUsdDesc: "Доходные",
+    // SortOptions.dailyUsdAsc: "Менее прибыльные",
     SortOptions.priceRiseAsc: "Рыночная цена/текущая цена",
   };
 
