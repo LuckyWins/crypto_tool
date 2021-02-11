@@ -24,3 +24,5 @@ class HomeFilter extends HomeEvent {
   @override
   List<Object> get props => [option];
 }
+
+class HomeCheckLoaded extends HomeEvent {}

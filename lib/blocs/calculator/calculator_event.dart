@@ -10,7 +10,7 @@ abstract class CalculatorEvent extends Equatable {
 class CalculatorInit extends CalculatorEvent {}
 
 class CalculatorCompute extends CalculatorEvent {
-  final double hashrate;
+  final int hashrate;
 
   const CalculatorCompute(this.hashrate);
 
@@ -26,3 +26,5 @@ class CalculatorUpdateTime extends CalculatorEvent {
   @override
   List<Object> get props => [time];
 }
+
+class CalculatorCheckLoaded extends CalculatorEvent {}

@@ -20,6 +20,9 @@ class DataManager {
     _emcdApi = EmcdApi(dio);
   }
 
+  bool gpuFirstLoaded = false;
+  bool calculatorFirstLoaded = false;
+
   Future<VideoCardResponse> getVideocard(String gpuName) {
     return _onlinerApi.videocardRequest(gpuName);
   }

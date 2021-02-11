@@ -13,17 +13,19 @@ class CalculatorInitial extends CalculatorState {
   final double ethProfit;
   final double usdProfit;
   final CalculateTime time;
+  final int hashrate;
 
   const CalculatorInitial({
     @required this.ethRate,
     @required this.changePercentage,
     @required this.ethProfit,
     @required this.usdProfit,
-    @required this.time
+    @required this.time,
+    @required this.hashrate
   });
 
   @override
-  List<Object> get props => [ethRate, changePercentage, ethProfit, usdProfit, time];
+  List<Object> get props => [ethRate, changePercentage, ethProfit, usdProfit, time, hashrate];
 }
 
 class CalculatorLoading extends CalculatorState {}
@@ -33,3 +35,5 @@ class CalculatorError extends CalculatorState {
 
   const CalculatorError({this.error});
 }
+
+class CalculatorToggleRefresh extends CalculatorState {}

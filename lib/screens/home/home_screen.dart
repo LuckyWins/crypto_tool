@@ -18,7 +18,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
   var _scrollController = ScrollController();
-  RefreshController refreshController = RefreshController(initialRefresh: true);
+  RefreshController refreshController = RefreshController();
 
   List<Videocard> _videocards = [];
   bool get isListEmpty => (_videocards?.length ?? 0) == 0;
@@ -26,6 +26,13 @@ class _HomeScreenState extends State<HomeScreen> {
   SortOptions _currentOption;
   bool _showPriceRise;
   bool _includeElectricityCost;
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => context.read<HomeBloc>().add(HomeCheckLoaded()));
+  }
 
   @override
   void dispose() {
@@ -57,6 +64,9 @@ class _HomeScreenState extends State<HomeScreen> {
           }
           if (state is HomeLoaded) {
             _successLoad(state);
+          }
+          if (state is HomeToggleRefresh) {
+            refreshController.requestRefresh();
           }
         },
         child: Column(

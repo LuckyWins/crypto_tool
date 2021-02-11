@@ -21,7 +21,7 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
   double ethRate = 1;
   double changePercentage = 0;
   double ethDailyProfit = 1;
-  double hashrate = 1;
+  int hashrate = 1;
   var time = CalculateTime.day;
 
   @override
@@ -36,6 +36,9 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
     }
     if (event is CalculatorUpdateTime) {
       yield* _mapCalculatorUpdateTimeToState(event);
+    }
+    if (event is CalculatorCheckLoaded) {
+      yield* _mapCalculatorCheckLoadedToState(event);
     }
   }
 
@@ -57,12 +60,15 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
 
       var calc = _calculate();
 
+      _dataManager.calculatorFirstLoaded = true;
+
       yield CalculatorInitial(
         ethRate: ethRate,
         changePercentage: changePercentage,
         ethProfit: calc.ethProfit,
         usdProfit: calc.usdProfit,
-        time: time
+        time: time,
+        hashrate: hashrate
       );
     } catch (error, stacktrace) {
       yield CalculatorError(
@@ -85,6 +91,7 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
       ethProfit: calc.ethProfit,
       usdProfit: calc.usdProfit,
       time: time,
+      hashrate: hashrate
     );
   }
 
@@ -102,7 +109,8 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
         changePercentage: changePercentage,
         ethProfit: calc.ethProfit,
         usdProfit: calc.usdProfit,
-        time: time
+        time: time,
+        hashrate: hashrate
       );
     }
   }
@@ -115,5 +123,13 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
       ethProfit: ethProfit.toStringAsFixed(8).toDouble(),
       usdProfit: usdProfit
     );
+  }
+
+  Stream<CalculatorState> _mapCalculatorCheckLoadedToState(
+    CalculatorCheckLoaded event
+  ) async* {
+    if (!_dataManager.calculatorFirstLoaded) {
+      yield CalculatorToggleRefresh();
+    }
   }
 }

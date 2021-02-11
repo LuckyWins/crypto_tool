@@ -30,6 +30,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (event is HomeFilter) {
       yield* _mapHomeFilterToState(event);
     }
+    if (event is HomeCheckLoaded) {
+      yield* _mapHomeCheckLoadedToState(event);
+    }
   }
 
   Stream<HomeState> _mapHomeInitToState(
@@ -128,6 +131,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       );
 
       var showPriceRise = await PreferencesHelper.getShowPriceRise();
+
+      _dataManager.gpuFirstLoaded = true;
 
       yield HomeLoaded(
         bynToUsd: bynToUsd,
@@ -239,5 +244,19 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         break;
     }
     return videocards;
+  }
+
+  Stream<HomeState> _mapHomeCheckLoadedToState(
+    HomeCheckLoaded event
+  ) async* {
+    if (!_dataManager.gpuFirstLoaded) {
+      yield HomeToggleRefresh();
+    } else {
+      if (state is HomeLoaded) {
+        var tempState = state;
+        yield HomeLoading();
+        yield tempState;
+      }
+    }
   }
 }

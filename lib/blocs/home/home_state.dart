@@ -42,3 +42,5 @@ class HomeError extends HomeState {
 
   const HomeError({this.error});
 }
+
+class HomeToggleRefresh extends HomeState {}
