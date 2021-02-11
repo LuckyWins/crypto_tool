@@ -14,7 +14,6 @@ class SettingsForm extends StatefulWidget {
   final bool initialShowPriceRise;
   final bool initialIncludeElectricityCost;
   final double initialElectricityCost;
-  final double initialPcPower;
 
   const SettingsForm({
     @required this.initialBynToUsdExchangeSource,
@@ -22,8 +21,7 @@ class SettingsForm extends StatefulWidget {
     @required this.initialSortOption,
     @required this.initialShowPriceRise,
     @required this.initialIncludeElectricityCost,
-    @required this.initialElectricityCost,
-    @required this.initialPcPower
+    @required this.initialElectricityCost
   });
 
   @override
@@ -39,7 +37,6 @@ class _SettingsFormState extends State<SettingsForm> {
   bool _showPriceRise;
   bool _includeElectricityCost;
   double _electricityCost;
-  double _pcPower;
 
   final _bynToUsdController = TextEditingController();
   final _sortOptionController = TextEditingController();
@@ -91,7 +88,6 @@ class _SettingsFormState extends State<SettingsForm> {
                       showPriceRise: _showPriceRise,
                       includeElectricityCost: _includeElectricityCost,
                       electricityCost: _electricityCost,
-                      pcPower: _pcPower
                     )
                   );
                 }
@@ -152,17 +148,6 @@ class _SettingsFormState extends State<SettingsForm> {
                       label: "Цена \$/kWh *",
                       onSaved: (value) {
                         _electricityCost = value;
-                      },
-                    ),
-                  ),
-                if (_includeElectricityCost)
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16, right: 16),
-                    child: MoneyField(
-                      initialValue: widget.initialPcPower,
-                      label: "Мощность ПК, W",
-                      onSaved: (value) {
-                        _pcPower = value;
                       },
                     ),
                   ),

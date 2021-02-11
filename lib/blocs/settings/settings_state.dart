@@ -16,7 +16,6 @@ class SettingsInitial extends SettingsState {
   final bool showPriceRise;
   final bool includeElectricityCost;
   final double electricityCost;
-  final double pcPower;
 
   const SettingsInitial({
     @required this.bynToUsdExchangeSource,
@@ -25,7 +24,6 @@ class SettingsInitial extends SettingsState {
     @required this.showPriceRise,
     @required this.includeElectricityCost,
     @required this.electricityCost,
-    @required this.pcPower
   });
 
   @override
@@ -35,8 +33,7 @@ class SettingsInitial extends SettingsState {
     sortOption,
     showPriceRise,
     includeElectricityCost,
-    electricityCost,
-    pcPower
+    electricityCost
   ];
 }
 

@@ -37,16 +37,16 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: CryptoDrawer(
+        isGpuSelected: true,
+        settingsCallback: (value) {
+          if (value) refreshController.requestRefresh();
+        },
+      ),
       appBar: AppBar(
         centerTitle: false,
         title: AppBarTitle(),
         actions: [
-          SettingsButton(
-            onPressed: () async {
-              var value = await Navigation.toSettings();
-              if (value ?? false) refreshController.requestRefresh();
-            },
-          ),
           FilterButton()
         ],
       ),

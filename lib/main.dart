@@ -19,6 +19,9 @@ void main() {
     providers: [
       BlocProvider<HomeBloc>(
         create: (context) => HomeBloc()
+      ),
+      BlocProvider<CalculatorBloc>(
+        create: (context) => CalculatorBloc()
       )
     ],
     child: CryptoToolApp()

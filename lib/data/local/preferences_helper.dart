@@ -81,14 +81,6 @@ class PreferencesHelper {
     return _setDouble(_electricityCost, value);
   }
 
-  static Future<double> getPcPower() async {
-    return await _getDouble(_pcPower) ?? 0;
-  }
-
-  static Future<bool> setPcPower(double value) {
-    return _setDouble(_pcPower, value);
-  }
-
   /// get/set for different types
   
   static Future<int> _getInt(String key) async {
@@ -132,5 +124,4 @@ class PreferencesHelper {
   static const _showPriceRise = "showpricerise";
   static const _includeElectricityCost = "includeelectricitycost";
   static const _electricityCost = "electricitycost";
-  static const _pcPower= "pcpower";
 }

@@ -8,6 +8,7 @@ class DataManager {
   AlfaBankApi _alfaBankApi;
   EtherchainApi _etherchainApi;
   NicehashApi _nicehashApi;
+  EmcdApi _emcdApi;
   final Dio dio;
 
   DataManager(this.dio) {
@@ -16,6 +17,7 @@ class DataManager {
     _alfaBankApi = AlfaBankApi(dio);
     _etherchainApi = EtherchainApi(dio);
     _nicehashApi = NicehashApi(dio);
+    _emcdApi = EmcdApi(dio);
   }
 
   Future<VideoCardResponse> getVideocard(String gpuName) {
@@ -36,5 +38,13 @@ class DataManager {
 
   Future<NicehashGpuResponse> getGpuInfo(String deviceId) {
     return _nicehashApi.device(deviceId);
+  }
+
+  Future<EmcdCaldResponse> getEmcdCalc() async {
+    return _emcdApi.getCalc();
+  }
+
+  Future<EmcdStatsResponse> getEmcdStats() async {
+    return _emcdApi.getStats();
   }
 }

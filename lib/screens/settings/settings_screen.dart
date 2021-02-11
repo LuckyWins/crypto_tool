@@ -48,7 +48,6 @@ class SettingsScreen extends StatelessWidget {
             initialShowPriceRise: state.showPriceRise,
             initialIncludeElectricityCost: state.includeElectricityCost,
             initialElectricityCost: state.electricityCost,
-            initialPcPower: state.pcPower,
           );
         }
         return body;

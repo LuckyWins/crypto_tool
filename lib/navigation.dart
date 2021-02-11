@@ -40,4 +40,22 @@ class Navigation {
       )
     );
   }
+
+  static toHome() {
+    beforeNavigate();
+    navigatorKey.currentState.pushReplacement(
+      MaterialPageRoute(builder: (context) =>
+        HomeScreen()
+      )
+    );
+  }
+
+  static toCalculator() {
+    beforeNavigate();
+    navigatorKey.currentState.pushReplacement(
+      MaterialPageRoute(builder: (context) =>
+        CalculatorScreen()
+      )
+    );
+  }
 }

@@ -39,7 +39,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     var includeElectricityCost = await PreferencesHelper.getIncludeElectricityCost();
     var electricityCost = await PreferencesHelper.getElectricityCost();
-    var pcPower = await PreferencesHelper.getPcPower();
 
     List<Videocard> initialList = GpuRepository.availableList;
 
@@ -96,7 +95,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         var revenueDailyInUsd = reward * 24 * etherchainResponse.currentStats.priceUsd;
 
         var electricityExp = _electricityExpenses(
-          pcPower: pcPower,
           electricityCost: electricityCost,
           powerUsage: card.powerUsage 
         );
@@ -161,13 +159,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   // expenses for 1 day
   double _electricityExpenses({
-    // powerUsage of PC
-    @required double pcPower,
     @required double electricityCost,
     // powerUsage of GPU
     @required double powerUsage
   }) {
-    return (((powerUsage+pcPower)/1000)*24*electricityCost)?.roundFixed() ?? 0;
+    return ((powerUsage/1000)*24*electricityCost)?.roundFixed() ?? 0;
   }
 
   Stream<HomeState> _mapHomeFilterToState(

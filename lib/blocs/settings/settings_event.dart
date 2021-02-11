@@ -16,7 +16,6 @@ class SettingsSave extends SettingsEvent {
   final bool showPriceRise;
   final bool includeElectricityCost;
   final double electricityCost;
-  final double pcPower;
 
   const SettingsSave({
     @required this.bynToUsdExchangeSource,
@@ -24,8 +23,7 @@ class SettingsSave extends SettingsEvent {
     @required this.sortOption,
     @required this.showPriceRise,
     @required this.includeElectricityCost,
-    @required this.electricityCost,
-    @required this.pcPower
+    @required this.electricityCost
   });
 
   @override
@@ -35,7 +33,6 @@ class SettingsSave extends SettingsEvent {
     sortOption,
     showPriceRise,
     includeElectricityCost,
-    electricityCost,
-    pcPower
+    electricityCost
   ];
 }
