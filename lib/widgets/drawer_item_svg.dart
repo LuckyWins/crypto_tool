@@ -16,31 +16,29 @@ class DrawerItemSvg extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      selected: selected,
-      leading: Padding(
-        padding: const EdgeInsets.only(left: 2),
-        child: SvgPicture.asset(
-          'assets/icon/$assetName.svg',
-          width: 24,
-          height: 24,
-          semanticsLabel: text,
-          color: selected
-              ? AppStyles.mainColor
-              : Colors.grey[700],
-        ),
+  Widget build(BuildContext context) => ListTile(
+    selected: selected,
+    leading: Padding(
+      padding: const EdgeInsets.only(left: 2),
+      child: SvgPicture.asset(
+        'assets/icon/$assetName.svg',
+        width: 24,
+        height: 24,
+        semanticsLabel: text,
+        color: selected
+            ? AppStyles.mainColor
+            : Colors.grey[700],
       ),
-      title: Text(
-        text,
-        style: TextStyle(
-          color: selected
-              ? AppStyles.mainColor
-              : AppStyles.mainTextColor,
-          // fontSize: 14
-        ),
+    ),
+    title: Text(
+      text,
+      style: TextStyle(
+        color: selected
+            ? AppStyles.mainColor
+            : AppStyles.mainTextColor,
+        // fontSize: 14
       ),
-      onTap: onTap,
-    );
-  }
+    ),
+    onTap: onTap,
+  );
 }

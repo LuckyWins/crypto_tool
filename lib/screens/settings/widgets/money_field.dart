@@ -1,7 +1,7 @@
 import 'package:cryptotool/utils/utils.dart';
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:dartx/dartx.dart';
 
 class MoneyField extends StatelessWidget {
   final Function(double value) onSaved;
@@ -21,12 +21,12 @@ class MoneyField extends StatelessWidget {
   });
   
   @override
-  Widget build(BuildContext context) {
-    return TextFormField(
+  Widget build(BuildContext context) => TextFormField(
       initialValue: initialValue?.toString() ?? '',
       focusNode: focusNode,
-      keyboardType: TextInputType.numberWithOptions(decimal: true),
+      keyboardType: const TextInputType.numberWithOptions(decimal: true),
       inputFormatters: [
+        // ignore: use_raw_strings
         FilteringTextInputFormatter.deny(RegExp('[\\-|\\ ]')),
         NumberTextInputFormatter(decimalRange: decimalRange)
       ],
@@ -37,7 +37,7 @@ class MoneyField extends StatelessWidget {
         if (mandatory && (value?.isEmpty ?? true)) {
           return 'Поле обязательно для заполнения';
         }
-        double? currency = value?.toDoubleOrNull();
+        final currency = value?.toDoubleOrNull();
         if (currency == null || currency < 0) {
           return 'Некорректное значение';
         }
@@ -45,5 +45,4 @@ class MoneyField extends StatelessWidget {
       },
       onSaved: (value) => onSaved.call(value!.toDouble()),
     );
-  }
 }

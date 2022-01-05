@@ -9,16 +9,14 @@ class DismissOutside extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        final currentFocus = FocusScope.of(context);
+  Widget build(BuildContext context) => GestureDetector(
+    onTap: () {
+      final currentFocus = FocusScope.of(context);
 
-        if (!currentFocus.hasPrimaryFocus) {
-          currentFocus.unfocus();
-        }
-      },
-      child: child,
-    );
-  }
+      if (!currentFocus.hasPrimaryFocus) {
+        currentFocus.unfocus();
+      }
+    },
+    child: child,
+  );
 }

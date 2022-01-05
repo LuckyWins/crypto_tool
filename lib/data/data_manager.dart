@@ -3,12 +3,12 @@ import 'package:dio/dio.dart';
 import 'data.dart';
 
 class DataManager {
-  OnlinerApi _onlinerApi;
-  NbrbApi _nbrbApi;
-  AlfaBankApi _alfaBankApi;
-  EtherchainApi _etherchainApi;
-  NicehashApi _nicehashApi;
-  EmcdApi _emcdApi;
+  final OnlinerApi _onlinerApi;
+  final NbrbApi _nbrbApi;
+  final AlfaBankApi _alfaBankApi;
+  final EtherchainApi _etherchainApi;
+  final NicehashApi _nicehashApi;
+  final EmcdApi _emcdApi;
   final Dio dio;
 
   DataManager(this.dio) :
@@ -22,31 +22,17 @@ class DataManager {
   bool gpuFirstLoaded = false;
   bool calculatorFirstLoaded = false;
 
-  Future<VideoCardResponse> getVideocard(String gpuName) {
-    return _onlinerApi.videocardRequest(gpuName);
-  }
+  Future<VideoCardResponse> getVideocard(String gpuName) => _onlinerApi.videocardRequest(gpuName);
 
-  Future<ExchangeRateResponse> getExchangeRateNbrb() {
-    return _nbrbApi.exchangeRateRequest();
-  }
+  Future<ExchangeRateResponse> getExchangeRateNbrb() => _nbrbApi.exchangeRateRequest();
 
-  Future<AlfabankRateResponse> getExchangeRateAlfabank() {
-    return _alfaBankApi.getRates();
-  }
+  Future<AlfabankRateResponse> getExchangeRateAlfabank() => _alfaBankApi.getRates();
 
-  Future<EtherchainResponse> getStat() {
-    return _etherchainApi.getStat();
-  }
+  Future<EtherchainResponse> getStat() => _etherchainApi.getStat();
 
-  Future<NicehashGpuResponse> getGpuInfo(String deviceId) {
-    return _nicehashApi.device(deviceId);
-  }
+  Future<NicehashGpuResponse> getGpuInfo(String deviceId) => _nicehashApi.device(deviceId);
 
-  Future<EmcdCaldResponse> getEmcdCalc() async {
-    return _emcdApi.getCalc();
-  }
+  Future<EmcdCaldResponse> getEmcdCalc() async => _emcdApi.getCalc();
 
-  Future<EmcdStatsResponse> getEmcdStats() async {
-    return _emcdApi.getStats();
-  }
+  Future<EmcdStatsResponse> getEmcdStats() async => _emcdApi.getStats();
 }

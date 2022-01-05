@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:cryptotool/data/data.dart';
 import 'package:cryptotool/models/models.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 
 part 'settings_event.dart';
 part 'settings_state.dart';
@@ -29,12 +28,12 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   ) async* {
     yield SettingsLoading();
 
-    var bynToUsdExchangeSource = await PreferencesHelper.getBynToUsdExchangeSource();
-    var bynToUsdExchangeRate = await PreferencesHelper.getBynToUsdExchangeRate();
-    var sortOption = await PreferencesHelper.getSortOption();
-    var showPriceRise = await PreferencesHelper.getShowPriceRise();
-    var includeElectricityCost = await PreferencesHelper.getIncludeElectricityCost();
-    var electricityCost = await PreferencesHelper.getElectricityCost();
+    final bynToUsdExchangeSource = await PreferencesHelper.getBynToUsdExchangeSource();
+    final bynToUsdExchangeRate = await PreferencesHelper.getBynToUsdExchangeRate();
+    final sortOption = await PreferencesHelper.getSortOption();
+    final showPriceRise = await PreferencesHelper.getShowPriceRise();
+    final includeElectricityCost = await PreferencesHelper.getIncludeElectricityCost();
+    final electricityCost = await PreferencesHelper.getElectricityCost();
 
     yield SettingsInitial(
       bynToUsdExchangeSource: bynToUsdExchangeSource,

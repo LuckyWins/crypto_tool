@@ -11,30 +11,28 @@ class InfoItem extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 16
-            ),
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 16
           ),
-          if (subtitle != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 4),
-                child: Text(
-                  subtitle!,
-                  style: TextStyle(
-                    color: AppStyles.mainTextColor.withOpacity(0.5)
-                  ),
+        ),
+        if (subtitle != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: Text(
+                subtitle!,
+                style: TextStyle(
+                  color: AppStyles.mainTextColor.withOpacity(0.5)
                 ),
               ),
-        ],
-      ),
-    );
-  }
+            ),
+      ],
+    ),
+  );
 }

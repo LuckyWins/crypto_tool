@@ -31,9 +31,7 @@ class EmcdCaldResponseCoins {
   @JsonKey(name: 'eth', fromJson: _doubleFromString)
   final double eth;
 
-  static double _doubleFromString(String value) {
-    return double.tryParse(value) ?? 1;
-  }
+  static double _doubleFromString(String value) => double.tryParse(value) ?? 1;
 
   EmcdCaldResponseCoins({
     required this.btc,

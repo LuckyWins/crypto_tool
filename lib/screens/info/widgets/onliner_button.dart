@@ -8,10 +8,8 @@ class OnlinerButton extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: () => onPressed.call(),
-      icon: Icon(Icons.store),
-    );
-  }
+  Widget build(BuildContext context) => IconButton(
+    onPressed: onPressed.call,
+    icon: const Icon(Icons.store),
+  );
 }

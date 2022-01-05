@@ -6,16 +6,16 @@ import 'package:flutter/material.dart';
 class LoadingIndicator extends StatelessWidget {
   final Color color;
   
-  LoadingIndicator({
+  const LoadingIndicator({
     Key? key,
-    Color color = AppStyles.mainColor
-  }) : color = color, super(key: key);
+    this.color = AppStyles.mainColor
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final isIOS = defaultTargetPlatform == TargetPlatform.iOS;
     return isIOS
-        ? CupertinoActivityIndicator()
+        ? const CupertinoActivityIndicator()
         : CircularProgressIndicator(
           valueColor:
           AlwaysStoppedAnimation<Color>(color),

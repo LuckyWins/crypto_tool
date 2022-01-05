@@ -9,17 +9,15 @@ class SaveButton extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      child: Text(
-        'Сохранить',
-        style: TextStyle(
-          color: AppStyles.mainColor,
-          // fontSize: 16,
-          fontWeight: FontWeight.w400
-        ),
+  Widget build(BuildContext context) => TextButton(
+    onPressed: onPressed.call,
+    child: const Text(
+      'Сохранить',
+      style: TextStyle(
+        color: AppStyles.mainColor,
+        // fontSize: 16,
+        fontWeight: FontWeight.w400
       ),
-      onPressed: () => onPressed.call(),
-    );
-  }
+    ),
+  );
 }

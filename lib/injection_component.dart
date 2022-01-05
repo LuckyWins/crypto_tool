@@ -5,29 +5,26 @@ import 'package:flutter/foundation.dart';
 import 'package:injector/injector.dart';
 import 'package:logger/logger.dart';
 
-import 'navigation.dart';
-
 class InjectionComponent {
-  static final InjectionComponent _singleton = new InjectionComponent._internal();
+  static final InjectionComponent _singleton = InjectionComponent._internal();
   // Use this static instance
   static final Injector injector = Injector.appInstance;
 
-  factory InjectionComponent() {
-    return _singleton;
-  }
+  factory InjectionComponent() => _singleton;
 
   InjectionComponent._internal();
 
   static Future<void> run() async {
     //Inject all
-    injector.registerSingleton<Dio>(() {
-      var dio = Dio();
+    injector
+    ..registerSingleton<Dio>(() {
+      final dio = Dio();
       dio.options.connectTimeout = 25000;
       dio.options.receiveTimeout = 25000;
 
       // inject debug dependency
       if (kDebugMode) {
-        var logger = Logger();
+        final logger = Logger();
         // var alice =  Alice(showNotification: false, showInspectorOnShake: true, darkTheme: true)..setNavigatorKey(Navigation.navigatorKey);
         dio.interceptors.add(InterceptorsWrapper(
           onRequest: (options, handler) {
@@ -53,18 +50,14 @@ class InjectionComponent {
       }
 
       return dio;
-    });
-    
-    injector.registerSingleton<DataManager>(() {
-      var dio = injector.get<Dio>();
+    })
+    ..registerSingleton<DataManager>(() {
+      final dio = injector.get<Dio>();
       return DataManager(dio);
-    });
-
-    injector.registerSingleton<PreferencesHelper>(() => PreferencesHelper());
+    })
+    ..registerSingleton<PreferencesHelper>(() => PreferencesHelper());
   }
 
-  static T getDependency<T>() {
-    return injector.get<T>();
-  }
+  static T getDependency<T>() => injector.get<T>();
   
 }

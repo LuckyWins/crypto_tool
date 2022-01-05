@@ -41,7 +41,7 @@ class _SettingsFormState extends State<SettingsForm> {
   final _bynToUsdController = TextEditingController();
   final _sortOptionController = TextEditingController();
   
-  Map<BynToUsdExchangeSource, String> _mapBynToUsdExchangeSource = {
+  final Map<BynToUsdExchangeSource, String> _mapBynToUsdExchangeSource = {
     BynToUsdExchangeSource.nbrb: 'НБРБ',
     BynToUsdExchangeSource.alfabank: 'Альфа-Банк',
     BynToUsdExchangeSource.manually: 'Вручную'
@@ -69,97 +69,96 @@ class _SettingsFormState extends State<SettingsForm> {
   }
   
   @override
-  Widget build(BuildContext context) {
-    return DismissOutside(
-      child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text('Настройки'),
-          actions: [
-            SaveButton(
-              onPressed: () {
-                if (_settingsFormKey.currentState?.validate() ?? false) {
-                  _settingsFormKey.currentState?.save();
-                  context.read<SettingsBloc>().add(
-                    SettingsSave(
-                      bynToUsdExchangeSource: _bynToUsdExchangeSource,
-                      bynToUsdExchangeRate: _bynToUsdExchangeRate,
-                      sortOption: _sortOption,
-                      showPriceRise: _showPriceRise,
-                      includeElectricityCost: _includeElectricityCost,
-                      electricityCost: _electricityCost,
-                    )
-                  );
-                }
-              },
-            )
-          ],
-        ),
-        body: FullScreen(
-          child: Form(
-            key: _settingsFormKey,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: BynToUsdField(
-                    controller: _bynToUsdController,
-                    onTap: () => _showBynToUsdDropDown(),
-                  ),
+  Widget build(BuildContext context) => DismissOutside(
+    child: Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text('Настройки'),
+        actions: [
+          SaveButton(
+            onPressed: () {
+              if (_settingsFormKey.currentState?.validate() ?? false) {
+                _settingsFormKey.currentState?.save();
+                context.read<SettingsBloc>().add(
+                  SettingsSave(
+                    bynToUsdExchangeSource: _bynToUsdExchangeSource,
+                    bynToUsdExchangeRate: _bynToUsdExchangeRate,
+                    sortOption: _sortOption,
+                    showPriceRise: _showPriceRise,
+                    includeElectricityCost: _includeElectricityCost,
+                    electricityCost: _electricityCost,
+                  )
+                );
+              }
+            },
+          )
+        ],
+      ),
+      body: FullScreen(
+        child: Form(
+          key: _settingsFormKey,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: BynToUsdField(
+                  controller: _bynToUsdController,
+                  onTap: _showBynToUsdDropDown,
                 ),
-                if (_bynToUsdExchangeSource == BynToUsdExchangeSource.manually)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8, left: 16, right: 16),
-                    child: MoneyField(
-                      initialValue: widget.initialBynToUsdExchangeRate,
-                      mandatory: true,
-                      label: 'Курс *',
-                      onSaved: (value) {
-                        _bynToUsdExchangeRate = value;
-                      },
-                    ),
-                  ),
+              ),
+              if (_bynToUsdExchangeSource == BynToUsdExchangeSource.manually)
                 Padding(
                   padding: const EdgeInsets.only(top: 8, left: 16, right: 16),
-                  child: SortOptionField(
-                    controller: _sortOptionController,
-                    onTap: () => _showSortOptionDropDown(),
+                  child: MoneyField(
+                    initialValue: widget.initialBynToUsdExchangeRate,
+                    mandatory: true,
+                    label: 'Курс *',
+                    onSaved: (value) {
+                      _bynToUsdExchangeRate = value;
+                    },
                   ),
                 ),
-                SizedBox(height: 8),
-                ParamSwitch(
-                  value: _showPriceRise,
-                  text: 'Отображать рыночную цену',
-                  onTap: (value) => setState(() => _showPriceRise = value)
+              Padding(
+                padding: const EdgeInsets.only(top: 8, left: 16, right: 16),
+                child: SortOptionField(
+                  controller: _sortOptionController,
+                  onTap: _showSortOptionDropDown,
                 ),
-                // SizedBox(height: 8),
-                ParamSwitch(
-                  value: _includeElectricityCost,
-                  text: "Включать электроэнергию в расчеты",
-                  onTap: (value) => setState(() => _includeElectricityCost = value)
-                ),
-                if (_includeElectricityCost)
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16, right: 16),
-                    child: MoneyField(
-                      initialValue: widget.initialElectricityCost,
-                      mandatory: true,
-                      decimalRange: 4,
-                      label: 'Цена \$/kWh *',
-                      onSaved: (value) {
-                        _electricityCost = value;
-                      },
-                    ),
+              ),
+              const SizedBox(height: 8),
+              ParamSwitch(
+                value: _showPriceRise,
+                text: 'Отображать рыночную цену',
+                onTap: (value) => setState(() => _showPriceRise = value)
+              ),
+              // SizedBox(height: 8),
+              ParamSwitch(
+                value: _includeElectricityCost,
+                text: 'Включать электроэнергию в расчеты',
+                onTap: (value) => setState(() => _includeElectricityCost = value)
+              ),
+              if (_includeElectricityCost)
+                Padding(
+                  padding: const EdgeInsets.only(left: 16, right: 16),
+                  child: MoneyField(
+                    initialValue: widget.initialElectricityCost,
+                    mandatory: true,
+                    decimalRange: 4,
+                    label: r'Цена $/kWh *',
+                    onSaved: (value) {
+                      _electricityCost = value;
+                    },
                   ),
-              ],
-            ),
+                ),
+            ],
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
 
-  _showBynToUsdDropDown() async {
+  // ignore: avoid_void_async
+  void _showBynToUsdDropDown() async {
     final value = await Multiplatform.showDropdown(
       context,
       map: _mapBynToUsdExchangeSource,
@@ -174,7 +173,8 @@ class _SettingsFormState extends State<SettingsForm> {
     }
   }
 
-  _showSortOptionDropDown() async {
+  // ignore: avoid_void_async
+  void _showSortOptionDropDown() async {
     final value = await Multiplatform.showDropdown<SortOptions>(
       context,
       map: SortExtersion.mapNames,

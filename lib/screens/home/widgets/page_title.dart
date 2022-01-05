@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:cryptotool/models/models.dart';
+import 'package:flutter/material.dart';
 
 class PageTitle extends StatelessWidget {
   final SortOptions option;
@@ -12,11 +12,11 @@ class PageTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     if (option != SortOptions.none) {
       return Container(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         color: Colors.black.withOpacity(0.3),
         child: Text(
           option.name,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white
           ),
         )

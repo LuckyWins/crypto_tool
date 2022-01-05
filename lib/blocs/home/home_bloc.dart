@@ -4,16 +4,15 @@ import 'package:bloc/bloc.dart';
 import 'package:cryptotool/data/data.dart';
 import 'package:cryptotool/injection_component.dart';
 import 'package:cryptotool/models/models.dart';
-import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
-import 'package:dartx/dartx.dart';
 import 'package:cryptotool/utils/utils.dart';
+import 'package:dartx/dartx.dart';
+import 'package:equatable/equatable.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  DataManager _dataManager;
+  final DataManager _dataManager;
   
   HomeBloc() : _dataManager = InjectionComponent.getDependency<DataManager>(),
   super(HomeLoading());
@@ -38,69 +37,72 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ) async* {
     yield HomeLoading();
 
-    var includeElectricityCost = await PreferencesHelper.getIncludeElectricityCost();
-    var electricityCost = await PreferencesHelper.getElectricityCost();
+    final includeElectricityCost = await PreferencesHelper.getIncludeElectricityCost();
+    final electricityCost = await PreferencesHelper.getElectricityCost();
 
-    List<Videocard> initialList = GpuRepository.availableList;
+    final initialList = GpuRepository.availableList;
 
     try {
-      BynToUsdExchangeSource bynToUsdExchangeSource = await PreferencesHelper.getBynToUsdExchangeSource();
+      final bynToUsdExchangeSource = await PreferencesHelper.getBynToUsdExchangeSource();
 
       double bynToUsd;
       switch (bynToUsdExchangeSource) {
         case BynToUsdExchangeSource.alfabank:
-          var exchangeResponse = await _dataManager.getExchangeRateAlfabank();
+          final exchangeResponse = await _dataManager.getExchangeRateAlfabank();
           bynToUsd = exchangeResponse.rates?.firstWhereOrNull((item) => item.sellCode == 840 && item.buyCode == 933)?.buyRate ?? 0;
           break;
         case BynToUsdExchangeSource.nbrb:
-          var exchangeResponse = await _dataManager.getExchangeRateNbrb();
+          final exchangeResponse = await _dataManager.getExchangeRateNbrb();
           bynToUsd = exchangeResponse.officialRate;
           break;
         case BynToUsdExchangeSource.manually:
           bynToUsd = await PreferencesHelper.getBynToUsdExchangeRate();
           break;
       }
-      if (bynToUsd == null) throw('error to get BYN->USD rate');
-      var etherchainResponse = await _dataManager.getStat();
+      // if (bynToUsd == null) throw('error to get BYN->USD rate');
+      final etherchainResponse = await _dataManager.getStat();
 
-      List<Videocard> videocards = [];
+      var videocards = <Videocard>[];
       // await initialList.forEach((card) async {
-      for (var card in initialList) {
+      for (final card in initialList) {
         Videocard? tempCard;
         try {
-          var nicehashResponse = await _dataManager.getGpuInfo(card.nicehashId!);
-          double daggerHashimoto = nicehashResponse.speeds["DAGGERHASHIMOTO"] ?? 0;
-          bool isStatActual = nicehashResponse.power != 0 && daggerHashimoto != 0;
+          final nicehashResponse = await _dataManager.getGpuInfo(card.nicehashId!);
+          final daggerHashimoto = nicehashResponse.speeds['DAGGERHASHIMOTO'] ?? 0;
+          final isStatActual = nicehashResponse.power != 0 && daggerHashimoto != 0;
 
           tempCard = card.copy(
             powerUsage: nicehashResponse.power,
             hashRate: daggerHashimoto,
             isStatActual: isStatActual
           );
-        } catch (error, stacktrace) {}
+        // ignore: avoid_catches_without_on_clauses, empty_catches, unused_catch_stack
+        } catch (error, stacktrace) {
+
+        }
         
-        var response = await _dataManager.getVideocard(card.onlinerGpuName);
+        final response = await _dataManager.getVideocard(card.onlinerGpuName);
 
-        var onlinerCard = response.products.firstOrNull;
-        var minPrice = ((onlinerCard?.prices.priceMin.amount.toDoubleOrNull() ?? 0.0) / bynToUsd).roundFixed();
-        var maxPrice = ((onlinerCard?.prices.priceMax.amount.toDoubleOrNull() ?? 0.0) / bynToUsd).roundFixed();
+        final onlinerCard = response.products.firstOrNull;
+        final minPrice = ((onlinerCard?.prices.priceMin.amount.toDoubleOrNull() ?? 0.0) / bynToUsd).roundFixed();
+        final maxPrice = ((onlinerCard?.prices.priceMax.amount.toDoubleOrNull() ?? 0.0) / bynToUsd).roundFixed();
 
-        double reward = _reward(
+        final reward = _reward(
           mhs: card.hashRate,
           blockReward: etherchainResponse.currentStats.blockReward,
           difficulty: etherchainResponse.currentStats.difficulty,
-          poolFee: 0.0
+          poolFee: 0
         );
 
-        var revenueDailyInBtc = reward * 24 * etherchainResponse.currentStats.priceBtc;
-        var revenueDailyInUsd = reward * 24 * etherchainResponse.currentStats.priceUsd;
+        final revenueDailyInBtc = reward * 24 * etherchainResponse.currentStats.priceBtc;
+        final revenueDailyInUsd = reward * 24 * etherchainResponse.currentStats.priceUsd;
 
-        var electricityExp = _electricityExpenses(
+        final electricityExp = _electricityExpenses(
           electricityCost: electricityCost,
           powerUsage: card.powerUsage 
         );
 
-        var profitDailyInUsd = revenueDailyInUsd - electricityExp;
+        final profitDailyInUsd = revenueDailyInUsd - electricityExp;
 
         tempCard = (tempCard ?? card).copy(
           name: onlinerCard?.name ?? 'Неизвестно',
@@ -120,7 +122,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         videocards.add(tempCard);
       }
 
-      var option = event.option;// ?? await PreferencesHelper.getSortOption();
+      final option = event.option;// ?? await PreferencesHelper.getSortOption();
 
       videocards = filterCards(
         list: videocards,
@@ -128,7 +130,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         includeElectricityCost: includeElectricityCost
       );
 
-      var showPriceRise = await PreferencesHelper.getShowPriceRise();
+      final showPriceRise = await PreferencesHelper.getShowPriceRise();
 
       _dataManager.gpuFirstLoaded = true;
 
@@ -140,6 +142,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         includeElectricityCost: includeElectricityCost,
         electricityCost: electricityCost
       );
+    // ignore: avoid_catches_without_on_clauses, unused_catch_stack
     } catch (error, stacktrace) {
       yield HomeError(
         error: error
@@ -155,8 +158,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     required double difficulty,
     required double poolFee
   }) {
-    double hashRate = mhs * 1000000;
-    double reward = ((hashRate * blockReward) / difficulty) * (1 - poolFee) * 3600;
+    final hashRate = mhs * 1000000;
+    final reward = ((hashRate * blockReward) / difficulty) * (1 - poolFee) * 3600;
     return reward;
   }
 
@@ -165,17 +168,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     required double electricityCost,
     // powerUsage of GPU
     required double powerUsage
-  }) {
-    return ((powerUsage/1000)*24*electricityCost).roundFixed();
-  }
+  }) => ((powerUsage/1000)*24*electricityCost).roundFixed();
 
   Stream<HomeState> _mapHomeFilterToState(
     HomeFilter event
   ) async* {
     if (state is HomeLoaded) {
-      var tempState = state as HomeLoaded;
+      final tempState = state as HomeLoaded;
       
-      var videocards = filterCards(
+      final videocards = filterCards(
         list: tempState.videocards,
         option: event.option,
         includeElectricityCost: tempState.includeElectricityCost
@@ -197,12 +198,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     required SortOptions option,
     required bool includeElectricityCost
   }) {
-    List<Videocard> videocards = [];
+    var videocards = <Videocard>[];
 
     switch (option) {
       case SortOptions.cardPriceAsc:
-        var cardWithZero = list.filter((card) => card.minPrice == 0.0);
-        var normalCards = list.filter((card) => card.minPrice != 0.0);
+        final cardWithZero = list.filter((card) => card.minPrice == 0.0);
+        final normalCards = list.filter((card) => card.minPrice != 0.0);
 
         videocards.addAll(normalCards.sortedBy((card) => card.minPrice));
         videocards.addAll(cardWithZero);
@@ -211,15 +212,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         videocards = list.sortedByDescending((card) => card.minPrice);
         break;
       case SortOptions.paybackDesc:
-        var cardWithZero = list.filter((card) => card.paybackDays(includeElectricityCost) == 0);
-        var normalCards = list.filter((card) => card.paybackDays(includeElectricityCost) != 0);
+        final cardWithZero = list.filter((card) => card.paybackDays(includeElectricityCost) == 0);
+        final normalCards = list.filter((card) => card.paybackDays(includeElectricityCost) != 0);
 
         videocards.addAll(normalCards.sortedBy((card) => card.paybackDays(includeElectricityCost)));
         videocards.addAll(cardWithZero);
         break;
       case SortOptions.paybackAsc:
-        var cardWithZero = list.filter((card) => card.paybackDays(includeElectricityCost) == 0);
-        var normalCards = list.filter((card) => card.paybackDays(includeElectricityCost) != 0);
+        final cardWithZero = list.filter((card) => card.paybackDays(includeElectricityCost) == 0);
+        final normalCards = list.filter((card) => card.paybackDays(includeElectricityCost) != 0);
 
         videocards.addAll(normalCards.sortedByDescending((card) => card.paybackDays(includeElectricityCost)));
         videocards.addAll(cardWithZero);
@@ -231,8 +232,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         videocards = list.sortedBy((card) => card.revenueDailyInUsd);
         break;
       case SortOptions.priceRiseAsc:
-        var cardWithZero = list.filter((card) => card.priceRise == 0);
-        var normalCards = list.filter((card) => card.priceRise != 0);
+        final cardWithZero = list.filter((card) => card.priceRise == 0);
+        final normalCards = list.filter((card) => card.priceRise != 0);
 
         videocards.addAll(normalCards.sortedBy((card) => card.priceRise));
         videocards.addAll(cardWithZero);
@@ -251,7 +252,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       yield HomeToggleRefresh();
     } else {
       if (state is HomeLoaded) {
-        var tempState = state;
+        final tempState = state;
         yield HomeLoading();
         yield tempState;
       }

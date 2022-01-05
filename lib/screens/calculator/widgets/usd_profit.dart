@@ -7,22 +7,20 @@ class UsdProfit extends StatelessWidget {
   const UsdProfit(this.usd);
 
   @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(
-          Icons.attach_money,
-          color: AppStyles.mainTextColor,
+  Widget build(BuildContext context) => Row(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      const Icon(
+        Icons.attach_money,
+        color: AppStyles.mainTextColor,
+      ),
+      Text(
+        '$usd',
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 16
         ),
-        Text(
-          '$usd',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16
-          ),
-        ),
-      ],
-    );
-  }
+      ),
+    ],
+  );
 }

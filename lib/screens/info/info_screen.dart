@@ -15,8 +15,7 @@ class InfoScreen extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text(videocard.gpuName),
@@ -41,14 +40,14 @@ class InfoScreen extends StatelessWidget {
               InfoItem(
                 title: videocard.gpuDescription,
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               InfoItem(
                 title: 'Среднее энергопотребление',
                 subtitle: '${videocard.powerUsage} W',
               ),
               InfoItem(
                 title: 'Текущая цена',
-                subtitle: '${videocard.minPrice == 0.0 ? "Нет в продаже" : "\$${videocard.minPrice}" }'
+                subtitle: videocard.minPrice == 0.0 ? 'Нет в продаже' : '\$${videocard.minPrice}'
               ),
               InfoItem(
                 title: 'Рыночная цена',
@@ -69,7 +68,7 @@ class InfoScreen extends StatelessWidget {
                     if (state.includeElectricityCost) {
                       body = InfoItem(
                         title: 'Электроэнергия, день/месяц/год',
-                        subtitle: '\$${videocard.electricityExpensesDaily.toStringAsFixed(2)}  \$${(videocard.electricityExpensesDaily*30)}  \$${(videocard.electricityExpensesDaily*365).toStringAsFixed(2)}',
+                        subtitle: '\$${videocard.electricityExpensesDaily.toStringAsFixed(2)}  \$${videocard.electricityExpensesDaily*30}  \$${(videocard.electricityExpensesDaily*365).toStringAsFixed(2)}',
                       );
                     }
                   }
@@ -111,5 +110,4 @@ class InfoScreen extends StatelessWidget {
         ),
       ),
     );
-  }
 }

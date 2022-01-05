@@ -15,26 +15,24 @@ class DrawerItem extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      selected: selected,
-      leading: Icon(
-        icon,
-        size: 28,
+  Widget build(BuildContext context) => ListTile(
+    selected: selected,
+    leading: Icon(
+      icon,
+      size: 28,
+      color: selected
+            ? AppStyles.mainColor
+            : null,
+    ),
+    title: Text(
+      text,
+      style: TextStyle(
         color: selected
-              ? AppStyles.mainColor
-              : null,
+            ? AppStyles.mainColor
+            : AppStyles.mainTextColor,
+        // fontSize: 14
       ),
-      title: Text(
-        text,
-        style: TextStyle(
-          color: selected
-              ? AppStyles.mainColor
-              : AppStyles.mainTextColor,
-          // fontSize: 14
-        ),
-      ),
-      onTap: onTap,
-    );
-  }
+    ),
+    onTap: onTap,
+  );
 }

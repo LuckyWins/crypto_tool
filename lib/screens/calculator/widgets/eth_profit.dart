@@ -6,13 +6,11 @@ class EthProfit extends StatelessWidget {
   const EthProfit(this.eth);
 
   @override
-  Widget build(BuildContext context) {
-    return Text(
-      '$eth ETH',
-      style: TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: 16
-      ),
-    );
-  }
+  Widget build(BuildContext context) => Text(
+    '$eth ETH',
+    style: const TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 16
+    ),
+  );
 }

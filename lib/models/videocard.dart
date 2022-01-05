@@ -1,6 +1,6 @@
+import 'package:cryptotool/utils/utils.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:cryptotool/utils/utils.dart';
 
 class Videocard extends Equatable {
   final String gpuName;
@@ -30,7 +30,7 @@ class Videocard extends Equatable {
 
   const Videocard({
     required this.gpuName,
-    this.gpuDescription = "",
+    this.gpuDescription = '',
     required this.onlinerGpuName,
     this.name,
     this.descriprtion,
@@ -92,31 +92,33 @@ class Videocard extends Equatable {
 
   double get rewardPerDay => reward * 24;
 
+  // ignore: avoid_positional_boolean_parameters
   int paybackDays(bool includeElectricityCost) {
-    double sum = includeElectricityCost ? profitDailyInUsd : revenueDailyInUsd;
+    final sum = includeElectricityCost ? profitDailyInUsd : revenueDailyInUsd;
     return (minPrice / sum).round();
   }
 
+  // ignore: avoid_positional_boolean_parameters
   Color paybackRateColor(bool includeElectricityCost) {
-    var value = paybackDays(includeElectricityCost);
+    final value = paybackDays(includeElectricityCost);
     if (value > 300) {
-      return Color(0xffe49a9a);
+      return const Color(0xffe49a9a);
     } else if (value > 200) {
-      return Color(0xffe4cd9a);
+      return const Color(0xffe4cd9a);
     } if (value > 100) {
-      return Color(0xffdbe49a);
+      return const Color(0xffdbe49a);
     } else {
       if (value == 0) {
         return Colors.black.withOpacity(0.3);
       } else {
-        return Color(0xff9de49a);
+        return const Color(0xff9de49a);
       }
     } 
   }
 
   /// shows the difference between the [expectedPrice] and the [minPrice]
   double get priceRise {
-    var finalPrice = minPrice == 0.0 ? expectedPrice : minPrice;
+    final finalPrice = minPrice == 0.0 ? expectedPrice : minPrice;
     return (((finalPrice - expectedPrice)/expectedPrice) * 100).roundFixed();
   }
 
@@ -124,5 +126,5 @@ class Videocard extends Equatable {
   List<Object> get props => [gpuName, minPrice, maxPrice, hashRate];
 
   @override
-  String toString() => "Videocard( gpuName = $gpuName, minPrice = $minPrice, maxPrice = $maxPrice, hashRate = $hashRate)";
+  String toString() => 'Videocard( gpuName = $gpuName, minPrice = $minPrice, maxPrice = $maxPrice, hashRate = $hashRate)';
 }

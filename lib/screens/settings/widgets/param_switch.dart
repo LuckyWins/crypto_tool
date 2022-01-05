@@ -14,15 +14,13 @@ class ParamSwitch extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      onTap: () => onTap.call(!value),
-      title: Text(text),
-      trailing: CupertinoSwitch(
-        activeColor: AppStyles.mainColor,
-        value: value,
-        onChanged: (it) => onTap.call(it),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => ListTile(
+    onTap: () => onTap.call(!value),
+    title: Text(text),
+    trailing: CupertinoSwitch(
+      activeColor: AppStyles.mainColor,
+      value: value,
+      onChanged: onTap.call,
+    ),
+  );
 }

@@ -3,7 +3,7 @@ enum CalculateTime {
 }
 
 extension CalculateTimeExtension on CalculateTime {
-  static Map<CalculateTime, double> _calculationTactics = {
+  static final Map<CalculateTime, double> _calculationTactics = {
     CalculateTime.hour: 1/24,
     CalculateTime.day: 1,
     CalculateTime.week: 7,
@@ -12,7 +12,7 @@ extension CalculateTimeExtension on CalculateTime {
 
   double get calculationTactic => _calculationTactics[this]!;
 
-  static Map<CalculateTime, String> _names = {
+  static final Map<CalculateTime, String> _names = {
     CalculateTime.hour: 'Час',
     CalculateTime.day: 'День',
     CalculateTime.week: 'Неделя',
@@ -21,7 +21,7 @@ extension CalculateTimeExtension on CalculateTime {
 
   String get name => _names[this]!;
 
-  static Map<CalculateTime, String> _calculationNames = {
+  static final Map<CalculateTime, String> _calculationNames = {
     CalculateTime.hour: 'час',
     CalculateTime.day: 'день',
     CalculateTime.week: 'неделю',

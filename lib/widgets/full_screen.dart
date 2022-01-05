@@ -19,27 +19,23 @@ class FullScreen extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      left: leftSafe,
-      top: topSafe,
-      right: rightSafe,
-      bottom: bottomSafe,
-      child: LayoutBuilder(
-        builder: (context, viewportConstraints) {
-          return Scrollbar(
-            child: SingleChildScrollView(
-              controller: controller,
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: viewportConstraints.maxHeight
-                ),
-                child: child,
-              ),
+  Widget build(BuildContext context) => SafeArea(
+    left: leftSafe,
+    top: topSafe,
+    right: rightSafe,
+    bottom: bottomSafe,
+    child: LayoutBuilder(
+      builder: (context, viewportConstraints) => Scrollbar(
+        child: SingleChildScrollView(
+          controller: controller,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: viewportConstraints.maxHeight
             ),
-          );
-        },
+            child: child,
+          ),
+        ),
       ),
-    );
-  }
+    ),
+  );
 }

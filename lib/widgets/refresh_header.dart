@@ -4,11 +4,9 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class RefreshHeader extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return defaultTargetPlatform == TargetPlatform.iOS
-        ? ClassicHeader(
-          idleText: 'Потяните вниз, чтобы обновить',
-        )
-        : MaterialClassicHeader();
-  }
+  Widget build(BuildContext context) => defaultTargetPlatform == TargetPlatform.iOS
+    ? const ClassicHeader(
+      idleText: 'Потяните вниз, чтобы обновить',
+    )
+    : const MaterialClassicHeader();
 }

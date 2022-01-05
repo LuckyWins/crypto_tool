@@ -9,8 +9,8 @@ class NumberTextInputFormatter extends TextInputFormatter {
 
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
-    TextEditingValue _newValue = this.sanitize(newValue);
-    String text = _newValue.text;
+    final _newValue = sanitize(newValue);
+    final text = _newValue.text;
 
     if (text == ',' || text == '.') {
       return TextEditingValue(
@@ -20,11 +20,11 @@ class NumberTextInputFormatter extends TextInputFormatter {
       );
     }
 
-    return this.isValid(text) ? _newValue : oldValue;
+    return isValid(text) ? _newValue : oldValue;
   }
 
   bool isValid(String text) {
-    int dots = '.'.allMatches(text).length;
+    final dots = '.'.allMatches(text).length;
 
     if (dots == 0) {
       return true;
@@ -38,13 +38,13 @@ class NumberTextInputFormatter extends TextInputFormatter {
   }
 
   TextEditingValue sanitize(TextEditingValue value) {
-    String tempText = value.text.replaceAll(',', '.');
+    final tempText = value.text.replaceAll(',', '.');
 
     if (false == tempText.contains('-')) {
       return value.copyWith(text: tempText);
     }
 
-    String text = '-' + tempText.replaceAll('-', '');
+    final text = '-${tempText.replaceAll('-', '')}';
 
     return TextEditingValue(text: text, selection: value.selection, composing: TextRange.empty);
   }

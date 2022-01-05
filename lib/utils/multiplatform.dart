@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+// ignore: avoid_classes_with_only_static_members
 class Multiplatform {
 
   static bool isIOS = defaultTargetPlatform == TargetPlatform.iOS;
@@ -42,7 +43,7 @@ class Multiplatform {
           )).values.toList(),
           cancelButton: CupertinoActionSheetAction(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text(
+            child: const Text(
               'Отмена',
               style: TextStyle(
                 color: CupertinoColors.systemRed
@@ -58,7 +59,7 @@ class Multiplatform {
           title: title != null
               ? Text(
                 title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18
                 ),
               )

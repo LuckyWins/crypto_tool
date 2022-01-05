@@ -6,22 +6,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'blocs/blocs.dart';
 
+// ignore: avoid_classes_with_only_static_members
 /// Simple static class to aggregate navigation
 class Navigation {
 
   static GlobalKey<NavigatorState> navigatorKey =
-      new GlobalKey<NavigatorState>();
+    GlobalKey<NavigatorState>();
 
-  static beforeNavigate() {
-    SystemChannels.textInput.invokeMethod('TextInput.hide');
+  static void beforeNavigate() {
+    SystemChannels.textInput.invokeMethod<void>('TextInput.hide');
   }
 
-  static toInfo({
+  static void toInfo({
     required Videocard videocard
   }) {
     beforeNavigate();
     navigatorKey.currentState!.push(
-      MaterialPageRoute(builder: (context) =>
+      MaterialPageRoute<void>(builder: (context) =>
         InfoScreen(
           videocard: videocard,
         )
@@ -41,19 +42,19 @@ class Navigation {
     );
   }
 
-  static toHome() {
+  static void toHome() {
     beforeNavigate();
     navigatorKey.currentState!.pushReplacement(
-      MaterialPageRoute(builder: (context) =>
-        HomeScreen()
+      MaterialPageRoute<void>(builder: (context) =>
+        const HomeScreen()
       )
     );
   }
 
-  static toCalculator() {
+  static void toCalculator() {
     beforeNavigate();
     navigatorKey.currentState!.pushReplacement(
-      MaterialPageRoute(builder: (context) =>
+      MaterialPageRoute<void>(builder: (context) =>
         CalculatorScreen()
       )
     );

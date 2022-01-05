@@ -4,15 +4,14 @@ import 'package:bloc/bloc.dart';
 import 'package:cryptotool/data/data.dart';
 import 'package:cryptotool/injection_component.dart';
 import 'package:cryptotool/models/models.dart';
-import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:dartx/dartx.dart';
+import 'package:equatable/equatable.dart';
 
 part 'calculator_event.dart';
 part 'calculator_state.dart';
 
 class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
-  DataManager _dataManager;
+  final DataManager _dataManager;
 
   CalculatorBloc() : _dataManager = InjectionComponent.getDependency<DataManager>(),
   super(CalculatorLoading());
@@ -21,7 +20,7 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
   double changePercentage = 0;
   double ethDailyProfit = 1;
   int hashrate = 1;
-  var time = CalculateTime.day;
+  CalculateTime time = CalculateTime.day;
 
   @override
   Stream<CalculatorState> mapEventToState(
@@ -47,17 +46,17 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
     yield CalculatorLoading();
 
     try {
-      var rateResponse = await _dataManager.getEmcdStats();
+      final rateResponse = await _dataManager.getEmcdStats();
 
       // ethRate = 1743.9;
       ethRate = rateResponse.marketPriceUsd;
       changePercentage = rateResponse.changePercentage;
 
-      var response = await _dataManager.getEmcdCalc();
+      final response = await _dataManager.getEmcdCalc();
       // ethDailyProfit = 77.08864736 / 1000000;
       ethDailyProfit = response.coins.eth / 1000000;
 
-      var calc = _calculate();
+      final calc = _calculate();
 
       _dataManager.calculatorFirstLoaded = true;
 
@@ -69,6 +68,7 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
         time: time,
         hashrate: hashrate
       );
+    // ignore: avoid_catches_without_on_clauses, unused_catch_stack
     } catch (error, stacktrace) {
       yield CalculatorError(
         error: error
@@ -82,7 +82,7 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
     yield CalculatorLoading();
 
     hashrate = event.hashrate;
-    var calc = _calculate();
+    final calc = _calculate();
 
     yield CalculatorInitial(
       ethRate: ethRate,
@@ -101,7 +101,7 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
       yield CalculatorLoading();
 
       time = event.time;
-      var calc = _calculate();
+      final calc = _calculate();
 
       yield CalculatorInitial(
         ethRate: ethRate,
@@ -115,8 +115,8 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
   }
 
   CalculateResult _calculate() {
-    var ethProfit = (ethDailyProfit * hashrate * time.calculationTactic);
-    var usdProfit = (ethProfit * ethRate).toStringAsFixed(2).toDouble();
+    final ethProfit = ethDailyProfit * hashrate * time.calculationTactic;
+    final usdProfit = (ethProfit * ethRate).toStringAsFixed(2).toDouble();
 
     return CalculateResult(
       ethProfit: ethProfit.toStringAsFixed(8).toDouble(),

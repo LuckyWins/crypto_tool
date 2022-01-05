@@ -20,10 +20,10 @@ class NicehashGpuResponse {
   final Map<String, double> speeds;
 
   static Map<String, double> _speedsFromString(String str) {
-    Map<String, dynamic> valueAsMap = json.decode(str);
+    final valueAsMap = json.decode(str) as Map<String, dynamic>;
     return Map<String, double>.from(
-      valueAsMap.map((key, value) {
-        double val = 0;
+      valueAsMap.map<String, dynamic>((key, dynamic value) {
+        var val = 0.0;
         if (value == null) {
           // val = 0;
         } else if (value is int) {
@@ -33,7 +33,7 @@ class NicehashGpuResponse {
         } else if (value is String) {
           val = double.tryParse(value) ?? 0;
         }
-        return MapEntry(key, val);
+        return MapEntry<String, double>(key, val);
       })
     );
   }

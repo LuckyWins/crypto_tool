@@ -44,7 +44,7 @@ class _EmcdApi implements EmcdApi {
               queryParameters: queryParameters, data: _data)
           .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl));
     
-    final value = EmcdCaldResponse.fromJson(json.decode(_result.data ?? ''));
+    final value = EmcdCaldResponse.fromJson(json.decode(_result.data ?? '') as Map<String, dynamic>);
     return value;
   }
 
@@ -59,7 +59,7 @@ class _EmcdApi implements EmcdApi {
           .compose(_dio.options, '/eth/stats?emcd=1',
               queryParameters: queryParameters, data: _data)
           .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl));
-    final value = EmcdStatsResponse.fromJson(json.decode(_result.data ?? ''));
+    final value = EmcdStatsResponse.fromJson(json.decode(_result.data ?? '') as Map<String, dynamic>);
     return value;
   }
 }

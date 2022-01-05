@@ -11,22 +11,20 @@ class BynToUsdField extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      onTap: () => onTap.call(),
-      readOnly: true,
-      decoration: InputDecoration(
-        labelText: 'BYN -> USD',
-        suffixIcon: Padding(
-            padding: EdgeInsets.only(top: 16, left: 10),
-            child: Icon(
-              Icons.expand_more,
-              color: AppStyles.mainColor,
-              size: 35,
-            )
-        )
-      ),
-    );
-  }
+  Widget build(BuildContext context) => TextFormField(
+    controller: controller,
+    onTap: onTap.call,
+    readOnly: true,
+    decoration: const InputDecoration(
+      labelText: 'BYN -> USD',
+      suffixIcon: Padding(
+          padding: EdgeInsets.only(top: 16, left: 10),
+          child: Icon(
+            Icons.expand_more,
+            color: AppStyles.mainColor,
+            size: 35,
+          )
+      )
+    ),
+  );
 }
