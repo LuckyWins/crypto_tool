@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Videocard> _videocards = [];
   bool get isListEmpty => _videocards.isEmpty;
 
-  var _currentOption = SortOptions.none;
+  SortOptions? _currentOption;
   var _showPriceRise = false;
   var _includeElectricityCost = false;
 
@@ -117,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
   );
 
   void _onRefresh({
-    required SortOptions option
+    required SortOptions? option
   }) {
     context.read<HomeBloc>().add(HomeInit(
       option: option

@@ -4,16 +4,16 @@ abstract class HomeEvent extends Equatable {
   const HomeEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class HomeInit extends HomeEvent {
-  final SortOptions option;
+  final SortOptions? option;
 
   const HomeInit({this.option = SortOptions.none});
 
   @override
-  List<Object> get props => [option];
+  List<Object?> get props => [option];
 }
 
 class HomeFilter extends HomeEvent {

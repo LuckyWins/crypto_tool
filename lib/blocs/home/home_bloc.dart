@@ -122,7 +122,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         videocards.add(tempCard);
       }
 
-      final option = event.option;// ?? await PreferencesHelper.getSortOption();
+      final option = event.option ?? await PreferencesHelper.getSortOption();
 
       videocards = filterCards(
         list: videocards,
