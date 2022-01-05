@@ -18,10 +18,10 @@ class VideoCardResponse {
   final int totalUngrouped;
 
   VideoCardResponse({
-    this.products,
-    this.total,
-    this.page,
-    this.totalUngrouped
+    required this.products,
+    required this.total,
+    required this.page,
+    required this.totalUngrouped
   });
 
   factory VideoCardResponse.fromJson(Map<String, dynamic> json) => _$VideoCardResponseFromJson(json);
@@ -42,9 +42,9 @@ class OnlinerVideocard {
   final OnlinerVideocardPrices prices;
 
   OnlinerVideocard({
-    this.name,
-    this.microDescription,
-    this.prices
+    required this.name,
+    required this.microDescription,
+    required this.prices
   });
 
   factory OnlinerVideocard.fromJson(Map<String, dynamic> json) => _$OnlinerVideocardFromJson(json);
@@ -63,11 +63,11 @@ class OnlinerVideocardPrices {
   final OnlinerVideocardPrice priceMax;
 
   @JsonKey(name: 'html_url')
-  final String htmlUrl;
+  final String? htmlUrl;
 
   OnlinerVideocardPrices({
-    this.priceMin,
-    this.priceMax,
+    required this.priceMin,
+    required this.priceMax,
     this.htmlUrl
   });
 
@@ -87,8 +87,8 @@ class OnlinerVideocardPrice {
   final String currency;
 
   OnlinerVideocardPrice({
-    this.amount,
-    this.currency
+    required this.amount,
+    required this.currency
   });
 
   factory OnlinerVideocardPrice.fromJson(Map<String, dynamic> json) => _$OnlinerVideocardPriceFromJson(json);
@@ -113,10 +113,10 @@ class VideoCardResponsePage {
   final int last;
 
   VideoCardResponsePage({
-    this.limit,
-    this.items,
-    this.current,
-    this.last
+    required this.limit,
+    required this.items,
+    required this.current,
+    required this.last
   });
 
   factory VideoCardResponsePage.fromJson(Map<String, dynamic> json) => _$VideoCardResponsePageFromJson(json);

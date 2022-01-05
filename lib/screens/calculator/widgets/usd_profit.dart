@@ -16,7 +16,7 @@ class UsdProfit extends StatelessWidget {
           color: AppStyles.mainTextColor,
         ),
         Text(
-          "$usd",
+          '$usd',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16

@@ -6,8 +6,8 @@ class Videocard extends Equatable {
   final String gpuName;
   final String gpuDescription;
   final String onlinerGpuName;
-  final String name;
-  final String descriprtion;
+  final String? name;
+  final String? descriprtion;
   final double minPrice;
   final double maxPrice;
   final double hashRate;
@@ -20,28 +20,28 @@ class Videocard extends Equatable {
   /// прибыль сутки USD
   final double profitDailyInUsd;
   final double electricityExpensesDaily;
-  final String pricesUrl;
+  final String? pricesUrl;
   final double expectedPrice;
   final double powerUsage;
   /// nicehash device id for getting actual [powerUsage] & [hashRate]
-  final String nicehashId;
+  final String? nicehashId;
   /// is stat loaded from nicehash
   final bool isStatActual;
 
   const Videocard({
-    @required this.gpuName,
+    required this.gpuName,
     this.gpuDescription = "",
-    @required this.onlinerGpuName,
+    required this.onlinerGpuName,
     this.name,
     this.descriprtion,
-    this.minPrice,
-    this.maxPrice,
-    @required this.hashRate,
-    this.reward,
-    this.revenueDailyInBtc,
-    this.revenueDailyInUsd,
-    this.profitDailyInUsd,
-    this.electricityExpensesDaily,
+    this.minPrice = 0,
+    this.maxPrice = 0.0,
+    required this.hashRate,
+    this.reward = 0.0,
+    this.revenueDailyInBtc = 0.0,
+    this.revenueDailyInUsd = 0.0,
+    this.profitDailyInUsd = 0.0,
+    this.electricityExpensesDaily = 0.0,
     this.pricesUrl,
     this.expectedPrice = 0.0,
     this.powerUsage = 0.0,
@@ -50,25 +50,25 @@ class Videocard extends Equatable {
   });
 
   Videocard copy({
-    String gpuName,
-    String gpuDescription,
-    String onlinerGpuName,
-    String name,
-    String descriprtion,
-    double minPrice,
-    double maxPrice,
-    double hashRate,
-    double reward,
-    double revenueDailyInBtc,
-    double revenueDailyInUsd,
-    double profitDailyInBtc,
-    double profitDailyInUsd,
-    double electricityExpensesDaily,
-    String pricesUrl,
-    double expectedPrice,
-    double powerUsage,
-    String nicehashId,
-    bool isStatActual
+    String? gpuName,
+    String? gpuDescription,
+    String? onlinerGpuName,
+    String? name,
+    String? descriprtion,
+    double? minPrice,
+    double? maxPrice,
+    double? hashRate,
+    double? reward,
+    double? revenueDailyInBtc,
+    double? revenueDailyInUsd,
+    double? profitDailyInBtc,
+    double? profitDailyInUsd,
+    double? electricityExpensesDaily,
+    String? pricesUrl,
+    double? expectedPrice,
+    double? powerUsage,
+    String? nicehashId,
+    bool? isStatActual
   }) => Videocard(
     gpuName: gpuName ?? this.gpuName,
     gpuDescription: gpuDescription ?? this.gpuDescription,
@@ -116,8 +116,8 @@ class Videocard extends Equatable {
 
   /// shows the difference between the [expectedPrice] and the [minPrice]
   double get priceRise {
-    var finalPrice = minPrice == null || minPrice == 0.0 ? expectedPrice : minPrice;
-    return (((finalPrice - expectedPrice)/expectedPrice) * 100)?.roundFixed();
+    var finalPrice = minPrice == 0.0 ? expectedPrice : minPrice;
+    return (((finalPrice - expectedPrice)/expectedPrice) * 100).roundFixed();
   }
 
   @override

@@ -43,6 +43,16 @@ class GpuRepository {
       expectedPrice: 670.00,
       powerUsage: 130.0
     ),
+    // 17.03.2021
+    Videocard(
+      gpuName: "NVIDIA RTX 3060",
+      onlinerGpuName: "rtx3060",
+      nicehashId: "a16e5f4e-1665-486a-bd5a-450b15a9a563",
+      hashRate: 28.0,
+      gpuDescription: "NVIDIA RTX 3060 Ti была выпущена 25 февраля 2021 г.",
+      expectedPrice: 330.00,
+      powerUsage: 115.0
+    ),
     // 21.01.2021
     Videocard(
       gpuName: "NVIDIA RTX 3070",

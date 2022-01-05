@@ -8,10 +8,10 @@ class DrawerItem extends StatelessWidget {
   final Function() onTap;
 
   const DrawerItem({
-    @required this.selected,
-    @required this.icon,
-    @required this.text,
-    @required this.onTap
+    required this.selected,
+    required this.icon,
+    required this.text,
+    required this.onTap
   });
 
   @override

@@ -8,20 +8,20 @@ class ParamSwitch extends StatelessWidget {
   final Function(bool value) onTap;
 
   const ParamSwitch({
-    @required this.value,
-    @required this.text,
-    @required this.onTap
+    required this.value,
+    required this.text,
+    required this.onTap
   });
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () => onTap?.call(!value),
-      title: Text(text ?? ""),
+      onTap: () => onTap.call(!value),
+      title: Text(text),
       trailing: CupertinoSwitch(
         activeColor: AppStyles.mainColor,
         value: value,
-        onChanged: (it) => onTap?.call(it),
+        onChanged: (it) => onTap.call(it),
       ),
     );
   }

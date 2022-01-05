@@ -10,23 +10,23 @@ extension CalculateTimeExtension on CalculateTime {
     CalculateTime.month: 30
   };
 
-  double get calculationTactic => _calculationTactics[this];
+  double get calculationTactic => _calculationTactics[this]!;
 
   static Map<CalculateTime, String> _names = {
-    CalculateTime.hour: "Час",
-    CalculateTime.day: "День",
-    CalculateTime.week: "Неделя",
-    CalculateTime.month: "Месяц"
+    CalculateTime.hour: 'Час',
+    CalculateTime.day: 'День',
+    CalculateTime.week: 'Неделя',
+    CalculateTime.month: 'Месяц'
   };
 
-  String get name => _names[this];
+  String get name => _names[this]!;
 
   static Map<CalculateTime, String> _calculationNames = {
-    CalculateTime.hour: "час",
-    CalculateTime.day: "день",
-    CalculateTime.week: "неделю",
-    CalculateTime.month: "месяц"
+    CalculateTime.hour: 'час',
+    CalculateTime.day: 'день',
+    CalculateTime.week: 'неделю',
+    CalculateTime.month: 'месяц'
   };
 
-  String get calculationName => _calculationNames[this];
+  String get calculationName => _calculationNames[this]!;
 }

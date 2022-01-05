@@ -6,18 +6,18 @@ class SortOptionField extends StatelessWidget {
   final Function() onTap;
 
   const SortOptionField({
-    @required this.controller,
-    @required this.onTap
+    required this.controller,
+    required this.onTap
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
-      onTap: () => onTap?.call(),
+      onTap: () => onTap.call(),
       readOnly: true,
       decoration: InputDecoration(
-        labelText: "Сортировка при запуске",
+        labelText: 'Сортировка при запуске',
         suffixIcon: Padding(
             padding: EdgeInsets.only(top: 16, left: 10),
             child: Icon(

@@ -7,8 +7,8 @@ class EthRate extends StatelessWidget {
   final double changePercentage;
 
   const EthRate({
-    @required this.eth,
-    @required this.changePercentage
+    required this.eth,
+    required this.changePercentage
   });
 
   @override
@@ -16,7 +16,7 @@ class EthRate extends StatelessWidget {
     return Column(
       children: [
         Text(
-          "ETH/USD",
+          'ETH/USD',
           style: TextStyle(
             color: AppStyles.mainTextColor.withOpacity(0.5)
           ),
@@ -27,7 +27,7 @@ class EthRate extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Text(
-              "$eth",
+              '$eth',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 22
@@ -35,7 +35,7 @@ class EthRate extends StatelessWidget {
             ),
             SizedBox(width: 8),
             Text(
-              "${changePercentage.isNegative ? "-" : "+"}$changePercentage%",
+              '${changePercentage.isNegative ? "" : "+"}$changePercentage%',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 14,

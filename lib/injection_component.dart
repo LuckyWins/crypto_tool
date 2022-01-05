@@ -30,18 +30,22 @@ class InjectionComponent {
         var logger = Logger();
         // var alice =  Alice(showNotification: false, showInspectorOnShake: true, darkTheme: true)..setNavigatorKey(Navigation.navigatorKey);
         dio.interceptors.add(InterceptorsWrapper(
-          onRequest: (RequestOptions options) async {
-            //logger.i(options.uri);
-            logger.i(options.data);
-            return options;
+          onRequest: (options, handler) {
+            // logger.i(options.uri);
+            logger
+              ..i('REQUEST[${options.method}] => PATH: ${options.baseUrl}${options.path}\nquery${options.queryParameters}\nAUTH: ${options.headers["Authorization"]}')
+              ..i(options.data);
+            return handler.next(options);
           },
-          onResponse: (Response response) async {
+          onResponse: (response, handler) {
             logger.i(response.data);
-            return response;
+            return handler.next(response);
           },
-          onError: (DioError e) async {
-            logger.e(e.message);
-            return e;
+          onError: (e, handler) {
+            logger
+              ..e('${e.message}\n\n${e.response?.data}')
+              ..e(e.response?.data);
+            return handler.next(e);
           }
         ));
 

@@ -12,11 +12,11 @@ class Multiplatform {
 
   static const TextTheme iosTextTheme = Typography.blackCupertino;
 
-  static Future<T> showDropdown<T>({
-    @required BuildContext context,
-    Map<T, String> map,
-    T selected,
-    String title
+  static Future<T?> showDropdown<T>(
+    BuildContext context,
+    {required Map<T, String> map,
+    required T selected,
+    String? title
   }) {
     if (isIOS) {
       return showCupertinoModalPopup<T>(
@@ -29,7 +29,7 @@ class Multiplatform {
             CupertinoActionSheetAction(
               onPressed: () => Navigator.of(context).pop(key),
               child: Text(
-                description ?? "",
+                description,
                 style: TextStyle(
                   color: CupertinoColors.systemBlue,
                   fontWeight: selected == key
@@ -43,7 +43,7 @@ class Multiplatform {
           cancelButton: CupertinoActionSheetAction(
             onPressed: () => Navigator.of(context).pop(),
             child: Text(
-              "Отмена",
+              'Отмена',
               style: TextStyle(
                 color: CupertinoColors.systemRed
               )
@@ -85,51 +85,50 @@ class Multiplatform {
     }
   }
 
-  static showMessage({
-    @required BuildContext context,
-    @required String title,
-    @required String message,
+  static void showMessage({
+    required BuildContext context,
+    required String title,
+    required String message,
     DialogType type = DialogType.error
   }) {
     String iconName;
     switch (type) {
       case DialogType.error:
-        iconName = "dialog_error";
+        iconName = 'dialog_error';
         break;
       case DialogType.success:
-        iconName = "dialog_success";
+        iconName = 'dialog_success';
         break;
       case DialogType.info:
-        iconName = "dialog_info";
+        iconName = 'dialog_info';
         break;
     }
 
-    Widget dialogChild = IntrinsicWidth(
-      stepWidth: 56.0,
+    final dialogChild = IntrinsicWidth(
+      stepWidth: 56,
       child: ConstrainedBox(
-        constraints: const BoxConstraints(minWidth: 280.0),
+        constraints: const BoxConstraints(minWidth: 280),
         child: Stack(
           children: <Widget>[
             Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                if (title != null)
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(36, 40, 36, 8),
-                    child: Center(
-                      child: Text(
-                        title,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: AppStyles.mainTextColor,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: -0.4
-                        ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(36, 40, 36, 8),
+                  child: Center(
+                    child: Text(
+                      title,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: AppStyles.mainTextColor,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: -0.4
                       ),
                     ),
                   ),
+                ),
                 Flexible(
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(36, 0, 36, 16),
@@ -151,7 +150,7 @@ class Multiplatform {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 IconButton(
-                  onPressed: () => Navigation.navigatorKey.currentState.pop(),
+                  onPressed: () => Navigation.navigatorKey.currentState?.pop(),
                   icon: SvgPicture.asset('assets/icon/dialog_close.svg'),
                 ),
               ],
@@ -161,13 +160,13 @@ class Multiplatform {
       ),
     );
 
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        final EdgeInsets effectivePadding = MediaQuery.of(context).viewInsets + (EdgeInsets.symmetric(horizontal: 40.0, vertical: 24.0));
+        final effectivePadding = MediaQuery.of(context).viewInsets + (const EdgeInsets.symmetric(horizontal: 40, vertical: 24));
         return AnimatedPadding(
           padding: effectivePadding,
-          duration: Duration(milliseconds: 100),
+          duration: const Duration(milliseconds: 100),
           curve: Curves.decelerate,
           child: MediaQuery.removeViewInsets(
             removeLeft: true,
@@ -183,15 +182,15 @@ class Multiplatform {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Container(
-                        margin: EdgeInsets.only(top: 33),
+                        margin: const EdgeInsets.only(top: 33),
                         child: ConstrainedBox(
                           constraints: const BoxConstraints(minWidth: 280),
                           child: SizedBox(
                             width: 100,
                             child: Material(
                               color: Colors.white,
-                              elevation: 24.0,
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
+                              elevation: 24,
+                              shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
                               type: MaterialType.card,
                               clipBehavior: Clip.none,
                               child: dialogChild,

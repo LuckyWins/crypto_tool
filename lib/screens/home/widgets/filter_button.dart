@@ -13,7 +13,7 @@ class FilterButton extends StatelessWidget {
           return IconButton(
             onPressed: () async {
               var option = await Multiplatform.showDropdown<SortOptions>(
-                context: context,
+                context,
                 map: SortExtersion.mapNamesForFilter,
                 selected: state.sortOption
               );

@@ -8,14 +8,14 @@ class AppStyles {
 
   static const Color mainColor = Color(0xff036ee9);
 
-  static Color secondaryColor = Color(0xff56c5af);
+  static const Color secondaryColor = Color(0xff56c5af);
   
-  static Color scaffoldColor = Colors.white;
+  static const Color scaffoldColor = Colors.white;
 
   ///
   /// Text
   ///
 
-  static Color mainTextColor = Color(0xff172030);
+  static const Color mainTextColor = Color(0xff172030);
   
 }

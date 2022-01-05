@@ -14,9 +14,8 @@ part 'calculator_state.dart';
 class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
   DataManager _dataManager;
 
-  CalculatorBloc() : super(CalculatorLoading()) {
-    _dataManager = InjectionComponent.getDependency<DataManager>();
-  }
+  CalculatorBloc() : _dataManager = InjectionComponent.getDependency<DataManager>(),
+  super(CalculatorLoading());
 
   double ethRate = 1;
   double changePercentage = 0;
@@ -116,7 +115,7 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
   }
 
   CalculateResult _calculate() {
-    var ethProfit = (ethDailyProfit * hashrate * time.calculationTactic) ?? 0;
+    var ethProfit = (ethDailyProfit * hashrate * time.calculationTactic);
     var usdProfit = (ethProfit * ethRate).toStringAsFixed(2).toDouble();
 
     return CalculateResult(

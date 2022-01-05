@@ -9,8 +9,8 @@ class PreferencesHelper {
       1: BynToUsdExchangeSource.nbrb,
       2: BynToUsdExchangeSource.manually
     };
-    int value = await _getInt(_bynToUsdExchangeSource) ?? 0;
-    return _map[value];
+    int? value = await _getInt(_bynToUsdExchangeSource);
+    return _map[value] ?? BynToUsdExchangeSource.manually;
   }
 
   static Future<bool> setBynToUsdExchangeSource(BynToUsdExchangeSource value) {
@@ -19,11 +19,11 @@ class PreferencesHelper {
       BynToUsdExchangeSource.nbrb: 1,
       BynToUsdExchangeSource.manually: 2
     };
-    return _setInt(_bynToUsdExchangeSource, _map[value]);
+    return _setInt(_bynToUsdExchangeSource, _map[value]!);
   }
 
   static Future<double> getBynToUsdExchangeRate() async {
-    return await _getDouble(_bynToUsdExchangeRate) ?? 0;
+    return await _getDouble(_bynToUsdExchangeRate) ?? 1;
   }
 
   static Future<bool> setBynToUsdExchangeRate(double value) {
@@ -40,8 +40,8 @@ class PreferencesHelper {
       5: SortOptions.dailyUsdAsc,
       6: SortOptions.none
     };
-    int value = await _getInt(_sortOption) ?? 6;
-    return _map[value];
+    int? value = await _getInt(_sortOption);
+    return _map[value] ?? SortOptions.none;
   }
 
   static Future<bool> setSortOption(SortOptions value) {
@@ -54,7 +54,7 @@ class PreferencesHelper {
       SortOptions.dailyUsdAsc: 5,
       SortOptions.none: 6
     };
-    return _setInt(_sortOption, _map[value]);
+    return _setInt(_sortOption, _map[value]!);
   }
 
   static Future<bool> getShowPriceRise() async {
@@ -74,7 +74,7 @@ class PreferencesHelper {
   }
 
   static Future<double> getElectricityCost() async {
-    return await _getDouble(_electricityCost) ?? 0;
+    return await _getDouble(_electricityCost) ?? 0.0;
   }
 
   static Future<bool> setElectricityCost(double value) {
@@ -83,7 +83,7 @@ class PreferencesHelper {
 
   /// get/set for different types
   
-  static Future<int> _getInt(String key) async {
+  static Future<int?> _getInt(String key) async {
     var prefs = await _load();
     return prefs.getInt(key);
   }
@@ -93,7 +93,7 @@ class PreferencesHelper {
     return prefs.setInt(key, value);
   }
 
-  static Future<double> _getDouble(String key) async {
+  static Future<double?> _getDouble(String key) async {
     var prefs = await _load();
     return prefs.getDouble(key);
   }
@@ -103,7 +103,7 @@ class PreferencesHelper {
     return prefs.setDouble(key, value);
   }
 
-  static Future<bool> _getBool(String key) async {
+  static Future<bool?> _getBool(String key) async {
     var prefs = await _load();
     return prefs.getBool(key);
   }

@@ -22,15 +22,27 @@ class NicehashGpuResponse {
   static Map<String, double> _speedsFromString(String str) {
     Map<String, dynamic> valueAsMap = json.decode(str);
     return Map<String, double>.from(
-      valueAsMap.map((key, value) => MapEntry(key, value is int ? value.toDouble() : value is double ? value : double.tryParse(value)))
+      valueAsMap.map((key, value) {
+        double val = 0;
+        if (value == null) {
+          // val = 0;
+        } else if (value is int) {
+          val = value.toDouble();
+        } else if (value is double) {
+          val = value;
+        } else if (value is String) {
+          val = double.tryParse(value) ?? 0;
+        }
+        return MapEntry(key, val);
+      })
     );
   }
 
   NicehashGpuResponse({
-    this.id,
-    this.name,
-    this.power,
-    this.speeds
+    required this.id,
+    required this.name,
+    required this.power,
+    required this.speeds
   });
 
   factory NicehashGpuResponse.fromJson(Map<String, dynamic> json) => _$NicehashGpuResponseFromJson(json);

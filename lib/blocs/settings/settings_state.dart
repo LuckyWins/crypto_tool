@@ -18,12 +18,12 @@ class SettingsInitial extends SettingsState {
   final double electricityCost;
 
   const SettingsInitial({
-    @required this.bynToUsdExchangeSource,
-    @required this.bynToUsdExchangeRate,
-    @required this.sortOption,
-    @required this.showPriceRise,
-    @required this.includeElectricityCost,
-    @required this.electricityCost,
+    required this.bynToUsdExchangeSource,
+    required this.bynToUsdExchangeRate,
+    required this.sortOption,
+    required this.showPriceRise,
+    required this.includeElectricityCost,
+    required this.electricityCost,
   });
 
   @override

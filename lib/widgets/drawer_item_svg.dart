@@ -9,10 +9,10 @@ class DrawerItemSvg extends StatelessWidget {
   final Function() onTap;
 
   const DrawerItemSvg({
-    @required this.selected,
-    @required this.assetName,
-    @required this.text,
-    @required this.onTap
+    required this.selected,
+    required this.assetName,
+    required this.text,
+    required this.onTap
   });
 
   @override
@@ -22,7 +22,7 @@ class DrawerItemSvg extends StatelessWidget {
       leading: Padding(
         padding: const EdgeInsets.only(left: 2),
         child: SvgPicture.asset(
-          "assets/icon/$assetName.svg",
+          'assets/icon/$assetName.svg',
           width: 24,
           height: 24,
           semanticsLabel: text,

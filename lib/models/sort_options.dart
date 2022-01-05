@@ -20,25 +20,25 @@ enum SortOptions {
 extension SortExtersion on SortOptions {
 
   static const Map<SortOptions, String> mapNamesForFilter = {
-    SortOptions.cardPriceAsc: "Дешевые",
-    SortOptions.cardPriceDesc: "Дорогие",
-    SortOptions.paybackDesc: "Быстроокупаемые",
+    SortOptions.cardPriceAsc: 'Дешевые',
+    SortOptions.cardPriceDesc: 'Дорогие',
+    SortOptions.paybackDesc: 'Быстроокупаемые',
     // SortOptions.paybackAsc: "Плохоокупаемые",
-    SortOptions.dailyUsdDesc: "Доходные",
+    SortOptions.dailyUsdDesc: 'Доходные',
     // SortOptions.dailyUsdAsc: "Менее прибыльные",
-    SortOptions.priceRiseAsc: "Рыночная цена/текущая цена",
+    SortOptions.priceRiseAsc: 'Рыночная цена/текущая цена',
   };
 
   static const Map<SortOptions, String> mapNames = {
-    SortOptions.cardPriceAsc: "Сначала дешевые",
-    SortOptions.cardPriceDesc: "Сначала дорогие",
-    SortOptions.paybackDesc: "Сначала быстроокупаемые",
+    SortOptions.cardPriceAsc: 'Сначала дешевые',
+    SortOptions.cardPriceDesc: 'Сначала дорогие',
+    SortOptions.paybackDesc: 'Сначала быстроокупаемые',
     // SortOptions.paybackAsc: "Сначала плохоокупаемые",
-    SortOptions.dailyUsdDesc: "Сначала самые доходные",
+    SortOptions.dailyUsdDesc: 'Сначала самые доходные',
     // SortOptions.dailyUsdAsc: "Сначала менее прибыльные",
-    SortOptions.priceRiseAsc: "Рыночная цена/текущая цена",
-    SortOptions.none: "По умолчанию"
+    SortOptions.priceRiseAsc: 'Рыночная цена/текущая цена',
+    SortOptions.none: 'По умолчанию'
   };
 
-  String get name => mapNames[this] ?? "Неизвестно";
+  String get name => mapNames[this] ?? 'Неизвестно';
 }

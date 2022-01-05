@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 
 class FullScreen extends StatelessWidget {
-  final Key key;
   final bool leftSafe;
   final bool topSafe;
   final bool rightSafe;
   final bool bottomSafe;
   final Widget child;
-  final ScrollController controller;
+  final ScrollController? controller;
 
   const FullScreen({
-    this.key,
+    Key? key,
     this.leftSafe = true,
     this.topSafe = true,
     this.rightSafe = true,
     this.bottomSafe = true,
-    @required this.child,
+    required this.child,
     this.controller
   }) : super(key: key);
 

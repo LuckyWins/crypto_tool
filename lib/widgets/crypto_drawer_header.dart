@@ -5,8 +5,8 @@ class CryptoDrawerHeader extends StatelessWidget {
   final String subtitle;
 
   const CryptoDrawerHeader({
-    @required this.title,
-    @required this.subtitle
+    required this.title,
+    required this.subtitle
   });
 
   @override

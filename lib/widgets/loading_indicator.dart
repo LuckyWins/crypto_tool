@@ -7,7 +7,7 @@ class LoadingIndicator extends StatelessWidget {
   final Color color;
   
   LoadingIndicator({
-    Key key,
+    Key? key,
     Color color = AppStyles.mainColor
   }) : color = color, super(key: key);
 

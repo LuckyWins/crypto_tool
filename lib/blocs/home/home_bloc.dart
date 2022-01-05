@@ -9,16 +9,14 @@ import 'package:flutter/foundation.dart';
 import 'package:dartx/dartx.dart';
 import 'package:cryptotool/utils/utils.dart';
 
-
 part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   DataManager _dataManager;
   
-  HomeBloc() : super(HomeLoading()) {
-    _dataManager = InjectionComponent.getDependency<DataManager>();
-  }
+  HomeBloc() : _dataManager = InjectionComponent.getDependency<DataManager>(),
+  super(HomeLoading());
 
   @override
   Stream<HomeState> mapEventToState(
@@ -52,7 +50,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       switch (bynToUsdExchangeSource) {
         case BynToUsdExchangeSource.alfabank:
           var exchangeResponse = await _dataManager.getExchangeRateAlfabank();
-          bynToUsd = exchangeResponse.rates.firstWhere((item) => item.sellCode == 840 && item.buyCode == 933, orElse: () => null)?.buyRate;
+          bynToUsd = exchangeResponse.rates?.firstWhereOrNull((item) => item.sellCode == 840 && item.buyCode == 933)?.buyRate ?? 0;
           break;
         case BynToUsdExchangeSource.nbrb:
           var exchangeResponse = await _dataManager.getExchangeRateNbrb();
@@ -62,17 +60,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           bynToUsd = await PreferencesHelper.getBynToUsdExchangeRate();
           break;
       }
-      if (bynToUsd == null) throw("error to get BYN->USD rate");
+      if (bynToUsd == null) throw('error to get BYN->USD rate');
       var etherchainResponse = await _dataManager.getStat();
 
       List<Videocard> videocards = [];
       // await initialList.forEach((card) async {
       for (var card in initialList) {
-        Videocard tempCard;
+        Videocard? tempCard;
         try {
-          var nicehashResponse = await _dataManager.getGpuInfo(card.nicehashId);
-          double daggerHashimoto = nicehashResponse?.speeds["DAGGERHASHIMOTO"];
-          bool isStatActual = nicehashResponse.power != null && daggerHashimoto != null;
+          var nicehashResponse = await _dataManager.getGpuInfo(card.nicehashId!);
+          double daggerHashimoto = nicehashResponse.speeds["DAGGERHASHIMOTO"] ?? 0;
+          bool isStatActual = nicehashResponse.power != 0 && daggerHashimoto != 0;
 
           tempCard = card.copy(
             powerUsage: nicehashResponse.power,
@@ -83,9 +81,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         
         var response = await _dataManager.getVideocard(card.onlinerGpuName);
 
-        var onlinerCard = response?.products?.firstOrNull;
-        var minPrice = ((onlinerCard?.prices?.priceMin?.amount?.toDoubleOrNull() ?? 0.0) / bynToUsd).roundFixed();
-        var maxPrice = ((onlinerCard?.prices?.priceMax?.amount?.toDoubleOrNull() ?? 0.0) / bynToUsd).roundFixed();
+        var onlinerCard = response.products.firstOrNull;
+        var minPrice = ((onlinerCard?.prices.priceMin.amount.toDoubleOrNull() ?? 0.0) / bynToUsd).roundFixed();
+        var maxPrice = ((onlinerCard?.prices.priceMax.amount.toDoubleOrNull() ?? 0.0) / bynToUsd).roundFixed();
 
         double reward = _reward(
           mhs: card.hashRate,
@@ -105,8 +103,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         var profitDailyInUsd = revenueDailyInUsd - electricityExp;
 
         tempCard = (tempCard ?? card).copy(
-          name: onlinerCard?.name ?? "Неизвестно",
-          descriprtion: onlinerCard?.microDescription ?? "",
+          name: onlinerCard?.name ?? 'Неизвестно',
+          descriprtion: onlinerCard?.microDescription ?? '',
           minPrice: minPrice,
           maxPrice: maxPrice,
           reward: reward,
@@ -114,15 +112,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           revenueDailyInUsd: revenueDailyInUsd,
           profitDailyInUsd: profitDailyInUsd,
           electricityExpensesDaily: electricityExp,
-          pricesUrl: onlinerCard?.prices?.htmlUrl != null
-              ? "${onlinerCard?.prices?.htmlUrl}?order=price%3Aasc"
+          pricesUrl: onlinerCard?.prices.htmlUrl != null
+              ? '${onlinerCard?.prices.htmlUrl}?order=price%3Aasc'
               : null
         );
 
         videocards.add(tempCard);
       }
 
-      var option = event.option ?? await PreferencesHelper.getSortOption();
+      var option = event.option;// ?? await PreferencesHelper.getSortOption();
 
       videocards = filterCards(
         list: videocards,
@@ -152,23 +150,23 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   // get reward for 1h
   double _reward({
     // MH/S
-    @required double mhs,
-    @required double blockReward,
-    @required double difficulty,
-    @required double poolFee
+    required double mhs,
+    required double blockReward,
+    required double difficulty,
+    required double poolFee
   }) {
     double hashRate = mhs * 1000000;
     double reward = ((hashRate * blockReward) / difficulty) * (1 - poolFee) * 3600;
-    return reward ?? 0.0;
+    return reward;
   }
 
   // expenses for 1 day
   double _electricityExpenses({
-    @required double electricityCost,
+    required double electricityCost,
     // powerUsage of GPU
-    @required double powerUsage
+    required double powerUsage
   }) {
-    return ((powerUsage/1000)*24*electricityCost)?.roundFixed() ?? 0;
+    return ((powerUsage/1000)*24*electricityCost).roundFixed();
   }
 
   Stream<HomeState> _mapHomeFilterToState(
@@ -195,9 +193,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   List<Videocard> filterCards({
-    @required List<Videocard> list,
-    @required SortOptions option,
-    @required bool includeElectricityCost
+    required List<Videocard> list,
+    required SortOptions option,
+    required bool includeElectricityCost
   }) {
     List<Videocard> videocards = [];
 

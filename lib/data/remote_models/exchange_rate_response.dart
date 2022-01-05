@@ -24,12 +24,12 @@ class ExchangeRateResponse {
   final double officialRate;
 
   ExchangeRateResponse({
-    this.id,
-    this.date,
-    this.abbreviation,
-    this.scale,
-    this.name,
-    this.officialRate
+    required this.id,
+    required this.date,
+    required this.abbreviation,
+    required this.scale,
+    required this.name,
+    required this.officialRate
   });
 
   factory ExchangeRateResponse.fromJson(Map<String, dynamic> json) => _$ExchangeRateResponseFromJson(json);

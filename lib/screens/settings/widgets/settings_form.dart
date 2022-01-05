@@ -16,12 +16,12 @@ class SettingsForm extends StatefulWidget {
   final double initialElectricityCost;
 
   const SettingsForm({
-    @required this.initialBynToUsdExchangeSource,
-    @required this.initialBynToUsdExchangeRate,
-    @required this.initialSortOption,
-    @required this.initialShowPriceRise,
-    @required this.initialIncludeElectricityCost,
-    @required this.initialElectricityCost
+    required this.initialBynToUsdExchangeSource,
+    required this.initialBynToUsdExchangeRate,
+    required this.initialSortOption,
+    required this.initialShowPriceRise,
+    required this.initialIncludeElectricityCost,
+    required this.initialElectricityCost
   });
 
   @override
@@ -31,20 +31,20 @@ class SettingsForm extends StatefulWidget {
 class _SettingsFormState extends State<SettingsForm> {
   final _settingsFormKey = GlobalKey<FormState>();
 
-  BynToUsdExchangeSource _bynToUsdExchangeSource;
-  double _bynToUsdExchangeRate;
-  SortOptions _sortOption;
-  bool _showPriceRise;
-  bool _includeElectricityCost;
-  double _electricityCost;
+  late BynToUsdExchangeSource _bynToUsdExchangeSource;
+  double? _bynToUsdExchangeRate;
+  late SortOptions _sortOption;
+  late bool _showPriceRise;
+  late bool _includeElectricityCost;
+  double? _electricityCost;
 
   final _bynToUsdController = TextEditingController();
   final _sortOptionController = TextEditingController();
   
   Map<BynToUsdExchangeSource, String> _mapBynToUsdExchangeSource = {
-    BynToUsdExchangeSource.nbrb: "НБРБ",
-    BynToUsdExchangeSource.alfabank: "Альфа-Банк",
-    BynToUsdExchangeSource.manually: "Вручную"
+    BynToUsdExchangeSource.nbrb: 'НБРБ',
+    BynToUsdExchangeSource.alfabank: 'Альфа-Банк',
+    BynToUsdExchangeSource.manually: 'Вручную'
   };
 
   @override
@@ -52,10 +52,10 @@ class _SettingsFormState extends State<SettingsForm> {
     super.initState();
 
     _bynToUsdExchangeSource = widget.initialBynToUsdExchangeSource;
-    _bynToUsdController.text = _mapBynToUsdExchangeSource[_bynToUsdExchangeSource];
+    _bynToUsdController.text = _mapBynToUsdExchangeSource[_bynToUsdExchangeSource] ?? '';
 
     _sortOption = widget.initialSortOption;
-    _sortOptionController.text = SortExtersion.mapNames[_sortOption];
+    _sortOptionController.text = SortExtersion.mapNames[_sortOption] ?? '';
 
     _showPriceRise = widget.initialShowPriceRise;
     _includeElectricityCost = widget.initialIncludeElectricityCost;
@@ -63,8 +63,8 @@ class _SettingsFormState extends State<SettingsForm> {
 
   @override
   void dispose() {
-    _bynToUsdController?.dispose();
-    _sortOptionController?.dispose();
+    _bynToUsdController.dispose();
+    _sortOptionController.dispose();
     super.dispose();
   }
   
@@ -74,12 +74,12 @@ class _SettingsFormState extends State<SettingsForm> {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text("Настройки"),
+          title: Text('Настройки'),
           actions: [
             SaveButton(
               onPressed: () {
-                if (_settingsFormKey.currentState.validate()) {
-                  _settingsFormKey.currentState.save();
+                if (_settingsFormKey.currentState?.validate() ?? false) {
+                  _settingsFormKey.currentState?.save();
                   context.read<SettingsBloc>().add(
                     SettingsSave(
                       bynToUsdExchangeSource: _bynToUsdExchangeSource,
@@ -113,7 +113,7 @@ class _SettingsFormState extends State<SettingsForm> {
                     child: MoneyField(
                       initialValue: widget.initialBynToUsdExchangeRate,
                       mandatory: true,
-                      label: "Курс *",
+                      label: 'Курс *',
                       onSaved: (value) {
                         _bynToUsdExchangeRate = value;
                       },
@@ -129,7 +129,7 @@ class _SettingsFormState extends State<SettingsForm> {
                 SizedBox(height: 8),
                 ParamSwitch(
                   value: _showPriceRise,
-                  text: "Отображать рыночную цену",
+                  text: 'Отображать рыночную цену',
                   onTap: (value) => setState(() => _showPriceRise = value)
                 ),
                 // SizedBox(height: 8),
@@ -145,7 +145,7 @@ class _SettingsFormState extends State<SettingsForm> {
                       initialValue: widget.initialElectricityCost,
                       mandatory: true,
                       decimalRange: 4,
-                      label: "Цена \$/kWh *",
+                      label: 'Цена \$/kWh *',
                       onSaved: (value) {
                         _electricityCost = value;
                       },
@@ -161,13 +161,13 @@ class _SettingsFormState extends State<SettingsForm> {
 
   _showBynToUsdDropDown() async {
     final value = await Multiplatform.showDropdown(
-      context:context,
+      context,
       map: _mapBynToUsdExchangeSource,
       selected: _bynToUsdExchangeSource,
-      title: "BYN -> USD"
+      title: 'BYN -> USD'
     );
     if (value != null) {
-      _bynToUsdController.text = _mapBynToUsdExchangeSource[value];
+      _bynToUsdController.text = _mapBynToUsdExchangeSource[value] ?? '';
       setState(() {
         _bynToUsdExchangeSource = value;
       });
@@ -176,13 +176,13 @@ class _SettingsFormState extends State<SettingsForm> {
 
   _showSortOptionDropDown() async {
     final value = await Multiplatform.showDropdown<SortOptions>(
-      context:context,
+      context,
       map: SortExtersion.mapNames,
       selected: _sortOption,
-      title: "Сортировка при запуске"
+      title: 'Сортировка при запуске'
     );
     if (value != null) {
-      _sortOptionController.text = SortExtersion.mapNames[value];
+      _sortOptionController.text = SortExtersion.mapNames[value] ?? '';
       setState(() {
         _sortOption = value;
       });

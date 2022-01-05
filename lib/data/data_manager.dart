@@ -11,14 +11,13 @@ class DataManager {
   EmcdApi _emcdApi;
   final Dio dio;
 
-  DataManager(this.dio) {
-    _onlinerApi = OnlinerApi(dio);
-    _nbrbApi = NbrbApi(dio);
-    _alfaBankApi = AlfaBankApi(dio);
-    _etherchainApi = EtherchainApi(dio);
-    _nicehashApi = NicehashApi(dio);
+  DataManager(this.dio) :
+    _onlinerApi = OnlinerApi(dio),
+    _nbrbApi = NbrbApi(dio),
+    _alfaBankApi = AlfaBankApi(dio),
+    _etherchainApi = EtherchainApi(dio),
+    _nicehashApi = NicehashApi(dio),
     _emcdApi = EmcdApi(dio);
-  }
 
   bool gpuFirstLoaded = false;
   bool calculatorFirstLoaded = false;

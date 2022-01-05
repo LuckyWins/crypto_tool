@@ -17,10 +17,10 @@ class Navigation {
   }
 
   static toInfo({
-    Videocard videocard
+    required Videocard videocard
   }) {
     beforeNavigate();
-    navigatorKey.currentState.push(
+    navigatorKey.currentState!.push(
       MaterialPageRoute(builder: (context) =>
         InfoScreen(
           videocard: videocard,
@@ -29,9 +29,9 @@ class Navigation {
     );
   }
 
-  static Future<bool> toSettings() {
+  static Future<bool?> toSettings() {
     beforeNavigate();
-    return navigatorKey.currentState.push<bool>(
+    return navigatorKey.currentState!.push<bool>(
       MaterialPageRoute(builder: (context) =>
         BlocProvider<SettingsBloc>(
           create: (context) => SettingsBloc()..add(SettingsInit()),
@@ -43,7 +43,7 @@ class Navigation {
 
   static toHome() {
     beforeNavigate();
-    navigatorKey.currentState.pushReplacement(
+    navigatorKey.currentState!.pushReplacement(
       MaterialPageRoute(builder: (context) =>
         HomeScreen()
       )
@@ -52,7 +52,7 @@ class Navigation {
 
   static toCalculator() {
     beforeNavigate();
-    navigatorKey.currentState.pushReplacement(
+    navigatorKey.currentState!.pushReplacement(
       MaterialPageRoute(builder: (context) =>
         CalculatorScreen()
       )

@@ -6,16 +6,16 @@ part of 'exchange_rate_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ExchangeRateResponse _$ExchangeRateResponseFromJson(Map<String, dynamic> json) {
-  return ExchangeRateResponse(
-    id: json['Cur_ID'] as int,
-    date: json['Date'] as String,
-    abbreviation: json['Cur_Abbreviation'] as String,
-    scale: json['Cur_Scale'] as int,
-    name: json['Cur_Name'] as String,
-    officialRate: (json['Cur_OfficialRate'] as num)?.toDouble(),
-  );
-}
+ExchangeRateResponse _$ExchangeRateResponseFromJson(
+        Map<String, dynamic> json) =>
+    ExchangeRateResponse(
+      id: json['Cur_ID'] as int,
+      date: json['Date'] as String,
+      abbreviation: json['Cur_Abbreviation'] as String,
+      scale: json['Cur_Scale'] as int,
+      name: json['Cur_Name'] as String,
+      officialRate: (json['Cur_OfficialRate'] as num).toDouble(),
+    );
 
 Map<String, dynamic> _$ExchangeRateResponseToJson(
         ExchangeRateResponse instance) =>

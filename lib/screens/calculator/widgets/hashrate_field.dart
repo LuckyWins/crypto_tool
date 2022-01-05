@@ -6,7 +6,7 @@ class HashrateField extends StatelessWidget {
   final TextEditingController controller;
 
   const HashrateField({
-    @required this.controller
+    required this.controller
   });
 
   @override
@@ -17,7 +17,7 @@ class HashrateField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          "Ваш хэшрейт",
+          'Ваш хэшрейт',
           style: TextStyle(
             fontSize: 16
           ),
@@ -28,10 +28,9 @@ class HashrateField extends StatelessWidget {
           child: TextField(
             controller: controller,
             textAlign: TextAlign.center,
-            keyboardType: TextInputType.numberWithOptions(decimal: true),
+            keyboardType: TextInputType.number,
             inputFormatters: [
-              FilteringTextInputFormatter.deny(RegExp('[\\-|\\ ]')),
-              NumberTextInputFormatter(decimalRange: 2)
+              FilteringTextInputFormatter.deny(RegExp('[\\-|\\ |\\,|\\.]'))
             ],
             style: TextStyle(
               fontSize: 16,
@@ -41,7 +40,7 @@ class HashrateField extends StatelessWidget {
         ),
         SizedBox(width: 8),
         Text(
-          "MH",
+          'MH',
           style: TextStyle(
             fontSize: 16,
             // fontWeight: FontWeight.bold

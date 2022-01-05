@@ -6,16 +6,15 @@ part of 'emcd_stats_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-EmcdStatsResponse _$EmcdStatsResponseFromJson(Map<String, dynamic> json) {
-  return EmcdStatsResponse(
-    code: json['code'] as int,
-    marketPriceUsd: (json['market_price_usd'] as num)?.toDouble(),
-    changePercentage:
-        (json['market_price_usd_change_24h_percentage'] as num)?.toDouble(),
-    marketPriceBtc: json['market_price_btc'] as String,
-    coin: json['coin'] as String,
-  );
-}
+EmcdStatsResponse _$EmcdStatsResponseFromJson(Map<String, dynamic> json) =>
+    EmcdStatsResponse(
+      code: json['code'] as int,
+      marketPriceUsd: (json['market_price_usd'] as num).toDouble(),
+      changePercentage:
+          (json['market_price_usd_change_24h_percentage'] as num).toDouble(),
+      marketPriceBtc: json['market_price_btc'] as String,
+      coin: json['coin'] as String,
+    );
 
 Map<String, dynamic> _$EmcdStatsResponseToJson(EmcdStatsResponse instance) =>
     <String, dynamic>{

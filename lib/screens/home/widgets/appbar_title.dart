@@ -9,14 +9,19 @@ class AppBarTitle extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Crypto Tool"),
+        Text(
+          'Crypto Tool',
+          style: TextStyle(
+            color: AppStyles.mainTextColor,
+          ),
+        ),
         BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
             if (state is HomeLoaded) {
               return Text(
                 state.electricityCost == null || state.electricityCost == 0.0
-                ? "\$1 = ${state.bynToUsd} BYN"
-                : "\$1 = ${state.bynToUsd} BYN; 1kWh = \$${state.electricityCost}",
+                ? '\$1 = ${state.bynToUsd} BYN'
+                : '\$1 = ${state.bynToUsd} BYN; 1kWh = \$${state.electricityCost}',
                 style: TextStyle(
                   fontSize: 14,
                   color: AppStyles.mainTextColor.withOpacity(0.5)
@@ -25,7 +30,7 @@ class AppBarTitle extends StatelessWidget {
             } else {
               // return Container();
               return Text(
-                "\$1 = - BYN",
+                '\$1 = - BYN',
                 style: TextStyle(
                   fontSize: 14,
                   color: AppStyles.mainTextColor.withOpacity(0.5)

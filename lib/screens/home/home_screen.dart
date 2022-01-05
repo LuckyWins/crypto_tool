@@ -9,7 +9,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key key}) : super(key: key);
+  HomeScreen({Key? key}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -21,23 +21,23 @@ class _HomeScreenState extends State<HomeScreen> {
   RefreshController refreshController = RefreshController();
 
   List<Videocard> _videocards = [];
-  bool get isListEmpty => (_videocards?.length ?? 0) == 0;
+  bool get isListEmpty => (_videocards.length) == 0;
 
-  SortOptions _currentOption;
-  bool _showPriceRise;
-  bool _includeElectricityCost;
+  var _currentOption = SortOptions.none;
+  var _showPriceRise = false;
+  var _includeElectricityCost = false;
 
   @override
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => context.read<HomeBloc>().add(HomeCheckLoaded()));
+    WidgetsBinding.instance?.addPostFrameCallback((_) => context.read<HomeBloc>().add(HomeCheckLoaded()));
   }
 
   @override
   void dispose() {
-    _scrollController?.dispose();
-    refreshController?.dispose();
+    _scrollController.dispose();
+    refreshController.dispose();
     super.dispose();
   }
 
@@ -92,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        "Список пуст.\nВоспользуйтесь фильтром",
+                        'Список пуст.\nВоспользуйтесь фильтром',
                         textAlign: TextAlign.center
                       )
                     ],
@@ -103,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: EdgeInsets.symmetric(horizontal: 16),
                       child: Divider(),
                     ),
-                    itemCount: _videocards?.length ?? 0,
+                    itemCount: _videocards.length,
                     itemBuilder: (BuildContext context, int index) => HomeItem(
                       videocard: _videocards[index],
                       showPriceRise: _showPriceRise || _currentOption == SortOptions.priceRiseAsc,
@@ -120,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   _onRefresh({
-    @required SortOptions option
+    required SortOptions option
   }) {
     context.read<HomeBloc>().add(HomeInit(
       option: option

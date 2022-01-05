@@ -12,8 +12,8 @@ class EmcdCaldResponse {
   final int code;
 
   EmcdCaldResponse({
-    this.coins,
-    this.code
+    required this.coins,
+    required this.code
   });
 
   factory EmcdCaldResponse.fromJson(Map<String, dynamic> json) => _$EmcdCaldResponseFromJson(json);
@@ -36,8 +36,8 @@ class EmcdCaldResponseCoins {
   }
 
   EmcdCaldResponseCoins({
-    this.btc,
-    this.eth
+    required this.btc,
+    required this.eth
   });
 
   factory EmcdCaldResponseCoins.fromJson(Map<String, dynamic> json) => _$EmcdCaldResponseCoinsFromJson(json);

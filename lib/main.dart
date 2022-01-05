@@ -35,6 +35,7 @@ class CryptoToolApp extends StatelessWidget {
     return MaterialApp(
       navigatorKey: Navigation.navigatorKey,
       localizationsDelegates: [
+
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
@@ -50,8 +51,11 @@ class CryptoToolApp extends StatelessWidget {
         scaffoldBackgroundColor: AppStyles.scaffoldColor,
         appBarTheme: AppBarTheme(
           color: AppStyles.scaffoldColor,
-          brightness: Brightness.light,
+          systemOverlayStyle: SystemUiOverlayStyle.dark,
           elevation: 0,
+          // toolbarTextStyle: TextStyle(
+          //   color: AppStyles.mainTextColor
+          // ),
           iconTheme: Theme.of(context).primaryIconTheme.copyWith(
             color: AppStyles.mainColor
           )

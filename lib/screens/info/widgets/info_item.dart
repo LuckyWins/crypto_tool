@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 class InfoItem extends StatelessWidget {
   final String title;
-  final String subtitle;
+  final String? subtitle;
 
   const InfoItem({
-    @required this.title,
+    required this.title,
     this.subtitle
   });
 
@@ -18,7 +18,7 @@ class InfoItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            title ?? "",
+            title,
             style: TextStyle(
               fontSize: 16
             ),
@@ -27,7 +27,7 @@ class InfoItem extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 4),
                 child: Text(
-                  subtitle,
+                  subtitle!,
                   style: TextStyle(
                     color: AppStyles.mainTextColor.withOpacity(0.5)
                   ),

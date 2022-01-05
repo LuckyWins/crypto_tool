@@ -8,8 +8,8 @@ class CalculateTimeControl extends StatelessWidget {
   final Function(CalculateTime activeTab) onTabChanged;
 
   const CalculateTimeControl({
-    @required this.selectedTab,
-    @required this.onTabChanged
+    required this.selectedTab,
+    required this.onTabChanged
   });
     
   @override

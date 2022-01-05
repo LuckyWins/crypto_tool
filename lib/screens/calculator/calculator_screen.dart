@@ -20,6 +20,9 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
 
   RefreshController refreshController = RefreshController();
 
+  // for textController
+  bool initialLoaded = false;
+
   @override
   void initState() {
     super.initState();
@@ -29,12 +32,12 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       context.read<CalculatorBloc>().add(CalculatorCompute(value));
     });
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => context.read<CalculatorBloc>().add(CalculatorCheckLoaded()));
+    WidgetsBinding.instance?.addPostFrameCallback((_) => context.read<CalculatorBloc>().add(CalculatorCheckLoaded()));
   }
 
   @override
   void dispose() {
-    _hashrateController?.dispose();
+    _hashrateController.dispose();
     super.dispose();
   }
 
@@ -44,7 +47,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       child: Scaffold(
         drawer: CryptoDrawer(isCalculatorSelected: true),
         appBar: AppBar(
-          title: Text("Калькулятор дохода"),
+          title: Text('Калькулятор дохода'),
         ),
         body: SmartRefresher(
           // topSafe: false,
@@ -77,7 +80,10 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                 Widget body = Container();
 
                 if (state is CalculatorInitial) {
-                  _hashrateController.text = state.hashrate.toString();
+                  if (!initialLoaded) {
+                    _hashrateController.text = state.hashrate.toString();
+                    initialLoaded = true;
+                  }
                   body = Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -99,7 +105,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                       SizedBox(height: 16),
                       Center(
                         child: Text(
-                          "Ваш доход за ${state.time.calculationName}",
+                          'Ваш доход за ${state.time.calculationName}',
                           style: TextStyle(
                             
                           ),
@@ -117,7 +123,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 48),
                         child: Text(
-                          "Примерные данные основанные на профитности пула EMCD за 24ч",
+                          'Примерные данные основанные на профитности пула EMCD за 24ч',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 12
@@ -151,7 +157,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                         padding: const EdgeInsets.only(top: 8),
                         child: Center(
                           child: Text(
-                            "Не удалось связаться с серверами",
+                            'Не удалось связаться с серверами',
                             style: TextStyle(
                               color: AppStyles.mainTextColor,
                               fontSize: 16,
@@ -164,10 +170,10 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                       SizedBox(
                         height: 16,
                       ),
-                      FlatButton(
+                      TextButton(
                         onPressed: () => context.read<CalculatorBloc>().add(CalculatorInit()),
                         child: Text(
-                          "Повторить",
+                          'Повторить',
                           style: TextStyle(
                             color: AppStyles.mainColor,
                           ),

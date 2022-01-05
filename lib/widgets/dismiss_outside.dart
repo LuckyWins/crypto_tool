@@ -5,7 +5,7 @@ class DismissOutside extends StatelessWidget {
   final Widget child;
 
   const DismissOutside({
-    @required this.child
+    required this.child
   });
 
   @override

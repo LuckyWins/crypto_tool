@@ -9,7 +9,7 @@ class EtherchainResponse {
   final EtherchainResponseStat currentStats;
 
   EtherchainResponse({
-    this.currentStats
+    required this.currentStats
   });
 
   factory EtherchainResponse.fromJson(Map<String, dynamic> json) => _$EtherchainResponseFromJson(json);
@@ -34,10 +34,10 @@ class EtherchainResponseStat {
   final double blockReward;
 
   EtherchainResponseStat({
-    this.priceUsd,
-    this.priceBtc,
-    this.difficulty,
-    this.blockReward
+    required this.priceUsd,
+    required this.priceBtc,
+    required this.difficulty,
+    required this.blockReward
   });
 
   factory EtherchainResponseStat.fromJson(Map<String, dynamic> json) => _$EtherchainResponseStatFromJson(json);

@@ -51,13 +51,15 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   ) async* {
     await PreferencesHelper.setBynToUsdExchangeSource(event.bynToUsdExchangeSource);
     if (event.bynToUsdExchangeSource == BynToUsdExchangeSource.manually) {
-      await PreferencesHelper.setBynToUsdExchangeRate(event.bynToUsdExchangeRate);
+      await PreferencesHelper.setBynToUsdExchangeRate(event.bynToUsdExchangeRate!);
     }
 
     await PreferencesHelper.setSortOption(event.sortOption);
     await PreferencesHelper.setShowPriceRise(event.showPriceRise);
     await PreferencesHelper.setIncludeElectricityCost(event.includeElectricityCost);
-    await PreferencesHelper.setElectricityCost(event.electricityCost);
+    if (event.electricityCost != null) {
+      await PreferencesHelper.setElectricityCost(event.electricityCost!);
+    }
 
     yield SettingsSavedSuccess();
   }

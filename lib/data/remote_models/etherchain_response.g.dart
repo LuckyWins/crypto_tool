@@ -6,14 +6,11 @@ part of 'etherchain_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-EtherchainResponse _$EtherchainResponseFromJson(Map<String, dynamic> json) {
-  return EtherchainResponse(
-    currentStats: json['currentStats'] == null
-        ? null
-        : EtherchainResponseStat.fromJson(
-            json['currentStats'] as Map<String, dynamic>),
-  );
-}
+EtherchainResponse _$EtherchainResponseFromJson(Map<String, dynamic> json) =>
+    EtherchainResponse(
+      currentStats: EtherchainResponseStat.fromJson(
+          json['currentStats'] as Map<String, dynamic>),
+    );
 
 Map<String, dynamic> _$EtherchainResponseToJson(EtherchainResponse instance) =>
     <String, dynamic>{
@@ -21,14 +18,13 @@ Map<String, dynamic> _$EtherchainResponseToJson(EtherchainResponse instance) =>
     };
 
 EtherchainResponseStat _$EtherchainResponseStatFromJson(
-    Map<String, dynamic> json) {
-  return EtherchainResponseStat(
-    priceUsd: (json['price_usd'] as num)?.toDouble(),
-    priceBtc: (json['price_btc'] as num)?.toDouble(),
-    difficulty: (json['difficulty'] as num)?.toDouble(),
-    blockReward: (json['block_reward'] as num)?.toDouble(),
-  );
-}
+        Map<String, dynamic> json) =>
+    EtherchainResponseStat(
+      priceUsd: (json['price_usd'] as num).toDouble(),
+      priceBtc: (json['price_btc'] as num).toDouble(),
+      difficulty: (json['difficulty'] as num).toDouble(),
+      blockReward: (json['block_reward'] as num).toDouble(),
+    );
 
 Map<String, dynamic> _$EtherchainResponseStatToJson(
         EtherchainResponseStat instance) =>

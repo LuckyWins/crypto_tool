@@ -10,9 +10,9 @@ class HomeItem extends StatelessWidget {
   final bool includeElectricityCost;
 
   const HomeItem({
-    @required this.videocard,
-    @required this.showPriceRise,
-    @required this.includeElectricityCost,
+    required this.videocard,
+    required this.showPriceRise,
+    required this.includeElectricityCost,
   });
   
   @override
@@ -40,14 +40,14 @@ class HomeItem extends StatelessWidget {
             RichText(
               text: TextSpan(
                 // "\$ ${videocard.minPrice} - ${videocard.maxPrice}",
-                text: "${videocard.minPrice == 0.0 ? "Нет в продаже" : "\$${videocard.minPrice}" }",
+                text: '${videocard.minPrice == 0.0 ? "Нет в продаже" : "\$${videocard.minPrice}" }',
                 style: TextStyle(
                   color: AppStyles.mainTextColor,
                 ),
                 children: [
                   if (showPriceRise)
                   TextSpan(
-                    text: "     \$${videocard.expectedPrice}",
+                    text: '     \$${videocard.expectedPrice}',
                     style: TextStyle(
                       color: AppStyles.mainTextColor.withOpacity(0.5),
                       fontSize: 12
@@ -55,7 +55,7 @@ class HomeItem extends StatelessWidget {
                   ),
                   if (showPriceRise && videocard.priceRise != 0.0)
                     TextSpan(
-                      text: "  ${videocard.priceRise.isNegative ? "-" : "+"}${videocard.priceRise}%",
+                      text: '  ${videocard.priceRise.isNegative ? "-" : "+"}${videocard.priceRise}%',
                       style: TextStyle(
                         // color: AppStyles.mainTextColor.withOpacity(0.5),
                         color: videocard.priceRise.isNegative
@@ -70,7 +70,7 @@ class HomeItem extends StatelessWidget {
             SizedBox(height: 8),
             RichText(
               text: TextSpan(
-                text: "${videocard.hashRate}",
+                text: '${videocard.hashRate}',
                 style: TextStyle(
                   color: AppStyles.mainTextColor,
                   fontWeight: FontWeight.bold,
@@ -78,7 +78,7 @@ class HomeItem extends StatelessWidget {
                 ),
                 children: [
                   TextSpan(
-                    text: " MH/S",
+                    text: ' MH/S',
                     style: TextStyle(
                       color: AppStyles.mainTextColor.withOpacity(0.5),
                       fontWeight: FontWeight.normal,
@@ -120,8 +120,8 @@ class HomeItem extends StatelessWidget {
             RichText(
               text: TextSpan(
                 text: includeElectricityCost
-                  ? "\$${videocard.profitDailyInUsd.toStringAsFixed(2)}"
-                  : "\$${videocard.revenueDailyInUsd.toStringAsFixed(2)}",
+                  ? '\$${videocard.profitDailyInUsd.toStringAsFixed(2)}'
+                  : '\$${videocard.revenueDailyInUsd.toStringAsFixed(2)}',
                 style: TextStyle(
                   color: AppStyles.mainTextColor,
                   fontWeight: FontWeight.bold,
@@ -130,8 +130,8 @@ class HomeItem extends StatelessWidget {
                 children: [
                   TextSpan(
                     text: includeElectricityCost
-                      ? " Прибыль"
-                      : " Доход",
+                      ? ' Прибыль'
+                      : ' Доход',
                     style: TextStyle(
                       color: AppStyles.mainTextColor.withOpacity(0.5),
                       fontWeight: FontWeight.normal,
@@ -150,11 +150,11 @@ class HomeItem extends StatelessWidget {
                     borderRadius: BorderRadius.circular(4)
                   ),
                   padding: EdgeInsets.all(4),
-                  child: Text("${videocard.paybackDays(includeElectricityCost) == 0 ? "-" : videocard.paybackDays(includeElectricityCost)} дней"),
+                  child: Text('${videocard.paybackDays(includeElectricityCost) == 0 ? "-" : videocard.paybackDays(includeElectricityCost)} дней'),
                 ),
                 SizedBox(width: 4),
                 Text(
-                  "Окупаемость",
+                  'Окупаемость',
                   style: TextStyle(
                     color: AppStyles.mainTextColor.withOpacity(0.5),
                     fontSize: 12

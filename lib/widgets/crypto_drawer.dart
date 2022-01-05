@@ -9,7 +9,7 @@ class CryptoDrawer extends StatefulWidget {
   final bool isHelpSelected;
   final bool isSettingsSelected;
 
-  final Function(bool value) settingsCallback;
+  final Function(bool value)? settingsCallback;
 
   CryptoDrawer({
     this.isGpuSelected = false,
@@ -33,13 +33,13 @@ class _CryptoDrawerState extends State<CryptoDrawer> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             CryptoDrawerHeader(
-              title: "title",
-              subtitle: "subtitle",
+              title: 'title',
+              subtitle: 'subtitle',
             ),
             DrawerItemSvg(
               selected: widget.isGpuSelected,
-              assetName: "gpu",
-              text: "Видеокарты",
+              assetName: 'gpu',
+              text: 'Видеокарты',
               onTap: () {
                 if (!widget.isGpuSelected) {
                   Navigation.toHome();
@@ -49,7 +49,7 @@ class _CryptoDrawerState extends State<CryptoDrawer> {
             DrawerItem(
               selected: widget.isCalculatorSelected,
               icon: Icons.calculate,
-              text: "Калькулятор",
+              text: 'Калькулятор',
               onTap: () {
                 if (!widget.isCalculatorSelected) {
                   Navigation.toCalculator();
@@ -60,7 +60,7 @@ class _CryptoDrawerState extends State<CryptoDrawer> {
             DrawerItem(
               selected: widget.isHelpSelected,
               icon: Icons.help_outline,
-              text: "Помощь",
+              text: 'Помощь',
               onTap: () {
                 // Close the drawer.
                 Navigator.pop(context);
@@ -72,7 +72,7 @@ class _CryptoDrawerState extends State<CryptoDrawer> {
             DrawerItem(
               selected: widget.isSettingsSelected,
               icon: Icons.settings,
-              text: "Настройки",
+              text: 'Настройки',
               onTap: () async {
                 // Close the drawer.
                 Navigator.pop(context);

@@ -16,12 +16,12 @@ class CalculatorInitial extends CalculatorState {
   final int hashrate;
 
   const CalculatorInitial({
-    @required this.ethRate,
-    @required this.changePercentage,
-    @required this.ethProfit,
-    @required this.usdProfit,
-    @required this.time,
-    @required this.hashrate
+    required this.ethRate,
+    required this.changePercentage,
+    required this.ethProfit,
+    required this.usdProfit,
+    required this.time,
+    required this.hashrate
   });
 
   @override
@@ -31,7 +31,7 @@ class CalculatorInitial extends CalculatorState {
 class CalculatorLoading extends CalculatorState {}
 
 class CalculatorError extends CalculatorState {
-  final Object error;
+  final Object? error;
 
   const CalculatorError({this.error});
 }

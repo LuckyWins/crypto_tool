@@ -21,11 +21,11 @@ class EmcdStatsResponse {
   final String coin;
 
   EmcdStatsResponse({
-    this.code,
-    this.marketPriceUsd,
-    this.changePercentage,
-    this.marketPriceBtc,
-    this.coin
+    required this.code,
+    required this.marketPriceUsd,
+    required this.changePercentage,
+    required this.marketPriceBtc,
+    required this.coin
   });
 
   factory EmcdStatsResponse.fromJson(Map<String, dynamic> json) => _$EmcdStatsResponseFromJson(json);

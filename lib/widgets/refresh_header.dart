@@ -7,7 +7,7 @@ class RefreshHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return defaultTargetPlatform == TargetPlatform.iOS
         ? ClassicHeader(
-          idleText: "Потяните вниз, чтобы обновить",
+          idleText: 'Потяните вниз, чтобы обновить',
         )
         : MaterialClassicHeader();
   }

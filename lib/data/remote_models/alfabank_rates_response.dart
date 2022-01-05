@@ -6,7 +6,7 @@ part 'alfabank_rates_response.g.dart';
 class AlfabankRateResponse {
 
   @JsonKey(name: 'rates')
-  final List<AlfabankRateItem> rates;
+  final List<AlfabankRateItem>? rates;
 
   AlfabankRateResponse({
     this.rates
@@ -34,10 +34,10 @@ class AlfabankRateItem {
   final double buyRate;
 
   AlfabankRateItem({
-    this.sellRate,
-    this.sellCode,
-    this.buyCode,
-    this.buyRate
+    required this.sellRate,
+    required this.sellCode,
+    required this.buyCode,
+    required this.buyRate
   });
 
   factory AlfabankRateItem.fromJson(Map<String, dynamic> json) => _$AlfabankRateItemFromJson(json);

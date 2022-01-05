@@ -11,7 +11,7 @@ class InfoScreen extends StatelessWidget {
   final Videocard videocard;
 
   const InfoScreen({
-    @required this.videocard
+    required this.videocard
   });
 
   @override
@@ -23,7 +23,7 @@ class InfoScreen extends StatelessWidget {
         actions: [
           if (videocard.pricesUrl != null)
             OnlinerButton(
-              onPressed: () => launch(videocard.pricesUrl),
+              onPressed: () => launch(videocard.pricesUrl!),
             )
         ],
       ),
@@ -43,24 +43,24 @@ class InfoScreen extends StatelessWidget {
               ),
               SizedBox(height: 16),
               InfoItem(
-                title: "Среднее энергопотребление",
-                subtitle: "${videocard.powerUsage} W",
+                title: 'Среднее энергопотребление',
+                subtitle: '${videocard.powerUsage} W',
               ),
               InfoItem(
-                title: "Текущая цена",
-                subtitle: "${videocard.minPrice == 0.0 ? "Нет в продаже" : "\$${videocard.minPrice}" }"
+                title: 'Текущая цена',
+                subtitle: '${videocard.minPrice == 0.0 ? "Нет в продаже" : "\$${videocard.minPrice}" }'
               ),
               InfoItem(
-                title: "Рыночная цена",
-                subtitle: "\$${videocard.expectedPrice}",
+                title: 'Рыночная цена',
+                subtitle: '\$${videocard.expectedPrice}',
               ),
               InfoItem(
-                title: "ETH",
-                subtitle: "${videocard.hashRate} MH/S",
+                title: 'ETH',
+                subtitle: '${videocard.hashRate} MH/S',
               ),
               InfoItem(
-                title: "BTC",
-                subtitle: "${(videocard.revenueDailyInBtc * 1000).toStringAsFixed(8)} mBTC/Day",
+                title: 'BTC',
+                subtitle: '${(videocard.revenueDailyInBtc * 1000).toStringAsFixed(8)} mBTC/Day',
               ),
               BlocBuilder<HomeBloc, HomeState>(
                 builder: (context, state) {
@@ -68,8 +68,8 @@ class InfoScreen extends StatelessWidget {
                   if (state is HomeLoaded) {
                     if (state.includeElectricityCost) {
                       body = InfoItem(
-                        title: "Электроэнергия, день/месяц/год",
-                        subtitle: "\$${videocard.electricityExpensesDaily.toStringAsFixed(2)}  \$${(videocard.electricityExpensesDaily*30)}  \$${(videocard.electricityExpensesDaily*365).toStringAsFixed(2)}",
+                        title: 'Электроэнергия, день/месяц/год',
+                        subtitle: '\$${videocard.electricityExpensesDaily.toStringAsFixed(2)}  \$${(videocard.electricityExpensesDaily*30)}  \$${(videocard.electricityExpensesDaily*365).toStringAsFixed(2)}',
                       );
                     }
                   }
@@ -77,8 +77,8 @@ class InfoScreen extends StatelessWidget {
                 }
               ),
               InfoItem(
-                title: "Доход, день/месяц/год",
-                subtitle: "\$${videocard.revenueDailyInUsd.toStringAsFixed(2)}  \$${(videocard.revenueDailyInUsd * 30).toStringAsFixed(2)}  \$${(videocard.revenueDailyInUsd * 365).toStringAsFixed(2)}",
+                title: 'Доход, день/месяц/год',
+                subtitle: '\$${videocard.revenueDailyInUsd.toStringAsFixed(2)}  \$${(videocard.revenueDailyInUsd * 30).toStringAsFixed(2)}  \$${(videocard.revenueDailyInUsd * 365).toStringAsFixed(2)}',
               ),
               BlocBuilder<HomeBloc, HomeState>(
                 builder: (context, state) {
@@ -86,8 +86,8 @@ class InfoScreen extends StatelessWidget {
                   if (state is HomeLoaded) {
                     if (state.includeElectricityCost) {
                       body = InfoItem(
-                        title: "Прибыль, день/месяц/год",
-                        subtitle: "\$${videocard.profitDailyInUsd.toStringAsFixed(2)}  \$${(videocard.profitDailyInUsd*30).toStringAsFixed(2)}  \$${(videocard.profitDailyInUsd*365).toStringAsFixed(2)}",
+                        title: 'Прибыль, день/месяц/год',
+                        subtitle: '\$${videocard.profitDailyInUsd.toStringAsFixed(2)}  \$${(videocard.profitDailyInUsd*30).toStringAsFixed(2)}  \$${(videocard.profitDailyInUsd*365).toStringAsFixed(2)}',
                       );
                     }
                   }
@@ -99,9 +99,9 @@ class InfoScreen extends StatelessWidget {
                   Widget body = Container();
                   if (state is HomeLoaded) {
                     body = InfoItem(
-                        title: "Окупаемость",
-                        subtitle: "${videocard.paybackDays(state.includeElectricityCost) == 0.0 ? "-" : videocard.paybackDays(state.includeElectricityCost)} дней",
-                      );
+                      title: 'Окупаемость',
+                      subtitle: '${videocard.paybackDays(state.includeElectricityCost) == 0.0 ? "-" : videocard.paybackDays(state.includeElectricityCost)} дней',
+                    );
                   }
                   return body;
                 }

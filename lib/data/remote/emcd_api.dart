@@ -8,7 +8,7 @@ import 'package:dio/dio.dart';
 
 // @RestApi(baseUrl: "https://common.emcd.io")
 abstract class EmcdApi {
-  factory EmcdApi(Dio dio, {String baseUrl}) = _EmcdApi;
+  factory EmcdApi(Dio dio, {String? baseUrl}) = _EmcdApi;
 
   // @GET("/get_calc?emcd=1")
   Future<EmcdCaldResponse> getCalc();
@@ -30,22 +30,21 @@ class _EmcdApi implements EmcdApi {
 
   final Dio _dio;
 
-  String baseUrl;
+  String? baseUrl;
 
   @override
   Future<EmcdCaldResponse> getCalc() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<String>('/get_calc?emcd=1',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = EmcdCaldResponse.fromJson(json.decode(_result.data));
+    final _result = await _dio.fetch<String>(
+      Options(method: 'GET', headers: _headers, extra: _extra, responseType: ResponseType.plain)
+          .compose(_dio.options, '/get_calc?emcd=1',
+              queryParameters: queryParameters, data: _data)
+          .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl));
+    
+    final value = EmcdCaldResponse.fromJson(json.decode(_result.data ?? ''));
     return value;
   }
 
@@ -53,16 +52,14 @@ class _EmcdApi implements EmcdApi {
   Future<EmcdStatsResponse> getStats() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<String>('/eth/stats?emcd=1',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    final value = EmcdStatsResponse.fromJson(json.decode(_result.data));
+    final _result = await _dio.fetch<String>(
+      Options(method: 'GET', headers: _headers, extra: _extra, responseType: ResponseType.plain)
+          .compose(_dio.options, '/eth/stats?emcd=1',
+              queryParameters: queryParameters, data: _data)
+          .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl));
+    final value = EmcdStatsResponse.fromJson(json.decode(_result.data ?? ''));
     return value;
   }
 }

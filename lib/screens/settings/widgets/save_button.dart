@@ -5,21 +5,21 @@ class SaveButton extends StatelessWidget {
   final Function() onPressed;
 
   const SaveButton({
-    @required this.onPressed
+    required this.onPressed
   });
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
+    return TextButton(
       child: Text(
-        "Сохранить",
+        'Сохранить',
         style: TextStyle(
           color: AppStyles.mainColor,
           // fontSize: 16,
           fontWeight: FontWeight.w400
         ),
       ),
-      onPressed: () => onPressed?.call(),
+      onPressed: () => onPressed.call(),
     );
   }
 }

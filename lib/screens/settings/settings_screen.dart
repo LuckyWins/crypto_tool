@@ -18,7 +18,7 @@ class SettingsScreen extends StatelessWidget {
         Widget body = Scaffold(
           appBar: AppBar(
             centerTitle: true,
-            title: Text("Настройки"),
+            title: Text('Настройки'),
           ),
         );
 
@@ -26,7 +26,7 @@ class SettingsScreen extends StatelessWidget {
           body = Scaffold(
             appBar: AppBar(
               centerTitle: true,
-              title: Text("Настройки"),
+              title: Text('Настройки'),
             ),
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.center,

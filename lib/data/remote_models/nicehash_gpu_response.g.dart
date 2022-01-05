@@ -6,14 +6,13 @@ part of 'nicehash_gpu_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-NicehashGpuResponse _$NicehashGpuResponseFromJson(Map<String, dynamic> json) {
-  return NicehashGpuResponse(
-    id: json['id'] as String,
-    name: json['name'] as String,
-    power: (json['power'] as num)?.toDouble(),
-    speeds: NicehashGpuResponse._speedsFromString(json['speeds'] as String),
-  );
-}
+NicehashGpuResponse _$NicehashGpuResponseFromJson(Map<String, dynamic> json) =>
+    NicehashGpuResponse(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      power: (json['power'] as num).toDouble(),
+      speeds: NicehashGpuResponse._speedsFromString(json['speeds'] as String),
+    );
 
 Map<String, dynamic> _$NicehashGpuResponseToJson(
         NicehashGpuResponse instance) =>
