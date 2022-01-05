@@ -16,9 +16,13 @@ class _OnlinerApi implements OnlinerApi {
   String? baseUrl;
 
   @override
-  Future<VideoCardResponse> videocardRequest(gpuName) async {
+  Future<VideoCardResponse> videocardRequest(
+      {required gpuName, required lhr}) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'desktop_gpu[0]': gpuName};
+    final queryParameters = <String, dynamic>{
+      r'desktop_gpu[0]': gpuName,
+      r'lhr_videocard': lhr
+    };
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<

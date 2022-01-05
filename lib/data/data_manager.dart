@@ -22,7 +22,13 @@ class DataManager {
   bool gpuFirstLoaded = false;
   bool calculatorFirstLoaded = false;
 
-  Future<VideoCardResponse> getVideocard(String gpuName) => _onlinerApi.videocardRequest(gpuName);
+  Future<VideoCardResponse> getVideocard({
+    required String gpuName,
+    required bool lhr
+  }) => _onlinerApi.videocardRequest(
+    gpuName: gpuName,
+    lhr: lhr ? 1 : 0
+  );
 
   Future<ExchangeRateResponse> getExchangeRateNbrb() => _nbrbApi.exchangeRateRequest();
 

@@ -9,6 +9,10 @@ abstract class OnlinerApi {
   factory OnlinerApi(Dio dio, {String baseUrl}) = _OnlinerApi;
 
   @GET('/videocard?desktop_gpu[operation]=union&videoram_videoc[from]=6gb&order=price:asc')
-  Future<VideoCardResponse> videocardRequest(@Query('desktop_gpu[0]') String gpuName);
+  Future<VideoCardResponse> videocardRequest({
+    @Query('desktop_gpu[0]') required String gpuName,
+    /// 1 - true, 0 - false
+    @Query('lhr_videocard') required int lhr,
+  });
 
 }

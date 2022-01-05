@@ -4,25 +4,79 @@ import 'package:cryptotool/models/models.dart';
 class GpuRepository {
 
   static List<Videocard> availableList = const [
-    // 22.01.2021
+    // 05.01.2022
     Videocard(
       gpuName: 'NVIDIA RTX 3090',
       onlinerGpuName: 'rtx3090',
       nicehashId: 'ff9715b2-78b2-4903-9962-2c03a7d4118b',
       hashRate: 120,
       gpuDescription: 'NVIDIA RTX 3090 была выпущена 24 сентября 2020 г.',
-      expectedPrice: 1999,
+      expectedPrice: 2737,
       powerUsage: 300
     ),
-    // 22.01.2021
+    // 05.01.2022
+    Videocard(
+      gpuName: 'NVIDIA RTX 3080 Ti LHR',
+      onlinerGpuName: 'rtx3080ti',
+      nicehashId: '9b902b12-2de0-4eca-a7a4-373ae4cdeb90',
+      hashRate: 80,
+      gpuDescription: 'NVIDIA RTX 3080 Ti LHR была выпущена 3 июня 2021 г..',
+      expectedPrice: 1829,
+      powerUsage: 320,
+      lhr: true
+    ),
+    // 05.01.2022
     Videocard(
       gpuName: 'NVIDIA RTX 3080',
       onlinerGpuName: 'rtx3080',
       nicehashId: '1821b5f3-581f-4d0a-9ae1-8db2e2f758e6',
-      hashRate: 98,
+      hashRate: 96,
       gpuDescription: 'NVIDIA RTX 3080 была выпущена 17 сентября 2020 г.',
-      expectedPrice: 1000.99,
+      expectedPrice: 1666,
       powerUsage: 240
+    ),
+    // 05.01.2022
+    Videocard(
+      gpuName: 'NVIDIA RTX 3080 LHR',
+      onlinerGpuName: 'rtx3080',
+      nicehashId: '80492f0b-d8d5-4909-b69b-1d1f2364af0b',
+      hashRate: 48,
+      gpuDescription: 'NVIDIA RTX 3080 LHR была выпущена 17 сентября 2020 г.',
+      expectedPrice: 1485,
+      powerUsage: 250,
+      lhr: true
+    ),
+    // 05.01.2022
+    Videocard(
+      gpuName: 'NVIDIA RTX 3070 Ti LHR',
+      onlinerGpuName: 'rtx3070ti',
+      nicehashId: '16f0110e-2dd7-4f80-adf2-d1dbf6d33df0',
+      hashRate: 53,
+      gpuDescription: 'NVIDIA RTX 3070 Ti LHR была выпущена 10 июня 2021 г.',
+      expectedPrice: 1124,
+      powerUsage: 150,
+      lhr: true
+    ),
+    // 05.01.2022
+    Videocard(
+      gpuName: 'NVIDIA RTX 3070',
+      onlinerGpuName: 'rtx3070',
+      nicehashId: '4e33d395-5c8a-4fb9-98c2-8af1f12bce2a',
+      hashRate: 60.56,
+      gpuDescription: 'NVIDIA RTX 3070 была выпущена 29 октября 2020 г.',
+      expectedPrice: 1144,
+      powerUsage: 125
+    ),
+    // 05.01.2022
+    Videocard(
+      gpuName: 'NVIDIA RTX 3070 LHR',
+      onlinerGpuName: 'rtx3070',
+      nicehashId: '49640e23-3b63-46f2-8fa3-ad2d567007f9',
+      hashRate: 41,
+      gpuDescription: 'NVIDIA RTX 3070 LHR была выпущена 29 октября 2020 г.',
+      expectedPrice: 1023,
+      powerUsage: 125,
+      lhr: true
     ),
     // 21.01.2021
     // Videocard(
@@ -34,35 +88,46 @@ class GpuRepository {
     //   expectedPrice: 870.0,
     //   powerUsage: 210.0
     // ),
-    // 21.01.2021
+    // 05.01.2022
     Videocard(
       gpuName: 'NVIDIA RTX 3060 Ti',
       onlinerGpuName: 'rtx3060ti',
       nicehashId: 'a16e5f4e-1665-486a-bd5a-450b15a9a563',
-      hashRate: 58.1,
+      hashRate: 60.5,
       gpuDescription: 'NVIDIA RTX 3060 Ti была выпущена 2 декабря 2020 г.',
-      expectedPrice: 670,
-      powerUsage: 130
+      expectedPrice: 907,
+      powerUsage: 125
     ),
-    // 17.03.2021
+    // 05.01.2022
+    Videocard(
+      gpuName: 'NVIDIA RTX 3060 Ti LHR',
+      onlinerGpuName: 'rtx3060ti',
+      nicehashId: '443cc946-0283-48f1-936e-fc26ffa13b77',
+      hashRate: 41,
+      gpuDescription: 'NVIDIA RTX 3060 Ti LHR была выпущена 2 декабря 2020 г.',
+      expectedPrice: 844,
+      powerUsage: 125,
+      lhr: true
+    ),
+    // 05.01.2022
     Videocard(
       gpuName: 'NVIDIA RTX 3060',
       onlinerGpuName: 'rtx3060',
-      nicehashId: 'a16e5f4e-1665-486a-bd5a-450b15a9a563',
-      hashRate: 28,
+      nicehashId: '3cd8829c-c420-4e6a-b1d3-030cea712433',
+      hashRate: 49,
       gpuDescription: 'NVIDIA RTX 3060 Ti была выпущена 25 февраля 2021 г.',
-      expectedPrice: 330,
-      powerUsage: 115
+      expectedPrice: 800,
+      powerUsage: 135
     ),
-    // 21.01.2021
+    // 05.01.2022
     Videocard(
-      gpuName: 'NVIDIA RTX 3070',
-      onlinerGpuName: 'rtx3070',
-      nicehashId: '4e33d395-5c8a-4fb9-98c2-8af1f12bce2a',
-      hashRate: 58.1,
-      gpuDescription: 'NVIDIA RTX 3070 была выпущена 29 октября 2020 г.',
-      expectedPrice: 749,
-      powerUsage: 130
+      gpuName: 'NVIDIA RTX 3060 LHR',
+      onlinerGpuName: 'rtx3060',
+      nicehashId: '1cb7542d-93d8-479c-9683-bfddfdf25370',
+      hashRate: 33,
+      gpuDescription: 'NVIDIA RTX 3060 Ti LHR была выпущена 25 февраля 2021 г.',
+      expectedPrice: 708,
+      powerUsage: 135
     ),
     // 21.01.2021
     Videocard(
@@ -95,15 +160,15 @@ class GpuRepository {
       powerUsage: 180
     ),
     // 21.01.2021
-    Videocard(
-      gpuName: 'NVIDIA GTX 1080 Ti',
-      onlinerGpuName: 'gtx1080ti',
-      nicehashId: '6e88ab8b-7081-4170-84b5-a36686ec98fe',
-      hashRate: 49,
-      gpuDescription: 'NVIDIA GTX 1080 Ti была выпущена 10 марта 2017 г.',
-      expectedPrice: 350.27,
-      powerUsage: 180
-    ),
+    // Videocard(
+    //   gpuName: 'NVIDIA GTX 1080 Ti',
+    //   onlinerGpuName: 'gtx1080ti',
+    //   nicehashId: '6e88ab8b-7081-4170-84b5-a36686ec98fe',
+    //   hashRate: 49,
+    //   gpuDescription: 'NVIDIA GTX 1080 Ti была выпущена 10 марта 2017 г.',
+    //   expectedPrice: 350.27,
+    //   powerUsage: 180
+    // ),
     Videocard(
       gpuName: 'NVIDIA RTX 2070 SUPER',
       onlinerGpuName: 'rtx2070super',
@@ -191,15 +256,15 @@ class GpuRepository {
       powerUsage: 180
     ),
     // 21.01.2021
-    Videocard(
-      gpuName: 'NVIDIA GTX 1080',
-      onlinerGpuName: 'gtx1080',
-      nicehashId: 'f0893a52-2ec5-4c03-bf3c-2d00695c6873',
-      hashRate: 34,
-      gpuDescription: 'NVIDIA GTX 1080 была выпущена 27 мая 2016 г.',
-      expectedPrice: 239.69,
-      powerUsage: 170
-    ),
+    // Videocard(
+    //   gpuName: 'NVIDIA GTX 1080',
+    //   onlinerGpuName: 'gtx1080',
+    //   nicehashId: 'f0893a52-2ec5-4c03-bf3c-2d00695c6873',
+    //   hashRate: 34,
+    //   gpuDescription: 'NVIDIA GTX 1080 была выпущена 27 мая 2016 г.',
+    //   expectedPrice: 239.69,
+    //   powerUsage: 170
+    // ),
     // 21.01.2021
     Videocard(
       gpuName: 'AMD RX 580 8GB',
@@ -210,15 +275,15 @@ class GpuRepository {
       expectedPrice: 155.50,
       powerUsage: 130
     ),
-    Videocard(
-      gpuName: 'AMD RX 480 8GB',
-      onlinerGpuName: 'radeonrx480',
-      nicehashId: '58fa802b-460d-48be-be6e-2bb3824136f2',
-      hashRate: 31.5,
-      gpuDescription: 'AMD RX 480 8GB была выпущена 1 июля 2016 г.',
-      expectedPrice: 145,
-      powerUsage: 120
-    ),
+    // Videocard(
+    //   gpuName: 'AMD RX 480 8GB',
+    //   onlinerGpuName: 'radeonrx480',
+    //   nicehashId: '58fa802b-460d-48be-be6e-2bb3824136f2',
+    //   hashRate: 31.5,
+    //   gpuDescription: 'AMD RX 480 8GB была выпущена 1 июля 2016 г.',
+    //   expectedPrice: 145,
+    //   powerUsage: 120
+    // ),
     Videocard(
       gpuName: 'AMD RX 570 8GB',
       onlinerGpuName: 'radeonrx570',
@@ -239,15 +304,15 @@ class GpuRepository {
       powerUsage: 80
     ),
     // 21.01.2021
-    Videocard(
-      gpuName: 'NVIDIA GTX 1070 Ti',
-      onlinerGpuName: 'gtx1070ti',
-      nicehashId: '9282809e-94ae-4cb3-a8db-8941d98f3d09',
-      hashRate: 30.5,
-      gpuDescription: 'NVIDIA GTX 1070 Ti была выпущена 2 ноября 2017 г.',
-      expectedPrice: 215.18,
-      powerUsage: 130
-    ),
+    // Videocard(
+    //   gpuName: 'NVIDIA GTX 1070 Ti',
+    //   onlinerGpuName: 'gtx1070ti',
+    //   nicehashId: '9282809e-94ae-4cb3-a8db-8941d98f3d09',
+    //   hashRate: 30.5,
+    //   gpuDescription: 'NVIDIA GTX 1070 Ti была выпущена 2 ноября 2017 г.',
+    //   expectedPrice: 215.18,
+    //   powerUsage: 130
+    // ),
     // Videocard(
     //   gpuName: "AMD RX 470 8GB",
     //   onlinerGpuName: "x470",
@@ -307,15 +372,15 @@ class GpuRepository {
       powerUsage: 80
     ),
     // 21.01.2021
-    Videocard(
-      gpuName: 'NVIDIA GTX 1060 6GB',
-      onlinerGpuName: 'gfgtx1060',
-      nicehashId: '869da26b-6e22-4819-8996-a19acfb9ec0d',
-      hashRate: 22.5,
-      gpuDescription: 'NVIDIA GTX 1060 6GB была выпущена 8 июля 2016 г.',
-      expectedPrice: 140.51,
-      powerUsage: 90
-    ),
+    // Videocard(
+    //   gpuName: 'NVIDIA GTX 1060 6GB',
+    //   onlinerGpuName: 'gfgtx1060',
+    //   nicehashId: '869da26b-6e22-4819-8996-a19acfb9ec0d',
+    //   hashRate: 22.5,
+    //   gpuDescription: 'NVIDIA GTX 1060 6GB была выпущена 8 июля 2016 г.',
+    //   expectedPrice: 140.51,
+    //   powerUsage: 90
+    // ),
     // Videocard(
     //   gpuName: "NVIDIA P106-100",
     //   onlinerGpuName: "",

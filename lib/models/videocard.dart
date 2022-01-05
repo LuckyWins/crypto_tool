@@ -27,6 +27,8 @@ class Videocard extends Equatable {
   final String? nicehashId;
   /// is stat loaded from nicehash
   final bool isStatActual;
+  // LHR?
+  final bool lhr;
 
   const Videocard({
     required this.gpuName,
@@ -46,7 +48,8 @@ class Videocard extends Equatable {
     this.expectedPrice = 0.0,
     this.powerUsage = 0.0,
     this.nicehashId,
-    this.isStatActual = false
+    this.isStatActual = false,
+    this.lhr = false
   });
 
   Videocard copy({

@@ -81,7 +81,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
         }
         
-        final response = await _dataManager.getVideocard(card.onlinerGpuName);
+        final response = await _dataManager.getVideocard(
+          gpuName: card.onlinerGpuName,
+          lhr: card.lhr
+        );
 
         final onlinerCard = response.products.firstOrNull;
         final minPrice = ((onlinerCard?.prices.priceMin.amount.toDoubleOrNull() ?? 0.0) / bynToUsd).roundFixed();
