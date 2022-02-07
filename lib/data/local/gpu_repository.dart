@@ -115,7 +115,7 @@ class GpuRepository {
       onlinerGpuName: 'rtx3060',
       nicehashId: '3cd8829c-c420-4e6a-b1d3-030cea712433',
       hashRate: 49,
-      gpuDescription: 'NVIDIA RTX 3060 Ti была выпущена 25 февраля 2021 г.',
+      gpuDescription: 'NVIDIA RTX 3060 была выпущена 25 февраля 2021 г.',
       expectedPrice: 800,
       powerUsage: 135
     ),
@@ -125,9 +125,10 @@ class GpuRepository {
       onlinerGpuName: 'rtx3060',
       nicehashId: '1cb7542d-93d8-479c-9683-bfddfdf25370',
       hashRate: 33,
-      gpuDescription: 'NVIDIA RTX 3060 Ti LHR была выпущена 25 февраля 2021 г.',
+      gpuDescription: 'NVIDIA RTX 3060 LHR была выпущена 25 февраля 2021 г.',
       expectedPrice: 708,
-      powerUsage: 135
+      powerUsage: 135,
+      lhr: true
     ),
     // 21.01.2021
     Videocard(
